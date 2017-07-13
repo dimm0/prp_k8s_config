@@ -57,6 +57,7 @@ spec:
         name: kube-router
     spec:
       hostNetwork: true
+      serviceAccount: kube-router
       serviceAccountName: kube-router
       containers:
       - name: kube-router
@@ -93,4 +94,4 @@ spec:
               path: /etc/cni/net.d/10-kuberouter.conf
         - name: kubeconfig
           hostPath:
-              path: /etc/kubernetes/kubelet.conf
+              path: /etc/kubernetes/admin.conf

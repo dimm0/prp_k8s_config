@@ -1,4 +1,3 @@
----
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -44,35 +43,6 @@ metadata:
   name: kube-router
   namespace: kube-system
 ---
-apiVersion: v1
-data:
-  kubeconfig.conf: |
-    apiVersion: v1
-    kind: Config
-    clusters:
-    - cluster:
-        certificate-authority: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        server: https://67.58.53.146:6443
-      name: default
-    contexts:
-    - context:
-        cluster: default
-        namespace: default
-        user: default
-      name: default
-    current-context: default
-    users:
-    - name: default
-      user:
-        tokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-kind: ConfigMap
-metadata:
-  creationTimestamp: 2017-06-24T14:54:25Z
-  labels:
-    app: kube-router
-  name: kube-router
-  namespace: kube-system
----
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
@@ -87,6 +57,7 @@ spec:
         name: kube-router
     spec:
       hostNetwork: true
+      serviceAccountName: kube-router
       containers:
       - name: kube-router
         image: cloudnativelabs/kube-router

@@ -1,0 +1,41 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: gpu-pod
+spec:
+  containers:
+  - name: gpu-container
+    image: gcr.io/tensorflow/tensorflow:latest-gpu
+    imagePullPolicy: Always
+    #command: ["python"]
+    #args: ["-u", "-c", "import tensorflow"]
+    args: ["sleep", "36500000"]
+    resources:
+      limits:
+        alpha.kubernetes.io/nvidia-gpu: 8
+      requests:
+        alpha.kubernetes.io/nvidia-gpu: 8
+    volumeMounts:
+    - name: nvidia-driver-381-22
+      mountPath: /usr/local/nvidia
+      readOnly: true
+    - name: libcuda-so
+      mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so
+    - name: libcuda-so-1
+      mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
+    - name: libcuda-so-381-22
+      mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.381.22
+  restartPolicy: Never
+  volumes:
+  - name: nvidia-driver-381-22
+    hostPath:
+      path: /var/lib/nvidia-docker/volumes/nvidia_driver/381.22
+  - name: libcuda-so
+    hostPath:
+      path: /usr/lib/x86_64-linux-gnu/libcuda.so
+  - name: libcuda-so-1
+    hostPath:
+      path: /usr/lib/x86_64-linux-gnu/libcuda.so.1
+  - name: libcuda-so-381-22
+    hostPath:
+      path: /usr/lib/x86_64-linux-gnu/libcuda.so.381.22

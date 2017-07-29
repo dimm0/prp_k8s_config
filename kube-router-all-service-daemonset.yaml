@@ -1,7 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-router-cfg
+  namespace: kube-system
+  labels:
+    tier: node
+    k8s-app: kube-router
+data:
+  cni-conf.json: |
+    {
+      "name":"kubernetes",
+      "type":"bridge",
+      "bridge":"kube-bridge",
+      "isDefaultGateway":true,
+      "ipam": {
+        "type":"host-local"
+      }
+    }
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: kube-router
+  name: kube-router
+  namespace: kube-system
+---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: kube-router
+  labels:
+    k8s-app: kube-router
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -15,7 +45,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   name: kube-router
-  namespace: kube-system
 rules:
   - apiGroups: [""]
     resources:
@@ -37,12 +66,6 @@ rules:
       - list
       - watch
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: kube-router
-  namespace: kube-system
----
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
@@ -57,10 +80,35 @@ spec:
         k8s-app: kube-router
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
+        pod.beta.kubernetes.io/init-containers: '[
+            {
+                "name": "install-cni",
+                "image": "busybox",
+                "command": [ "/bin/sh", "-c", "set -e -x; if [ ! -f /etc/cni/net.d/10-kuberouter.conf ]; then TMP=/etc/cni/net.d/.tmp-kuberouter-cfg; cp /etc/kube-router/cni-conf.json ${TMP}; mv ${TMP} /etc/cni/net.d/10-kuberouter.conf; fi" ],
+                "volumeMounts": [
+                    {
+                        "name": "cni",
+                        "mountPath": "/etc/cni/net.d"
+                    },
+                    {
+                        "name": "kube-router-cfg",
+                        "mountPath": "/etc/kube-router"
+                    }
+                ],
+                "volumes": {
+                     "name": "cni",
+                     "hostPath": {
+                          "path": "/etc/cni/net.d"
+                     }
+                }
+            }
+        ]'
     spec:
+      imagePullSecrets:
+        - name: gcr-json-key
       containers:
       - name: kube-router
-        image: cloudnativelabs/kube-router
+        image: us.gcr.io/prp-k8s/kube-router-git:latest
         args: ["--run-router=true", "--run-firewall=true", "--run-service-proxy=true"]
         securityContext:
           privileged: true
@@ -74,11 +122,10 @@ spec:
           - mountPath: /lib/modules
             name: lib-modules
             readOnly: true
-          - mountPath: /etc/cni/net.d/10-kuberouter.conf
-            name: cni-conf-dir
-          - mountPath: /var/lib/kube-router/kubeconfig
-            name: kubeconfig
+          - name: cni
+            mountPath: /etc/cni/net.d
       hostNetwork: true
+      serviceAccountName: kube-router
       tolerations:
       - key: CriticalAddonsOnly
         operator: Exists
@@ -89,9 +136,9 @@ spec:
         - name: lib-modules
           hostPath:
               path: /lib/modules
-        - name: cni-conf-dir
+        - name: cni
           hostPath:
-              path: /etc/cni/net.d/10-kuberouter.conf
-        - name: kubeconfig
-          hostPath:
-              path: /etc/kubernetes/admin.conf
+            path: /etc/cni/net.d
+        - name: kube-router-cfg
+          configMap:
+            name: kube-router-cfg

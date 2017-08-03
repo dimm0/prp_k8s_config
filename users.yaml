@@ -1,21 +1,24 @@
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1beta1
-metadata:
-  name: cilogon-admin
-rules:
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["pods"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
----
+# kind: ClusterRole
+# apiVersion: rbac.authorization.k8s.io/v1beta1
+# metadata:
+#   name: cilogon-admin
+# rules:
+# - apiGroups: ["rbac.authorization.k8s.io"]
+#   resources: ["pods"]
+#   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+# ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: cilogon-admins
+  name: cilogon-admin
 subjects:
 - kind: User
   name: https://cilogon.org#http://cilogon.org/serverA/users/15761
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: "rbac.authorization.k8s.io"
+- kind: User
+  name: https://cilogon.org#http://cilogon.org/serverA/users/23651
+  apiGroup: "rbac.authorization.k8s.io"
 roleRef:
   kind: ClusterRole
-  name: cilogon-admin
+  name: cluster-admin
   apiGroup: rbac.authorization.k8s.io

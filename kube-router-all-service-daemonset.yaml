@@ -109,6 +109,7 @@ spec:
       containers:
       - name: kube-router
         image: us.gcr.io/prp-k8s/kube-router-git:latest
+        # image: cloudnativelabs/kube-router
         args: ["--run-router=true", "--run-firewall=true", "--run-service-proxy=true"]
         securityContext:
           privileged: true

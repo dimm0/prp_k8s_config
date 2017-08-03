@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rook
+---
+apiVersion: rook.io/v1alpha1
+kind: Cluster
+metadata:
+  name: rook
+  namespace: rook
+spec:
+  versionTag: master
+  dataDirHostPath:
+# To control where various services will be scheduled by kubernetes, use the placement configuration sections below.
+# The example under 'all' would have all services scheduled on kubernetes nodes labeled with 'role=storage' and
+# tolerate taints with a key of 'storage-node'.
+#  placement:
+#    all:
+#      nodeAffinity:
+#        requiredDuringSchedulingIgnoredDuringExecution:
+#          nodeSelectorTerms:
+#          - matchExpressions:
+#            - key: role
+#              operator: In
+#              values:
+#              - storage-node
+#      tolerations:
+#      - key: storage-node
+#        operator: Exists
+#    api:
+#      nodeAffinity:
+#      tolerations:
+#    mds:
+#      nodeAffinity:
+#      tolerations:
+#    mon:
+#      nodeAffinity:
+#      tolerations:
+#    osd:
+#      nodeAffinity:
+#      tolerations:
+#    rgw:
+#      nodeAffinity:
+#      tolerations:
+  storage:                # cluster level storage configuration and selection
+    useAllNodes: false
+    useAllDevices: false
+    deviceFilter:
+    metadataDevice:
+    location:
+    storeConfig:
+      storeType: bluestore
+    nodes:
+    - name: "coreos-01.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "coreos-02.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "coreos-03.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "coreos-04.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "coreos-05.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "coreos-06.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "coreos-07.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "coreos-08.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+    - name: "k8s-gpu-02.calit2.optiputer.net"
+      devices:
+      - name: "nvme0n1"
+      - name: "nvme1n1"
+      - name: "sdd"
+      - name: "sde"
+      - name: "sdf"
+    - name: "fiona8.calit2.uci.edu"
+      devices:
+      - name: "nvme0n1"
+      - name: "nvme1n1"
+      - name: "sdd"
+      - name: "sde"
+      - name: "sdf"
+    # - name: "siderea.ucsc.edu"
+    #   devices:
+    #   - name: "nvme0n1"
+    #   - name: "nvme1n2"
+    #   - name: "nvme1n3"
+    #   - name: "nvme1n4"
+    #   - name: "nvme1n5"
+    #   - name: "nvme1n6"
+    #   - name: "nvme1n7"

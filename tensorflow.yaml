@@ -12,30 +12,32 @@ spec:
     args: ["sleep", "36500000"]
     resources:
       limits:
-        alpha.kubernetes.io/nvidia-gpu: 8
+        alpha.kubernetes.io/nvidia-gpu: 7
       requests:
-        alpha.kubernetes.io/nvidia-gpu: 8
+        alpha.kubernetes.io/nvidia-gpu: 7
     volumeMounts:
-    - name: nvidia-driver-381-22
+    - name: nvidia-driver-375-66
       mountPath: /usr/local/nvidia
       readOnly: true
     - name: libcuda-so
       mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so
     - name: libcuda-so-1
       mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
-    - name: libcuda-so-381-22
-      mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.381.22
+    - name: libcuda-so-375-66
+      mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.375.66/
   restartPolicy: Never
+  nodeSelector:
+    kubernetes.io/hostname: k8s-gpu-01.calit2.optiputer.net
   volumes:
-  - name: nvidia-driver-381-22
+  - name: nvidia-driver-375-66
     hostPath:
-      path: /var/lib/nvidia-docker/volumes/nvidia_driver/381.22
+      path: /var/lib/nvidia-docker/volumes/nvidia_driver/375.66/
   - name: libcuda-so
     hostPath:
       path: /usr/lib/x86_64-linux-gnu/libcuda.so
   - name: libcuda-so-1
     hostPath:
       path: /usr/lib/x86_64-linux-gnu/libcuda.so.1
-  - name: libcuda-so-381-22
+  - name: libcuda-so-375-66
     hostPath:
-      path: /usr/lib/x86_64-linux-gnu/libcuda.so.381.22
+      path: /usr/lib/x86_64-linux-gnu/libcuda.so.375.66/

@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tensorvol
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi
+---
 kind: Pod
 apiVersion: v1
 metadata:
@@ -25,6 +37,8 @@ spec:
       mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
     - name: libcuda-so-375-66
       mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.375.66/
+    - mountPath: /tensorvol
+      name: tensorvol
   restartPolicy: Never
   nodeSelector:
     kubernetes.io/hostname: k8s-gpu-01.calit2.optiputer.net
@@ -41,3 +55,6 @@ spec:
   - name: libcuda-so-375-66
     hostPath:
       path: /usr/lib/x86_64-linux-gnu/libcuda.so.375.66/
+  - name: tensorvol
+    persistentVolumeClaim:
+      claimName: tensorvol

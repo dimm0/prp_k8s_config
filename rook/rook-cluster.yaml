@@ -82,13 +82,13 @@ spec:
       - name: "sdd"
       - name: "sde"
       - name: "sdf"
-    - name: "fiona8.calit2.uci.edu"
-      devices:
-      - name: "nvme0n1"
-      - name: "nvme1n1"
-      - name: "sdd"
-      - name: "sde"
-      - name: "sdf"
+    # - name: "fiona8.calit2.uci.edu"
+    #   devices:
+    #   - name: "nvme0n1"
+    #   - name: "nvme1n1"
+    #   - name: "sdd"
+    #   - name: "sde"
+    #   - name: "sdf"
     # - name: "siderea.ucsc.edu"
     #   devices:
     #   - name: "nvme0n1"

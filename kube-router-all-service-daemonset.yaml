@@ -65,6 +65,13 @@ rules:
       - get
       - list
       - watch
+  - apiGroups: ["networking.k8s.io"]
+    resources:
+      - networkpolicies
+    verbs:
+      - get
+      - list
+      - watch
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -104,13 +111,13 @@ spec:
             }
         ]'
     spec:
-      imagePullSecrets:
-        - name: gcr-json-key
+      # imagePullSecrets:
+      #   - name: gcr-json-key
       containers:
       - name: kube-router
-        image: us.gcr.io/prp-k8s/kube-router-git:latest
-        # image: cloudnativelabs/kube-router
-        args: ["--run-router=true", "--run-firewall=true", "--run-service-proxy=true"]
+        # image: us.gcr.io/prp-k8s/kube-router-git:latest
+        image: cloudnativelabs/kube-router
+        args: ["--run-router=true", "--run-firewall=true", "--run-service-proxy=true", "--advertise-cluster-ip=true"]
         securityContext:
           privileged: true
         imagePullPolicy: Always

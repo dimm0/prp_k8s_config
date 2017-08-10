@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: testvol
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -16,3 +28,10 @@ spec:
         args: ["sleep", "36500000"]
         securityContext:
           privileged: true
+        volumeMounts:
+        - mountPath: /testvol
+          name: testvol
+      volumes:
+      - name: testvol
+        persistentVolumeClaim:
+          claimName: testvol

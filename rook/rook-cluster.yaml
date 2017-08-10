@@ -75,13 +75,13 @@ spec:
     - name: "coreos-08.calit2.optiputer.net"
       devices:
       - name: "nvme0n1"
-    - name: "k8s-gpu-02.calit2.optiputer.net"
-      devices:
-      - name: "nvme0n1"
-      - name: "nvme1n1"
-      - name: "sdd"
-      - name: "sde"
-      - name: "sdf"
+    # - name: "k8s-gpu-02.calit2.optiputer.net"
+    #   devices:
+    #   - name: "nvme0n1"
+    #   - name: "nvme1n1"
+    #   - name: "sdd"
+    #   - name: "sde"
+    #   - name: "sdf"
     # - name: "fiona8.calit2.uci.edu"
     #   devices:
     #   - name: "nvme0n1"

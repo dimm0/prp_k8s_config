@@ -1,0 +1,13 @@
+# traefik.toml
+defaultEntryPoints = ["http","https"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/ssl/k8s_optiputer_net_cert.cer"
+      KeyFile = "/ssl/k8s_optiputer_net.key"

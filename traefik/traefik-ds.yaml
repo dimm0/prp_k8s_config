@@ -79,7 +79,6 @@ spec:
         - --web
         - --kubernetes
         - --configfile=/config/traefik.toml
-        - --logLevel=DEBUG
         volumeMounts:
         - mountPath: "/ssl"
           name: "ssl"

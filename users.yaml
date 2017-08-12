@@ -1,23 +1,152 @@
-# kind: ClusterRole
-# apiVersion: rbac.authorization.k8s.io/v1beta1
-# metadata:
-#   name: cilogon-admin
-# rules:
-# - apiGroups: ["rbac.authorization.k8s.io"]
-#   resources: ["pods"]
-#   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-# ---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: cilogon-edit
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/attach
+  - pods/exec
+  - pods/portforward
+  - pods/proxy
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - persistentvolumeclaims
+  - replicationcontrollers
+  - replicationcontrollers/scale
+  - secrets
+  - serviceaccounts
+  - services
+  - services/proxy
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - bindings
+  - events
+  - limitranges
+  - namespaces/status
+  - pods/log
+  - pods/status
+  - replicationcontrollers/status
+  - resourcequotas
+  - resourcequotas/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs:
+  - impersonate
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - deployments/rollback
+  - deployments/scale
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  - scheduledjobs
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - deployments
+  - deployments/rollback
+  - deployments/scale
+  - ingresses
+  - replicasets
+  - replicasets/scale
+  - replicationcontrollers/scale
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: cilogon-admin
+  name: cilogon
 subjects:
-# - kind: User
-#   name: https://test.cilogon.org#http://cilogon.org/serverA/users/15761
-#   apiGroup: "rbac.authorization.k8s.io"
 - kind: User
-  name: https://test.cilogon.org#http://cilogon.org/serverA/users/23651
+  name: https://test.cilogon.org#http://cilogon.org/serverA/users/15761
   apiGroup: "rbac.authorization.k8s.io"
+# - kind: User
+#   name: https://test.cilogon.org#http://cilogon.org/serverA/users/23651
+#   apiGroup: "rbac.authorization.k8s.io"
 # - kind: User
 #   name: https://test.cilogon.org#http://cilogon.org/serverT/users/182183
 #   apiGroup: "rbac.authorization.k8s.io"
@@ -25,6 +154,6 @@ subjects:
 #   name: https://test.cilogon.org#http://cilogon.org/serverT/users/182348
 #   apiGroup: "rbac.authorization.k8s.io"
 roleRef:
-  kind: ClusterRole
-  name: cluster-admin
+  kind: Role
+  name: cilogon-edit
   apiGroup: rbac.authorization.k8s.io

@@ -157,3 +157,19 @@ roleRef:
   kind: Role
   name: cilogon-edit
   apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: cilogon-admins
+subjects:
+- kind: User
+  name: https://test.cilogon.org#http://cilogon.org/serverA/users/15761
+  apiGroup: "rbac.authorization.k8s.io"
+- kind: User
+  name: https://test.cilogon.org#http://cilogon.org/serverA/users/23651
+  apiGroup: "rbac.authorization.k8s.io"
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io

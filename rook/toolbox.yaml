@@ -17,8 +17,6 @@ spec:
         name: sysbus
       - mountPath: /lib/modules
         name: libmodules
-      - mountPath: /images
-        name: images
   volumes:
     - name: dev
       hostPath:
@@ -29,6 +27,3 @@ spec:
     - name: libmodules
       hostPath:
         path: /lib/modules
-    - name: images
-      persistentVolumeClaim:
-        claimName: images

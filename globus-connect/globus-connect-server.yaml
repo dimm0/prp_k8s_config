@@ -1,0 +1,43 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: globus-connect-server
+  namespace: sdsu
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: globus-connect-server
+    spec:
+      containers:
+      - name: globus-connect-server
+        image: us.gcr.io/prp-k8s/globus-connect-server:latest
+        imagePullPolicy: Always
+        volumeMounts:
+            - mountPath: /home/data
+              name: data
+      volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: data
+      nodeSelector:
+        kubernetes.io/hostname: ps-100g.sdsu.edu
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: globus-connect-server
+  namespace: kube-public
+  labels:
+    k8s-app: globus-connect-server
+spec:
+  ports:
+  - port: 2811
+  type: NodePort
+  selector:
+    k8s-app: globus-connect-server
+  - port: 50000-51000
+  type: NodePort
+  selector:
+    k8s-app: globus-connect-server

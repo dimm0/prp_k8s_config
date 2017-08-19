@@ -5,13 +5,17 @@
 # also includes some network test tools
 
 FROM centos:centos7
-MAINTAINER John Graham <jjgraham@ucad.edu>
+MAINTAINER John Graham <jjgraham@ucsd.edu>
 
 RUN yum -y update; yum clean all
 RUN yum -y install traceroute lsb yum-utils net-tools 
 RUN rpm -hUv http://software.internet2.edu/rpms/el7/x86_64/main/RPMS/Internet2-repo-0.7-1.noarch.rpm
-RUN yum -y install iperf3 nuttcp bwctl owamp iperf
-RUN rpm -hUv http://www.globus.org/ftppub/gt6/installers/repo/globus-toolkit-repo-latest.noarch.rpm
+RUN yum -y install epel-release
+RUN yum -y update; yum clean all
+RUN yum -y install mlocate
+RUN yum -y install perfsonar-tools
+RUN yum -y install nuttcp bwctl owamp iperf3
+RUN rpm -hUv http://downloads.globus.org/toolkit/gt6/stable/installers/repo/rpm/globus-toolkit-repo-latest.noarch.rpm
 RUN yum -y install globus-data-management-client globus-data-management-server globus-xio-udt-driver
 RUN yum -y install globus-connect-server
 RUN adduser gridftp

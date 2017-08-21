@@ -1,0 +1,53 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: perfsonar-toolkit
+  namespace: kube-public
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: perfsonar-toolkit
+    spec:
+      containers:
+      - name: perfsonar-toolkit
+        image: gateway.calit2.optiputer.net:5000/prp-k8s/c7-systemd:latest
+        imagePullPolicy: Always
+        args: ["/usr/sbin/apachectl", "-DFOREGROUND"]
+        #args: ["/usr/bin/bwctld -c /etc/bwctl-server -R /var/run"]
+
+        #volumeMounts:
+            # - mountPath: /opt
+            #   name: getcams
+            #- mountPath: /home
+            #  name: home
+            #- mountPath: /Data
+            #  name: images
+      #volumes:
+          # - name: getcams
+          #   gitRepo:
+          #     repository: "https://github.com/ghidley/getcams.git"
+          #     revision: "master"
+          #- name: home
+          #  persistentVolumeClaim:
+          #    claimName: home
+          #- name: images
+          #  persistentVolumeClaim:
+          #    claimName: images
+      nodeSelector:
+        kubernetes.io/hostname: ps-100g.sdsu.edu
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: perfsonar-toolkit
+  namespace: kube-public
+  labels:
+    k8s-app: perfsonar-toolkit
+spec:
+  ports:
+  - port: 443
+  type: NodePort
+  selector:
+    k8s-app: perfsonar-toolkit

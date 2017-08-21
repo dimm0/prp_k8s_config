@@ -5,8 +5,12 @@ http://docs.perfsonar.net/install_options.html
 
 This can be used to run the perfSONAR Tools on any OS that supports docker.
 
-Download the container:
->docker pull perfsonar/tools
+docker build -t perfsonar-tools .
+
+docker tag perfsonar-tools gateway.calit2.optiputer.net:5000/prp-k8s/perfsonar-tools:latest
+
+docker push gateway.calit2.optiputer.net:5000/prp-k8s/perfsonar-tools:latest 
+
 
 To run the container in the background, so others can test to you:
 >docker run -d -P --net=host -v /var/run perfsonar/tools

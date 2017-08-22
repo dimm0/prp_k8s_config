@@ -1,6 +1,9 @@
 runuser -l postgres -c '/usr/pgsql-9.5/bin/postgresql95-check-db-dir /var/lib/pgsql/9.5/data/'
 runuser -l postgres -c '/usr/pgsql-9.5/bin/pg_ctl start -D /var/lib/pgsql/9.5/data/ -s -w -t 300'
 
+/usr/bin/bwctld -c /etc/bwctl-server -R /var/run
+/usr/bin/owampd -c /etc/owamp-server -R /var/run
+
 /usr/lib/perfsonar/bin/config_daemon.pl --config=/etc/perfsonar/toolkit/configdaemon.conf --pidfile=/var/run/configdaemon.pid --logger=/etc/perfsonar/toolkit/configdaemon-logger.conf --user=perfsonar --group=perfsonar
 /usr/lib/perfsonar/bin/lscachedaemon.pl --config=/etc/perfsonar/lscachedaemon.conf --logger=/etc/perfsonar/lscachedaemon-logger.conf --user=perfsonar --group=perfsonar
 /usr/lib/perfsonar/bin/lsregistrationdaemon.pl --config=/etc/perfsonar/lsregistrationdaemon.conf --logger=/etc/perfsonar/lsregistrationdaemon-logger.conf --user=perfsonar --group=perfsonar

@@ -25,4 +25,4 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     chkconfig ntpd on && \
     chkconfig httpd on && \
     yum clean all
-
+ADD apache-maddash.conf /etc/httpd/conf.d/apache-maddash.conf

@@ -1,4 +1,4 @@
-FROM centos:7
+FROM gateway.calit2.optiputer.net:5000/prp-k8s/c7-systemd:latest
 
 MAINTAINER John Graham <jjgraham@ucsd.edu>
 LABEL Vendor="UCSD" \
@@ -20,11 +20,8 @@ RUN mkdir -p /var/log/pods
 
 CMD ["/usr/sbin/init"]
 
-
-#ADD entrypoint.sh /entrypoint.sh
-#RUN chmod -v +x /entrypoint.sh
-
-#ENTRYPOINT [ "/entrypoint.sh" ]
+ADD startfoo.sh /startfoo.sh
+RUN chmod -v +x /startfoo.sh
 
 # The following ports are used:
 # bwctl:4823, 5001-5900, 6001-6200

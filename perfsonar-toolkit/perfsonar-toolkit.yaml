@@ -12,10 +12,13 @@ spec:
     spec:
       containers:
       - name: perfsonar-toolkit
-        image: gateway.calit2.optiputer.net:5000/prp-k8s/c7-systemd:latest
+        image: gateway.calit2.optiputer.net:5000/prp-k8s/perfsonar-toolkit:latest
         imagePullPolicy: Always
         args: ["/usr/sbin/apachectl", "-DFOREGROUND"]
         #args: ["/usr/bin/bwctld -c /etc/bwctl-server -R /var/run"]
+        #args: ["/usr/lib/systemd/systemd --system --unit=basic.target"]
+        #args: ["/usr/sbin/init"]
+        #args: ["init"]
 
         #volumeMounts:
             # - mountPath: /opt
@@ -47,7 +50,7 @@ metadata:
     k8s-app: perfsonar-toolkit
 spec:
   ports:
-  - port: 443
+  - port: 80
   type: NodePort
   selector:
     k8s-app: perfsonar-toolkit

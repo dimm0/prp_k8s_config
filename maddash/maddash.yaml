@@ -8,7 +8,7 @@ spec:
   template:
     metadata:
       labels:
-        k8s-app: 
+        k8s-app: maddash
     spec:
       containers:
       - name: maddash
@@ -21,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: getcams
+  name: maddash
   namespace: kube-public
   labels:
     k8s-app: maddash

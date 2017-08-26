@@ -10,34 +10,19 @@ spec:
       labels:
         k8s-app: perfsonar-toolkit
     spec:
+      imagePullSecrets:
+        - name: gcr-json-key
       containers:
       - name: perfsonar-toolkit
-        image: gateway.calit2.optiputer.net:5000/prp-k8s/perfsonar-toolkit:latest
+        image: us.gcr.io/prp-k8s/perfsonar-toolkit:latest
         imagePullPolicy: Always
-        args: ["/usr/sbin/apachectl", "-DFOREGROUND"]
-        #args: ["/usr/bin/bwctld -c /etc/bwctl-server -R /var/run"]
-        #args: ["/usr/lib/systemd/systemd --system --unit=basic.target"]
-        #args: ["/usr/sbin/init"]
-        #args: ["init"]
-
-        #volumeMounts:
-            # - mountPath: /opt
-            #   name: getcams
-            #- mountPath: /home
-            #  name: home
-            #- mountPath: /Data
-            #  name: images
-      #volumes:
-          # - name: getcams
-          #   gitRepo:
-          #     repository: "https://github.com/ghidley/getcams.git"
-          #     revision: "master"
-          #- name: home
-          #  persistentVolumeClaim:
-          #    claimName: home
-          #- name: images
-          #  persistentVolumeClaim:
-          #    claimName: images
+        ports:
+        - containerPort: 80
+        command:
+          - "/bin/bash"
+          - "-c"
+          # - "source /etc/profile.d/esmond.sh && export && /startfoo.sh && /usr/sbin/apachectl -DFOREGROUND"
+          - "/usr/sbin/apachectl -DFOREGROUND"
       nodeSelector:
         kubernetes.io/hostname: ps-100g.sdsu.edu
 ---

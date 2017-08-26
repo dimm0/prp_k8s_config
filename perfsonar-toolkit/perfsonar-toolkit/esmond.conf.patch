@@ -1,0 +1,9 @@
+5c5,6
+< sql_db_password = changeit
+---
+> sql_db_password = esmond
+> sql_db_host = esmond-postgres
+12c13
+< cassandra_servers = localhost:9160
+---
+> cassandra_servers = esmond-cassandra:9160

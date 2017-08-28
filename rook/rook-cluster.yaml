@@ -122,16 +122,15 @@ spec:
       - name: "sdd"
       - name: "sde"
       - name: "sdf"
-    - name: "k8s-gpu-01.calit2.optiputer.net
+    - name: "k8s-gpu-01.calit2.optiputer.net"
       devices:
       - name: "sdd"
       - name: "sde"
       - name: "sdf"
-    - name: "k8s-gpu-02.calit2.optiputer.net
+    - name: "k8s-gpu-02.calit2.optiputer.net"
       devices:
       - name: "nvme0n1"
       - name: "nvme1n1"
       - name: "sdd"
       - name: "sde"
       - name: "sdf"
-      

@@ -10,3 +10,6 @@ buildrelease: builddocker pushdocker
 
 buildgoogle:
 	gcloud container builds submit --tag us.gcr.io/prp-k8s/perfsonar-toolkit:latest .
+
+submitkeys:
+	kubectl create secret generic ssl-key --from-file=key=k8s_optiputer_net.key --from-file=cert=k8s_optiputer_net_cert.cer -n kube-public

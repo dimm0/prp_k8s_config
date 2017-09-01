@@ -15,7 +15,6 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install jq perl netpbm netpbm-progs perl-Log-Log4perl ImageMagick wget git mercurial vim patch && \
     yum clean all && \
     patch -i /tmp/esmond.conf.patch /etc/esmond/esmond.conf && \
-    patch -i /tmp/apache-toolkit.conf.patch /etc/httpd/conf.d/apache-toolkit_web_gui.conf && \
     cd /usr/lib/esmond && \
     easy_install pip && \
     pip install -r requirements.txt --exists-action=s

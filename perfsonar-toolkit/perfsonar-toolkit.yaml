@@ -17,14 +17,29 @@ spec:
         image: us.gcr.io/prp-k8s/perfsonar-toolkit:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 443
         command:
           - "/bin/bash"
           - "-c"
           # - "source /etc/profile.d/esmond.sh && export && /startfoo.sh && /usr/sbin/apachectl -DFOREGROUND"
-          - "/usr/sbin/apachectl -DFOREGROUND"
+          # - "/usr/sbin/apachectl -DFOREGROUND"
+          # - "sleep 365000000"
+          - "source /etc/profile.d/esmond.sh && export && /startfoo.sh && /usr/sbin/apachectl -DFOREGROUND"
+        volumeMounts:
+        - name: ssl-key
+          mountPath: /etc/pki/tls
       nodeSelector:
         kubernetes.io/hostname: ps-100g.sdsu.edu
+      volumes:
+        - name: ssl-key
+          secret:
+            secretName: ssl-key
+            defaultMode: 256
+            items:
+              - key: key
+                path: private/localhost.key
+              - key: cert
+                path: certs/localhost.crt
 ---
 apiVersion: v1
 kind: Service
@@ -35,7 +50,7 @@ metadata:
     k8s-app: perfsonar-toolkit
 spec:
   ports:
-  - port: 80
+  - port: 443
   type: NodePort
   selector:
     k8s-app: perfsonar-toolkit

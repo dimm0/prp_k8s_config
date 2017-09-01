@@ -24,7 +24,7 @@
 /bin/chown pscheduler:pscheduler /var/run/pscheduler-runner.pid
 #EnvironmentFile=-/var/run/pscheduler-runner.options
 /usr/libexec/pscheduler/daemons/runner --daemon --pid-file /var/run/pscheduler-runner.pid --dsn @/etc/pscheduler/database/database-dsn $OPTIONS
-ExecStopPost=/bin/rm -f /var/run/pscheduler-runner.pid /var/run/pscheduler-runner.options
+/bin/rm -f /var/run/pscheduler-runner.pid /var/run/pscheduler-runner.options
 
 /bin/touch /var/run/pscheduler-scheduler.pid
 /bin/chown pscheduler:pscheduler /var/run/pscheduler-scheduler.pid
@@ -36,4 +36,4 @@ ExecStopPost=/bin/rm -f /var/run/pscheduler-runner.pid /var/run/pscheduler-runne
 #EnvironmentFile=-/var/run/pscheduler-ticker.options
 /usr/libexec/pscheduler/daemons/ticker --daemon --pid-file /var/run/pscheduler-ticker.pid --dsn @/etc/pscheduler/database/database-dsn $OPTIONS
 
-cd /usr/lib/esmond && python esmond/manage.py syncdb --no-input && python esmond/manage.py cassandra_init --no-input
+cd /usr/lib/esmond && python esmond/manage.py syncdb --noinput && python esmond/manage.py cassandra_init

@@ -1,20 +1,21 @@
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: testvol
-# spec:
-#   storageClassName: rook-block
-#   accessModes:
-#   - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 200Gi
-# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: testvol
+  namespace: default
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: tools
-  namespace: ucsd-edu
+  namespace: default
 spec:
   replicas: 1
   template:
@@ -29,10 +30,10 @@ spec:
         args: ["sleep", "36500000"]
         # securityContext:
         #   privileged: true
-      #   volumeMounts:
-      #   - mountPath: /testvol
-      #     name: testvol
-      # volumes:
-      # - name: testvol
-      #   persistentVolumeClaim:
-      #     claimName: testvol
+        volumeMounts:
+        - mountPath: /testvol
+          name: testvol
+      volumes:
+      - name: testvol
+        persistentVolumeClaim:
+          claimName: testvol

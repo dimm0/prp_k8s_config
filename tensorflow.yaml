@@ -22,11 +22,11 @@ spec:
     #command: ["python"]
     #args: ["-u", "-c", "import tensorflow"]
     args: ["sleep", "36500000"]
-    resources:
-      limits:
-        alpha.kubernetes.io/nvidia-gpu: 8
-      requests:
-        alpha.kubernetes.io/nvidia-gpu: 8
+    # resources:
+    #   limits:
+    #     alpha.kubernetes.io/nvidia-gpu: 8
+    #   requests:
+    #     alpha.kubernetes.io/nvidia-gpu: 8
     volumeMounts:
     - name: nvidia-driver-375-51
       mountPath: /usr/local/nvidia
@@ -41,7 +41,7 @@ spec:
       name: tensorvol
   restartPolicy: Never
   nodeSelector:
-    kubernetes.io/hostname: k8s-gpu-02.calit2.optiputer.net
+    kubernetes.io/hostname: k8s-gpu-01.calit2.optiputer.net
   volumes:
   - name: nvidia-driver-375-51
     hostPath:

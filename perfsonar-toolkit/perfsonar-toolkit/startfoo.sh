@@ -37,3 +37,6 @@
 /usr/libexec/pscheduler/daemons/ticker --daemon --pid-file /var/run/pscheduler-ticker.pid --dsn @/etc/pscheduler/database/database-dsn $OPTIONS
 
 cd /usr/lib/esmond && python esmond/manage.py syncdb --noinput && python esmond/manage.py cassandra_init
+
+cat /usr/share/pscheduler/database-build-super.sql | psql -h esmond-postgres -U postgres pscheduler
+cat /usr/share/pscheduler/database-build.sql | psql -h esmond-postgres -U postgres pscheduler

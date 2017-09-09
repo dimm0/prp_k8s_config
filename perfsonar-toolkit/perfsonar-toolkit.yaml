@@ -10,6 +10,7 @@ spec:
       labels:
         k8s-app: perfsonar-toolkit
     spec:
+      # hostNetwork: true
       imagePullSecrets:
         - name: gcr-json-key
       containers:
@@ -24,7 +25,8 @@ spec:
           # - "source /etc/profile.d/esmond.sh && export && /startfoo.sh && /usr/sbin/apachectl -DFOREGROUND"
           # - "/usr/sbin/apachectl -DFOREGROUND"
           # - "sleep 365000000"
-          - "source /etc/profile.d/esmond.sh && export && /startfoo.sh && /usr/sbin/apachectl -DFOREGROUND"
+          # - "source /etc/profile.d/esmond.sh && export && /startfoo.sh && /usr/sbin/apachectl -DFOREGROUND"
+          - "/usr/bin/supervisord -c /etc/supervisord.conf"
         volumeMounts:
         - name: ssl-key
           mountPath: /etc/pki/tls

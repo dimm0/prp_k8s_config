@@ -41,8 +41,8 @@ spec:
           # value: /api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/
           # value: /grafana/
           value: /
-      nodeSelector:
-        routable: "true"
+      # nodeSelector:
+      #   routable: "true"
       volumes:
       - name: grafana-storage
         emptyDir: {}

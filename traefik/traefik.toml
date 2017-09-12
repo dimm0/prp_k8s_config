@@ -11,6 +11,6 @@ defaultEntryPoints = ["http","https"]
       [[entryPoints.https.tls.certificates]]
       CertFile = "/ssl/k8s_optiputer_net_cert.cer"
       KeyFile = "/ssl/k8s_optiputer_net.key"
-    [entryPoints.https.redirect]
-      regex = "(https:\\/\\/[^\\/]+\\/([^\\?]+)[^\\/])$"
-      replacement = "$1/"
+    # [entryPoints.https.redirect]
+    #   regex = "(https:\\/\\/[^\\/]+\\/([^\\?]+)[^\\/])$"
+    #   replacement = "$1/"

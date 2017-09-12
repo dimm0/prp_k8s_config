@@ -87,7 +87,7 @@ spec:
       volumes:
       - name: ssl
         secret:
-          secretName: traefik-cert
+          secretName: ssl-key
       - name: config
         configMap:
           name: traefik-conf

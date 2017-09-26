@@ -26,22 +26,27 @@ spec:
           # - "/usr/sbin/apachectl -DFOREGROUND"
           # - "sleep 365000000"
           # - "source /etc/profile.d/esmond.sh && export && /startfoo.sh && /usr/sbin/apachectl -DFOREGROUND"
-          - "/usr/bin/supervisord -c /etc/supervisord.conf"
+          - "/usr/bin/supervisord -c /etc/supervisor-config/supervisord.conf"
         volumeMounts:
         - name: ssl-key
-          mountPath: /etc/pki/tls
+          mountPath: /etc/pki/tls/mycert
+        - name: supervisor-config
+          mountPath: /etc/supervisor-config
       nodeSelector:
         kubernetes.io/hostname: ps-100g.sdsu.edu
       volumes:
+        - name: supervisor-config
+          configMap:
+            name: perfsonar-supervisor
         - name: ssl-key
           secret:
             secretName: ssl-key
             defaultMode: 256
             items:
               - key: key
-                path: private/localhost.key
+                path: localhost.key
               - key: cert
-                path: certs/localhost.crt
+                path: localhost.crt
 ---
 apiVersion: v1
 kind: Service

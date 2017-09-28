@@ -14,6 +14,7 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install http://software.internet2.edu/rpms/el7/x86_64/main/RPMS/perfSONAR-repo-0.8-1.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs clean all && \
     yum -y --setopt=tsflags=nodocs install perfsonar-toolkit perfsonar-toolkit-ntp net-tools sysstat tcpdump htop traceroute nmap mlocate && \
+    yum -y --setopt=tsflags=nodocs install maddash maddash-server maddash-webui perfsonar-meshconfig-guiagent perfsonar-meshconfig-agent && \
     yum -y --setopt=tsflags=nodocs install jq perl netpbm netpbm-progs perl-Log-Log4perl ImageMagick wget git mercurial vim patch && \
     yum -y --setopt=tsflags=nodocs install supervisor rsyslog iproute bind-utils && \
     yum clean all && \
@@ -22,13 +23,8 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     easy_install pip && \
     pip install -r requirements.txt --exists-action=s
 
-RUN mkdir -p /var/log/pods
-
 ADD startfoo.sh /startfoo.sh
 RUN chmod -v +x /startfoo.sh
-
-
-
 
 # -----------------------------------------------------------------------
 
@@ -87,6 +83,8 @@ COPY rsyslog/owamp_bwctl-syslog.conf /etc/rsyslog.d/owamp_bwctl-syslog.conf
 
 # -----------------------------------------------------------------------------
 
+RUN sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/mycert\/ssl.crt/' /etc/httpd/conf.d/ssl.conf && sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/mycert\/ssl.key/' /etc/httpd/conf.d/ssl.conf
+
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisord.conf
 
@@ -99,7 +97,7 @@ ADD supervisord.conf /etc/supervisord.conf
 # add pid directory, logging, and postgres directory
 # VOLUME ["/var/run", "/var/lib/pgsql", "/var/log", "/etc/rsyslog.d" ]
 
-CMD /usr/bin/supervisord -c /etc/supervisord.conf
+# CMD /usr/bin/supervisord -c /etc/supervisord.conf
 
 
 

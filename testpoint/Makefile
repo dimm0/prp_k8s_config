@@ -6,3 +6,6 @@ buildgoogle:
 pushconfig:
 	kubectl delete configmap perfsonar-testpoint -n kube-public
 	kubectl create configmap perfsonar-testpoint -n kube-public --from-file=conf/meshconfig-agent-tasks.conf --from-file=conf/meshconfig-agent.conf
+
+meshupdate:
+	for i in `kubectl get pods --selector=k8s-app=testpoint --output=jsonpath={.items..metadata.name} -n kube-public`; do kubectl exec -it $i -n kube-public supervisorctl restart perfsonar_meshconfig_agent; done

@@ -76,6 +76,8 @@ spec:
         volumeMounts:
         - name: cassandra-data
           mountPath: /cassandra_data
+      nodeSelector:
+        core: "true"
       volumes:
       - name: cassandra-data
         emptyDir: {}

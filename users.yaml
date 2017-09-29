@@ -135,28 +135,6 @@ rules:
   - patch
   - update
   - watch
-# ---
-# kind: RoleBinding
-# apiVersion: rbac.authorization.k8s.io/v1beta1
-# metadata:
-#   name: cilogon
-# subjects:
-# - kind: User
-#   name: https://test.cilogon.org#http://cilogon.org/serverA/users/15761
-#   apiGroup: "rbac.authorization.k8s.io"
-# - kind: User
-#   name: https://test.cilogon.org#http://cilogon.org/serverA/users/23651
-#   apiGroup: "rbac.authorization.k8s.io"
-# - kind: User
-#   name: https://test.cilogon.org#http://cilogon.org/serverT/users/182183
-#   apiGroup: "rbac.authorization.k8s.io"
-# - kind: User
-#   name: https://test.cilogon.org#http://cilogon.org/serverT/users/182348
-#   apiGroup: "rbac.authorization.k8s.io"
-# roleRef:
-#   kind: ClusterRole
-#   name: cilogon-edit
-#   apiGroup: rbac.authorization.k8s.io
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1

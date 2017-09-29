@@ -1,0 +1,35 @@
+cluster_url="k8s.optiputer.net"
+
+[org]
+
+[org.ucsd]
+lat=32.8761
+lon=-117.2318
+city="San Diego"
+state="CA"
+description="University of California, San Diego"
+domain=["optiputer.net", "ucsd.edu"]
+
+[org.uci]
+lat=33.6488
+lon=-117.8407
+description="University of California, Irvine"
+city="Irvine"
+state="CA"
+domain=["uci.edu"]
+
+[org.ucsc]
+lat=37.0044
+lon=-122.0258
+city="Santa Cruz"
+state="CA"
+description="University of California, Santa Cruz"
+domain=["ucsc.edu"]
+
+[org.sdsu]
+lat=32.7632
+lon=-117.0712
+city="San Diego"
+state="CA"
+description="San Diego State University"
+domain=["sdsu.edu"]

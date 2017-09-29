@@ -2,10 +2,10 @@ apiVersion: "apps/v1beta1"
 kind: StatefulSet
 metadata:
   name: esmond-cassandra
-  namespace: kube-public
+  namespace: perfsonar
 spec:
   serviceName: esmond-cassandra
-  replicas: 3
+  replicas: 6
   template:
     metadata:
       labels:
@@ -50,7 +50,7 @@ spec:
           - name: HEAP_NEWSIZE
             value: 100M
           - name: CASSANDRA_SEEDS
-            value: "esmond-cassandra-0.esmond-cassandra.kube-public.svc.cluster.local"
+            value: "esmond-cassandra-0.esmond-cassandra.perfsonar.svc.cluster.local"
           - name: CASSANDRA_CLUSTER_NAME
             value: "K8Demo"
           - name: CASSANDRA_DC
@@ -102,7 +102,7 @@ metadata:
   labels:
     app: esmond-cassandra
   name: esmond-cassandra
-  namespace: kube-public
+  namespace: perfsonar
 spec:
   clusterIP: None
   ports:

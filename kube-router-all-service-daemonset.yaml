@@ -13,6 +13,7 @@ data:
       "type":"bridge",
       "bridge":"kube-bridge",
       "isDefaultGateway":true,
+      "hairpinMode":true,
       "ipam": {
         "type":"host-local"
       }
@@ -117,7 +118,7 @@ spec:
       - name: kube-router
         # image: us.gcr.io/prp-k8s/kube-router-git:latest
         image: cloudnativelabs/kube-router
-        args: ["--run-router=true", "--run-firewall=true", "--run-service-proxy=false", "--advertise-cluster-ip=true", "--cluster-cidr=10.244.0.0/16"]
+        args: ["--run-router=true", "--run-firewall=true", "--run-service-proxy=false", "--advertise-cluster-ip=true", "--cluster-cidr=10.244.0.0/16", "--hairpin-mode=true"]
         securityContext:
           privileged: true
         imagePullPolicy: Always

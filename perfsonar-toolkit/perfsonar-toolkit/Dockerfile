@@ -83,25 +83,13 @@ COPY rsyslog/owamp_bwctl-syslog.conf /etc/rsyslog.d/owamp_bwctl-syslog.conf
 
 # -----------------------------------------------------------------------------
 
+ADD meshconfig-agent.conf meshconfig-guiagent.conf /etc/perfsonar/
+RUN chown perfsonar:perfsonar /etc/perfsonar/meshconfig*
+
+
 RUN sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/mycert\/ssl.crt/' /etc/httpd/conf.d/ssl.conf && sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/mycert\/ssl.key/' /etc/httpd/conf.d/ssl.conf
 
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisord.conf
 
-# The following ports are used:
-# pScheduler: 443
-# bwctl:4823, 5001-5900, 6001-6200
-# owamp:861, 8760-9960
-# ranges not supported in docker, so need to use docker run -P to expose all ports
-
-# add pid directory, logging, and postgres directory
-# VOLUME ["/var/run", "/var/lib/pgsql", "/var/log", "/etc/rsyslog.d" ]
-
-# CMD /usr/bin/supervisord -c /etc/supervisord.conf
-
-
-
-
-# The following ports are used:
-# bwctl:4823, 5001-5900, 6001-6200
-# owamp:861, 8760-9960
+ADD meshconfig /etc/cron.d/

@@ -65,6 +65,9 @@ COPY rsyslog/owamp_bwctl-syslog.conf /etc/rsyslog.d/owamp_bwctl-syslog.conf
 
 # -----------------------------------------------------------------------------
 
+ADD conf/meshconfig-agent.conf conf/meshconfig-agent-tasks.conf /etc/perfsonar/
+RUN chown perfsonar:perfsonar /etc/perfsonar/meshconfig*
+
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisord.conf
 

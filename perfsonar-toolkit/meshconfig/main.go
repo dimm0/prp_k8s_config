@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/spf13/viper"
+	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -78,6 +79,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error getting testpoint pods: %s", err.Error())
 		} else {
 			for _, pod := range pods.Items {
+				if pod.Status.Phase != v1.PodRunning {
+					continue
+				}
 				for orgID, org := range conf.Organizations {
 					for _, orgDomain := range org.Domain {
 						if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {

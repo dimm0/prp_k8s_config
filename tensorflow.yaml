@@ -22,39 +22,44 @@ spec:
     #command: ["python"]
     #args: ["-u", "-c", "import tensorflow"]
     args: ["sleep", "36500000"]
-    # resources:
-    #   limits:
-    #     alpha.kubernetes.io/nvidia-gpu: 8
-    #   requests:
-    #     alpha.kubernetes.io/nvidia-gpu: 8
+    resources:
+      limits:
+        alpha.kubernetes.io/nvidia-gpu: 8
+      requests:
+        alpha.kubernetes.io/nvidia-gpu: 8
     volumeMounts:
-    - name: nvidia-driver-375-51
+    - name: nvidia-driver-384-90
       mountPath: /usr/local/nvidia
       readOnly: true
     - name: libcuda-so
       mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so
     - name: libcuda-so-1
       mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
-    - name: libcuda-so-375-51
-      mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.375.51/
-    - mountPath: /tensorvol
-      name: tensorvol
+    - name: libcuda-so-384-90
+      mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.384.90/
+    # - mountPath: /tensorvol
+    #   name: tensorvol
+    - mountPath: /examples
+      name: tensor-examples
   restartPolicy: Never
   nodeSelector:
     kubernetes.io/hostname: k8s-gpu-01.calit2.optiputer.net
   volumes:
-  - name: nvidia-driver-375-51
+  - name: nvidia-driver-384-90
     hostPath:
-      path: /var/lib/nvidia-docker/volumes/nvidia_driver/375.51/
+      path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90/
   - name: libcuda-so
     hostPath:
       path: /usr/lib/x86_64-linux-gnu/libcuda.so
   - name: libcuda-so-1
     hostPath:
       path: /usr/lib/x86_64-linux-gnu/libcuda.so.1
-  - name: libcuda-so-375-51
+  - name: libcuda-so-384-90
     hostPath:
-      path: /usr/lib/x86_64-linux-gnu/libcuda.so.375.51/
-  - name: tensorvol
-    persistentVolumeClaim:
-      claimName: tensorvol
+      path: /usr/lib/x86_64-linux-gnu/libcuda.so.384.90/
+  # - name: tensorvol
+  #   persistentVolumeClaim:
+  #     claimName: tensorvol
+  - name: tensor-examples
+      gitRepo:
+        repository: "git@github.com:tensorflow/models.git"

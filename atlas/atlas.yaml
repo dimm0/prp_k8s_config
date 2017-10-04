@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: atlas
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: atlas
+    spec:
+      imagePullSecrets:
+        - name: gcr-json-key
+      containers:
+      - name: atlas
+        image: us.gcr.io/prp-k8s/atlas
+        imagePullPolicy: IfNotPresent
+        args: ["sleep", "36500000"]

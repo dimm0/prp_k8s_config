@@ -9,10 +9,14 @@ spec:
       labels:
         k8s-app: testpoint
     spec:
+      # hostNetwork: true
+      # dnsPolicy: ClusterFirstWithHostNet
       imagePullSecrets:
         - name: gcr-json-key
       containers:
       - name: testpoint
+        # securityContext:
+        #   privileged: true
         image: us.gcr.io/prp-k8s/perfsonar_testpoint:latest
         imagePullPolicy: Always
         command:

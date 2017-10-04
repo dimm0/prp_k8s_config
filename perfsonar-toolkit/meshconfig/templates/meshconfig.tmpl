@@ -37,7 +37,9 @@ description K8s Mesh Config
       {{ range $hind, $host :=  $org.Site.Host }}
         <host>
         description {{$host.Description}}
-        address {{$host.IP}}
+        {{ range $host.IP }}
+        address {{.}}
+        {{end}}
         </host>
       {{end}}
     </site>
@@ -76,7 +78,14 @@ description K8s Mesh Config
 
 <group k8s_group>
     type       mesh
-    {{ range .IPs }}
+    {{ range .BWIPs }}
+      member {{.}}
+    {{end}}
+</group>
+
+<group k8s_trace_group>
+    type       mesh
+    {{ range .TraceIPs }}
       member {{.}}
     {{end}}
 </group>

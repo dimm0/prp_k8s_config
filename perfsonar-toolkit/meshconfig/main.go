@@ -31,13 +31,14 @@ type Site struct {
 }
 
 type Host struct {
-	IP          string
+	IP          []string
 	Description string
 }
 
 type MeshConfig struct {
 	Organizations map[string]Organization
-	IPs           []string
+	BWIPs         []string
+	TraceIPs      []string
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -81,9 +82,39 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 				for orgID, org := range conf.Organizations {
 					for _, orgDomain := range org.Domain {
 						if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
-							org.Site.Host = append(org.Site.Host, Host{IP: pod.Status.PodIP, Description: pod.Spec.NodeName})
+							org.Site.Host = append(org.Site.Host, Host{IP: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
 							conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
-							conf.IPs = append(conf.IPs, pod.Status.PodIP)
+							conf.BWIPs = append(conf.BWIPs, pod.Status.PodIP)
+						}
+					}
+				}
+			}
+		}
+
+		pods, err = clientset.Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=htestpoint"})
+		if err != nil {
+			log.Printf("Error getting htestpoint pods: %s", err.Error())
+		} else {
+			for _, pod := range pods.Items {
+				for orgID, org := range conf.Organizations {
+					for _, orgDomain := range org.Domain {
+						if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
+
+							found := false
+							for hind, host := range org.Site.Host {
+								if host.Description == pod.Spec.NodeName {
+									org.Site.Host[hind].IP = append(org.Site.Host[hind].IP, pod.Status.PodIP)
+									found = true
+									conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
+								}
+							}
+
+							if !found {
+								org.Site.Host = append(org.Site.Host, Host{IP: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
+								conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
+							}
+
+							conf.TraceIPs = append(conf.TraceIPs, pod.Status.PodIP)
 						}
 					}
 				}

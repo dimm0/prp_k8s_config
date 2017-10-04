@@ -10,6 +10,14 @@ state="CA"
 description="University of California, San Diego"
 domain=["optiputer.net", "ucsd.edu"]
 
+[org.caltech]
+lat=34.1377
+lon=-118.1253
+city="Pasadena"
+state="CA"
+description="California Institute of Technology"
+domain=["ultralight.org"]
+
 [org.uci]
 lat=33.6488
 lon=-117.8407

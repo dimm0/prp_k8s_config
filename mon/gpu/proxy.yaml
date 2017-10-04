@@ -1,0 +1,58 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gpu-scrap-proxy
+  labels:
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      tier: frontend
+  endpoints:
+  - port: web            # works for different port numbers as long as the name matches
+    interval: 10s        # scrape the endpoint every 10 seconds
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gpu-scrap-proxy
+  labels:
+    tier: frontend
+spec:
+  type: NodePort
+  selector:
+    k8s-app: gpu-scrap-proxy
+  ports:
+  - name: web
+    protocol: TCP
+    port: 80
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: gpu-scrap-proxy
+  name: gpu-scrap-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: gpu-scrap-proxy
+      labels:
+        k8s-app: gpu-scrap-proxy
+    spec:
+      containers:
+      - name: proxy
+        image: nginx
+        # volumeMounts:
+        # - name: "nginx-config"
+        #   mountPath: "/etc/nginx/conf.d/"
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      nodeSelector:
+        kubernetes.io/hostname: k8s-gpu-01.calit2.optiputer.net
+      # volumes:
+      # - name: nginx-config
+      #   configMap:
+      #     name: nginx-conf

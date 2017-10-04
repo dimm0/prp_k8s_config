@@ -1,15 +1,15 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: tensorvol
-spec:
-  storageClassName: rook-block
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 200Gi
----
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: tensorvol
+# spec:
+#   storageClassName: rook-block
+#   accessModes:
+#   - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 200Gi
+# ---
 kind: Pod
 apiVersion: v1
 metadata:
@@ -24,9 +24,9 @@ spec:
     args: ["sleep", "36500000"]
     resources:
       limits:
-        alpha.kubernetes.io/nvidia-gpu: 8
+        alpha.kubernetes.io/nvidia-gpu: 5
       requests:
-        alpha.kubernetes.io/nvidia-gpu: 8
+        alpha.kubernetes.io/nvidia-gpu: 5
     volumeMounts:
     - name: nvidia-driver-384-90
       mountPath: /usr/local/nvidia
@@ -45,21 +45,18 @@ spec:
   nodeSelector:
     kubernetes.io/hostname: k8s-gpu-01.calit2.optiputer.net
   volumes:
-  - name: nvidia-driver-384-90
-    hostPath:
-      path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90/
-  - name: libcuda-so
-    hostPath:
-      path: /usr/lib/x86_64-linux-gnu/libcuda.so
-  - name: libcuda-so-1
-    hostPath:
-      path: /usr/lib/x86_64-linux-gnu/libcuda.so.1
-  - name: libcuda-so-384-90
-    hostPath:
-      path: /usr/lib/x86_64-linux-gnu/libcuda.so.384.90/
-  # - name: tensorvol
-  #   persistentVolumeClaim:
-  #     claimName: tensorvol
-  - name: tensor-examples
+    - name: nvidia-driver-384-90
+      hostPath:
+        path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90/
+    - name: libcuda-so
+      hostPath:
+        path: /usr/lib/x86_64-linux-gnu/libcuda.so
+    - name: libcuda-so-1
+      hostPath:
+        path: /usr/lib/x86_64-linux-gnu/libcuda.so.1
+    - name: libcuda-so-384-90
+      hostPath:
+        path: /usr/lib/x86_64-linux-gnu/libcuda.so.384.90/
+    - name: tensor-examples
       gitRepo:
-        repository: "git@github.com:tensorflow/models.git"
+        repository: "https://github.com/tensorflow/models.git"

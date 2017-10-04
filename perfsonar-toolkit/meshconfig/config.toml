@@ -8,7 +8,7 @@ lon=-117.2318
 city="San Diego"
 state="CA"
 description="University of California, San Diego"
-domain=["optiputer.net", "ucsd.edu"]
+domain=["optiputer.net", "ucsd.edu", "ultralight.org"]
 
 [org.uci]
 lat=33.6488

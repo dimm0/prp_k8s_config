@@ -1,4 +1,5 @@
 # traefik.toml
+InsecureSkipVerify = true
 defaultEntryPoints = ["http","https"]
 [entryPoints]
   [entryPoints.http]
@@ -14,3 +15,8 @@ defaultEntryPoints = ["http","https"]
     # [entryPoints.https.redirect]
     #   regex = "(https:\\/\\/[^\\/]+\\/([^\\?]+)[^\\/])$"
     #   replacement = "$1/"
+[web]
+  CertFile = "/ssl/k8s_optiputer_net_cert.cer"
+  KeyFile = "/ssl/k8s_optiputer_net.key"
+  [web.auth.basic]
+  users = ["admin:***REMOVED***"]

@@ -47,17 +47,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	} else {
-		perfsonarURL := "Not found"
-		perfsonarService, err := clientset.Services("perfsonar").Get("perfsonar-toolkit", metav1.GetOptions{})
-		if err != nil {
-			log.Printf("Error getting Perfsonar service: %s", err.Error())
-		} else {
-			for _, port := range perfsonarService.Spec.Ports {
-				if port.NodePort > 30000 {
-					perfsonarURL = fmt.Sprintf("https://%s:%d/esmond/perfsonar/archive", viper.GetString("cluster_url"), port.NodePort)
-				}
-			}
-		}
+		perfsonarURL := fmt.Sprintf("https://perfsonar.%s", viper.GetString("cluster_url"))
 
 		conf := MeshConfig{Organizations: map[string]Organization{}}
 		for orgID, _ := range viper.Get("org").(map[string]interface{}) {

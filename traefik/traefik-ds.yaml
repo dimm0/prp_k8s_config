@@ -76,7 +76,6 @@ spec:
           privileged: true
         args:
         - -d
-        - --web
         - --kubernetes
         - --configfile=/config/traefik.toml
         volumeMounts:

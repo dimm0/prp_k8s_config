@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: grafana
-  namespace: monitoring
+  name: perfsonar
+  namespace: perfsonar
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: grafana.k8s.optiputer.net
+  - host: perfsonar.k8s.optiputer.net
     http:
       paths:
       - path: /
         backend:
-          serviceName: grafana
-          servicePort: 3000
+          serviceName: perfsonar-toolkit
+          servicePort: 443

@@ -41,7 +41,7 @@ subsets:
   - addresses:
       - ip: 67.58.53.155
       - ip: 67.58.53.156
-      # - ip: 192.5.19.133
+      - ip: 192.5.19.133
     ports:
-      - port: 9200
+      - port: 9114
         name: web

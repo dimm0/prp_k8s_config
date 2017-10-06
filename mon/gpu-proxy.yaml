@@ -1,0 +1,47 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gpu-mon
+  namespace: monitoring
+  labels:
+    k8s-app: gpu-mon
+spec:
+  selector:
+    matchLabels:
+      k8s-app: gpu-mon
+  namespaceSelector:
+    matchNames:
+    - monitoring
+  endpoints:
+  - port: web            # works for different port numbers as long as the name matches
+    interval: 10s        # scrape the endpoint every 10 seconds
+    path: /metrics
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gpu-mon
+  namespace: monitoring
+  labels:
+    k8s-app: gpu-mon
+spec:
+  ports:
+  - protocol: TCP
+    name: web
+    port: 80
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: gpu-mon
+  namespace: monitoring
+  labels:
+    k8s-app: gpu-mon
+subsets:
+  - addresses:
+      - ip: 67.58.53.155
+      - ip: 67.58.53.156
+      # - ip: 192.5.19.133
+    ports:
+      - port: 9200
+        name: web

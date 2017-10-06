@@ -47,7 +47,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	} else {
-		perfsonarURL := fmt.Sprintf("https://perfsonar.%s", viper.GetString("cluster_url"))
+		perfsonarURL := fmt.Sprintf("https://perfsonar.%s/esmond/perfsonar/archive/", viper.GetString("cluster_url"))
 
 		conf := MeshConfig{Organizations: map[string]Organization{}}
 		for orgID, _ := range viper.Get("org").(map[string]interface{}) {

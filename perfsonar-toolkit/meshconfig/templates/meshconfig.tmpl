@@ -35,12 +35,13 @@ description K8s Mesh Config
       </location>
 
       {{ range $hind, $host :=  $org.Site.Host }}
-        <host>
-        description {{$host.Description}}
         {{ range $host.IP }}
-        address {{.}}:8443
+          <host>
+            description {{$host.Description}}
+            address {{.}}
+            pscheduler_address {{.}}:8443
+          </host>
         {{end}}
-        </host>
       {{end}}
     </site>
 </organization>

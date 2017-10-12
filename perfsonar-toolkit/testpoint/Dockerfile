@@ -65,6 +65,8 @@ COPY rsyslog/owamp_bwctl-syslog.conf /etc/rsyslog.d/owamp_bwctl-syslog.conf
 
 # -----------------------------------------------------------------------------
 
+RUN sed -i 's/Listen 443 https/Listen 8443 https/' /etc/httpd/conf.d/ssl.conf && sed -i 's/VirtualHost _default_:443/VirtualHost _default_:8443/' /etc/httpd/conf.d/ssl.conf && sed -i 's/Listen 80/Listen 8085/' /etc/httpd/conf/httpd.conf
+
 ADD conf/meshconfig-agent.conf conf/meshconfig-agent-tasks.conf /etc/perfsonar/
 RUN chown perfsonar:perfsonar /etc/perfsonar/meshconfig*
 

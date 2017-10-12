@@ -38,7 +38,7 @@ description K8s Mesh Config
         <host>
         description {{$host.Description}}
         {{ range $host.IP }}
-        address {{.}}
+        address {{.}}:8443
         {{end}}
         </host>
       {{end}}
@@ -104,6 +104,6 @@ description K8s Mesh Config
 
 <test>
   description       K8s traceroute Testing
-  group             k8s_group
+  group             k8s_trace_group
   test_spec         traceroute_test
 </test>

@@ -85,7 +85,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		pods, err = clientset.Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=htestpoint"})
+		pods, err = clientset.Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint-h"})
 		if err != nil {
 			log.Printf("Error getting htestpoint pods: %s", err.Error())
 		} else {

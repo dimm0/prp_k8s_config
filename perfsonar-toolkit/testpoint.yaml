@@ -9,14 +9,36 @@ spec:
       labels:
         k8s-app: testpoint
     spec:
-      # hostNetwork: true
-      # dnsPolicy: ClusterFirstWithHostNet
       imagePullSecrets:
         - name: gcr-json-key
       containers:
       - name: testpoint
-        # securityContext:
-        #   privileged: true
+        image: us.gcr.io/prp-k8s/perfsonar_testpoint:latest
+        imagePullPolicy: Always
+        command:
+          - "/usr/bin/supervisord"
+          - "-c"
+          - "/etc/supervisord.conf"
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: testpoint-h
+  namespace: perfsonar
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: testpoint-h
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      imagePullSecrets:
+        - name: gcr-json-key
+      containers:
+      - name: testpoint-h
+        securityContext:
+          privileged: true
         image: us.gcr.io/prp-k8s/perfsonar_testpoint:latest
         imagePullPolicy: Always
         command:

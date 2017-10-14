@@ -7,4 +7,5 @@ meshupdateh:
 	for i in `kubectl get pods --selector=k8s-app=htestpoint --output=jsonpath={.items..metadata.name} -n perfsonar`; do kubectl exec -it $$i -n perfsonar supervisorctl restart perfsonar_meshconfig_agent; done
 
 meshupdate:
-	for i in `kubectl get pods --selector=k8s-app=testpoint --output=jsonpath={.items..metadata.name} -n perfsonar`; do kubectl exec -it $$i -n perfsonar supervisorctl restart perfsonar_meshconfig_agent; done
+	kubectl get pods --selector=k8s-app=testpoint --output=jsonpath={.items..metadata.name} -n perfsonar | xargs -n 1 -P 8 -I{} kubectl exec -it {} -n perfsonar supervisorctl restart perfsonar_meshconfig_agent
+	kubectl get pods --selector=k8s-app=testpoint-h --output=jsonpath={.items..metadata.name} -n perfsonar | xargs -n 1 -P 8 -I{} kubectl exec -it {} -n perfsonar supervisorctl restart perfsonar_meshconfig_agent

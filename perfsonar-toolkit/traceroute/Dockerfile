@@ -2,7 +2,7 @@ FROM python:2-slim
 
 RUN pip install networkx==1.11 requests
 
-ADD index.html /web/
+ADD index.html index.js /web/
 
 ADD traceroute traceroute.py /opt/
 

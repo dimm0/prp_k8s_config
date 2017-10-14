@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traceroute
+  namespace: perfsonar
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: traceroute.k8s.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traceroute
+          servicePort: 80

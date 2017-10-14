@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: traceroute
+  name: traceroute
+  namespace: perfsonar
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: traceroute
+    spec:
+      imagePullSecrets:
+        - name: gcr-json-key
+      containers:
+      - name: traceroute
+        image: us.gcr.io/prp-k8s/traceroute:latest
+        imagePullPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: traceroute
+  name: traceroute
+  namespace: perfsonar
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    k8s-app: traceroute

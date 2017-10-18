@@ -7,6 +7,13 @@ import (
 	"time"
 )
 
+func handleCORS(h http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		h.ServeHTTP(w, r)
+	}
+}
+
 func main() {
 
 	out, err := exec.Command("/usr/local/bin/python", "/opt/traceroute.py").Output()
@@ -29,7 +36,7 @@ func main() {
 		}
 	}()
 
-	http.Handle("/", http.FileServer(http.Dir("/web")))
+	http.Handle("/", handleCORS(http.FileServer(http.Dir("/web"))))
 
 	http.ListenAndServe(":80", nil)
 }

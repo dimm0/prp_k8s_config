@@ -19,7 +19,7 @@ for org in meshconfig["organizations"]:
     for site in org["sites"]:
         for host in site["hosts"]:
             if not host["description"] in hosts:
-                hosts[host["description"]] = {"addr": [host["addresses"][0]], "lat": float(site["location"]["latitude"]), "lon": float(site["location"]["longitude"]), "id": i}
+                hosts[host["description"]] = {"addr": [host["addresses"][0]], "lat": float(site["location"]["latitude"]), "lon": float(site["location"]["longitude"]), "id": i, "org": org["description"]}
                 i += 1
             else:
                 hosts[host["description"]]["addr"].append(host["addresses"][0])
@@ -40,6 +40,10 @@ def get_lon(hostname):
         return hosts[hostname]["lon"]
     return None
 
+def get_org(hostname):
+    if(hostname in hosts):
+        return hosts[hostname]["org"]
+    return None
 
 def get_cen_group(hostname):
     if(hostname in hosts):
@@ -50,6 +54,7 @@ set_node_attributes(g_cen, name="source_group", values={host:[get_cen_group(host
 set_node_attributes(g_cen, name="target_group", values={host:[] for host in hosts})
 set_node_attributes(g_cen, name="lat", values={host:[get_lat(host)] for host in hosts})
 set_node_attributes(g_cen, name="lon", values={host:[get_lon(host)] for host in hosts})
+set_node_attributes(g_cen, name="org", values={host:[get_org(host)] for host in hosts})
 
 def get_cen_link_stats(source, target):
     result = [-1, -1, None]

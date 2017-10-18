@@ -40,6 +40,7 @@ description K8s Mesh Config
             description {{$host.Description}}
             address {{.}}
             pscheduler_address {{.}}:8443
+            lead_bind_address {{.}}:8443
           </host>
         {{end}}
       {{end}}

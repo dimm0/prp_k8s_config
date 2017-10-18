@@ -5,29 +5,17 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vex-js/4.0.1/js/vex.combined.min.js" integrity="sha256-lqqvhnw9/0R9wPhd7fMc2zKYwtzldLjsiMLxiL/cA0w=" crossorigin="anonymous"></script>
+  <script>vex.defaultOptions.className = 'vex-theme-os'</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vex-js/4.0.1/css/vex.min.css" integrity="sha256-tNBAz64TxO3GEr4eK4wo1lUKT0oium9qL5PqX3Pq8yE=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vex-js/4.0.1/css/vex-theme-os.min.css" />
 </head>
 <body>
 
 <svg width='100%' height='100%'></svg>
 <div id='tip'></div>
 <div id='nodes'></div>
-
-
-var nodesDiv = d3.select("#nodes")
-    .attr("class", "tooltip")
-    .style("position", "absolute")
-    .style("top", "0")
-    .style("right", "0")
-    .style("width", "30%")
-    .style("text-align", "center")
-    .style("opacity", "0.9")
-    .style("background-color", "rgba(0, 0, 0, 0.8)")
-    .style("color", "white")
-    .style("padding", "2px")
-    .style("border-radius", "3px")
-    .style("pointer-events", "none")
-    .style("font", "14px helvetica");
-
 
 <div style="background-color:rgb(230,230,230); border-radius: 20px; width:400px; padding:20px; position: absolute; bottom: 10; left: 0;">
   <h3>Many-body force params:</h3><br/>

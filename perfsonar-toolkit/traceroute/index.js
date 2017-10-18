@@ -18,9 +18,6 @@ Array.prototype.deleteElement = function(obj) {
 
 var width = window.innerWidth,
     height = window.innerHeight;
-// element.append("<svg width='" + width + "' height='" + height + "'></svg>");
-// element.append("<div id='tip'></div>");
-// element.append("<div id='nodes'></div>");
 
 // For buttons
 var bWidth= 40; //button width
@@ -35,10 +32,11 @@ var attachPoints = [], overNode = null;
         var curColorScale = 0; // throughput
 
 requirejs([
-    "//cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js",
+    "//cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/topojson/2.0.0/topojson.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/humanize-plus/1.8.2/humanize.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"], function(d3, topojson, humanize, _) {
+      // d3.json("https://traceroute.k8s.optiputer.net/graph.json", function(error, graph) {
       d3.json("graph.json", function(error, graph) {
 
 
@@ -170,13 +168,44 @@ requirejs([
 
           var clusters = {};
 
-          hosts.forEach(function(d, i) {
-  //             var host_coord = host_coords[d.id];
-              console.debug(d);
-              var pix_coord = projection([d.lon, d.lat]);
-              d.fx = pix_coord[0];
-              d.fy = pix_coord[1];
+          var groups = [];
+          hosts.forEach( function(host) {
+            if (!groups[host["org"]]) {
+              groups[host["org"]] = {nodes: [host]};
+            } else {
+              groups[host["org"]].nodes.push(host);
+            }
+          });
 
+          for(var groupkey in groups) {
+            if(groups.hasOwnProperty(groupkey)){
+              if (groups[groupkey].nodes.length <= 1) {
+                delete groups[groupkey];
+              } else {
+                var circle = svg.append("circle").attr("cx", 0)
+                                        .attr("cy", 0)
+                                        .attr("r", 60)
+                                        .style("fill", "none").style("stroke", "grey").style("stroke-width", "2");
+                circle.nodesnum = groups[groupkey].nodes.length;
+                groups[groupkey]["circle"] = circle;
+                groups[groupkey].nodes.forEach( function(host) {
+                  host.circle = circle;
+                });
+              }
+            }
+          }
+
+          //https://gist.github.com/krosenberg/989204175f68f40dfe3b#file-index-html
+          var circleCoord = function(node, index){
+              var circle = node.circle;
+              var circumference = circle.node().getTotalLength();
+              var pointAtLength = function(l){return circle.node().getPointAtLength(l)};
+              var sectionLength = (circumference)/circle.nodesnum;
+              var position = sectionLength*index+sectionLength/2;
+              return pointAtLength(circumference-position)
+          }
+
+          hosts.forEach(function(d, i) {
               if(!clusters[d.as])
                   clusters[d.as] = d;
           });
@@ -235,7 +264,7 @@ requirejs([
           document.clustering = clustering;
 
           var simulation = d3.forceSimulation(nodes);
-          simulation.alphaDecay(1-Math.pow(0.001,1/200)); // 1-Math.pow(0.001,1/300) is default for 300 iterations
+          simulation.alphaDecay(1-Math.pow(0.001,1/10)); // 1-Math.pow(0.001,1/300) is default for 300 iterations
           document.simulation = simulation;
 
           for(var forcename in forces) {
@@ -272,12 +301,27 @@ requirejs([
                   var transform = d3.zoomTransform(this);
                   projection.translate([transform.x, transform.y]).scale(transform.k);
                   d3.selectAll('path.map').attr('d', path);
+
+                  for(var groupkey in groups) {
+                    if(groups.hasOwnProperty(groupkey)){
+                      var group = groups[groupkey];
+                      var d = group.nodes[0];
+                      var pix_coord = projection([d.lon, d.lat]);
+                      group.circle.attr("cx", pix_coord[0]);
+                      group.circle.attr("cy", pix_coord[1]);
+                    }
+                  };
+                  var circleNum = 0;
                   hosts.forEach(function(d, i) {
-  //                     var host_coord = host_coords[d.id];
-                      console.debug(d.lon, d.lat);
+                    if (d.circle) {
+                      var coord = circleCoord(d, circleNum++);
+                      d.fx = coord.x;
+                      d.fy = coord.y;
+                    } else {
                       var pix_coord = projection([d.lon, d.lat]);
                       d.fx = pix_coord[0];
                       d.fy = pix_coord[1];
+                    }
                   });
               })
               .on("end", function() {
@@ -299,7 +343,7 @@ requirejs([
                       var overNodeData = d3.select(overNode);
                       var overNodeDatum = overNodeData.datum();
                       if(overNodeDatum.source) {
-                          alert("Edge: "+overNodeDatum.source.id + " "+overNodeDatum.target.id);
+                          vex.dialog.alert("Edge: "+overNodeDatum.source.id + " "+overNodeDatum.target.id);
                       } else {
                           if(overNodeDatum.type == "primary"){
                               if (d3.event.altKey) {
@@ -348,7 +392,7 @@ requirejs([
                                   .select("circle")
                                   .attr("fill", "pink");
                           } else {
-                              alert("Node name: "+overNodeDatum.id);
+                              vex.dialog.alert("Node name: "+overNodeDatum.id);
                           }
                       }
                   }

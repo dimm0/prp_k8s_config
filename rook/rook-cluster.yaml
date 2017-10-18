@@ -11,37 +11,6 @@ metadata:
 spec:
   versionTag: master
   dataDirHostPath: /var/lib/rook
-# To control where various services will be scheduled by kubernetes, use the placement configuration sections below.
-# The example under 'all' would have all services scheduled on kubernetes nodes labeled with 'role=storage' and
-# tolerate taints with a key of 'storage-node'.
-#  placement:
-#    all:
-#      nodeAffinity:
-#        requiredDuringSchedulingIgnoredDuringExecution:
-#          nodeSelectorTerms:
-#          - matchExpressions:
-#            - key: role
-#              operator: In
-#              values:
-#              - storage-node
-#      tolerations:
-#      - key: storage-node
-#        operator: Exists
-#    api:
-#      nodeAffinity:
-#      tolerations:
-#    mds:
-#      nodeAffinity:
-#      tolerations:
-#    mon:
-#      nodeAffinity:
-#      tolerations:
-#    osd:
-#      nodeAffinity:
-#      tolerations:
-#    rgw:
-#      nodeAffinity:
-#      tolerations:
   storage:                # cluster level storage configuration and selection
     useAllNodes: false
     useAllDevices: false
@@ -115,13 +84,13 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
-    - name: "fiona8.calit2.uci.edu"
-      devices:
-      - name: "nvme0n1"
-      - name: "nvme1n1"
-      - name: "sdd"
-      - name: "sde"
-      - name: "sdf"
+    # - name: "fiona8.calit2.uci.edu"
+    #   devices:
+    #   - name: "nvme0n1"
+    #   - name: "nvme1n1"
+    #   - name: "sdd"
+    #   - name: "sde"
+    #   - name: "sdf"
     - name: "k8s-gpu-01.calit2.optiputer.net"
       devices:
       - name: "sdd"

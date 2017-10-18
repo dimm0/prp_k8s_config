@@ -1,0 +1,16 @@
+apiVersion: rook.io/v1alpha1
+kind: Filesystem
+metadata:
+  name: myfs
+  namespace: rook
+spec:
+  metadataPool:
+    replicated:
+      size: 3
+  dataPools:
+    - erasureCoded:
+       codingChunks: 2
+       dataChunks: 2
+  metadataServer:
+    activeCount: 1
+    activeStandby: true

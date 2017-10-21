@@ -36,8 +36,8 @@ requirejs([
     "https://cdnjs.cloudflare.com/ajax/libs/topojson/2.0.0/topojson.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/humanize-plus/1.8.2/humanize.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"], function(d3, topojson, humanize, _) {
-      // d3.json("https://traceroute.k8s.optiputer.net/graph.json", function(error, graph) {
-      d3.json("graph.json", function(error, graph) {
+      d3.json("https://traceroute.k8s.optiputer.net/graph.json", function(error, graph) {
+      // d3.json("graph.json", function(error, graph) {
 
 
 
@@ -171,7 +171,7 @@ requirejs([
           var groups = [];
           hosts.forEach( function(host) {
             if (!groups[host["org"]]) {
-              groups[host["org"]] = {nodes: [host]};
+              groups[host["org"]] = {nodes: [host], name: host["org"][0]};
             } else {
               groups[host["org"]].nodes.push(host);
             }
@@ -182,10 +182,17 @@ requirejs([
               if (groups[groupkey].nodes.length <= 1) {
                 delete groups[groupkey];
               } else {
-                var circle = svg.append("circle").attr("cx", 0)
+                var circle = svg.append("g");
+                circle.append("circle").attr("cx", 0)
                                         .attr("cy", 0)
-                                        .attr("r", 60)
+                                        .attr("r", 2.5*groups[groupkey].nodes.length)
                                         .style("fill", "none").style("stroke", "grey").style("stroke-width", "2");
+                circle.append("text")
+                  .attr("text-anchor", "middle")
+                  .style("font", "14px helvetica")
+                  .attr("dy", "-.5em")
+                  .text(groups[groupkey].name);
+
                 circle.nodesnum = groups[groupkey].nodes.length;
                 groups[groupkey]["circle"] = circle;
                 groups[groupkey].nodes.forEach( function(host) {
@@ -414,7 +421,7 @@ requirejs([
                       return (d.type == "primary") ? "black" : "blue";
                   });
               g.filter(function(d) {
-                  return d.type == "primary";
+                  return d.type == "primary" && !d.circle;
               })
               .append("text")
                   .attr("text-anchor", "middle")

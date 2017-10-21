@@ -58,6 +58,8 @@ rules:
   resources:
   - clusterroles
   - clusterrolebindings
+  - roles
+  - rolebindings
   verbs:
   - get
   - list
@@ -118,6 +120,7 @@ spec:
       - name: rook-operator
         image: rook/rook:master
         args: ["operator"]
+        imagePullPolicy: Always
         env:
         - name: ROOK_REPO_PREFIX
           value: rook

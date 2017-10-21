@@ -18,11 +18,10 @@ i = 0
 for org in meshconfig["organizations"]:
     for site in org["sites"]:
         for host in site["hosts"]:
-            if not host["description"] in hosts:
-                hosts[host["description"]] = {"addr": [host["addresses"][0]], "lat": float(site["location"]["latitude"]), "lon": float(site["location"]["longitude"]), "id": i, "org": org["description"]}
-                i += 1
-            else:
-                hosts[host["description"]]["addr"].append(host["addresses"][0])
+            hosts[host["description"]] = {"addr": [], "lat": float(site["location"]["latitude"]), "lon": float(site["location"]["longitude"]), "id": i, "org": org["description"]}
+            i += 1
+            for addr in host["addresses"]:
+                hosts[host["description"]]["addr"].append(addr["address"])
 
 
 g_cen = nx.MultiDiGraph()

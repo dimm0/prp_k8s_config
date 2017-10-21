@@ -17,17 +17,17 @@
 <div id='tip'></div>
 <div id='nodes'></div>
 
-<div style="background-color:rgb(230,230,230); border-radius: 20px; width:400px; padding:20px; position: absolute; bottom: 10; left: 0;">
+<div style="background-color:rgba(230,230,230, 0.3); border-radius: 20px; width:400px; padding:20px; position: absolute; bottom: 10; left: 0;">
   <h3>Many-body force params:</h3><br/>
   Strength: <input id='strength' data-slider-id='strengthSlider' type='text' data-slider-min='-100' data-slider-max='5' data-slider-step='1' data-slider-value='-2'></input>
   <br/>
   Max distance: <input id='dist' data-slider-id='distSlider' type='text' data-slider-min='0' data-slider-max='300' data-slider-step='1' data-slider-value='40'></input>
 </div>
-<div style="background-color:rgb(230,230,230); border-radius: 20px; width:300px; padding:20px; position: absolute; bottom: 10; left: 425;">
+<div style="background-color:rgba(230,230,230,0.3); border-radius: 20px; width:300px; padding:20px; position: absolute; bottom: 10; left: 425;">
   <h3>Cluster force params:</h3><br/>
   Strength: <input id='clust' type='checkbox' onclick='handleClusterClick(this);'></input>
 </div>
-<div style="background-color:rgb(230,230,230); border-radius: 20px; width:300px; padding:20px; position: absolute; bottom: 10; left: 750;">
+<div style="background-color:rgba(230,230,230,0.3); border-radius: 20px; width:300px; padding:20px; position: absolute; bottom: 10; left: 750;">
   <h3>Links force params:</h3><br/>
   Strength: <input id='link_strength' data-slider-id='linkStrengthSlider' type='text' data-slider-min='0' data-slider-max='0.5' data-slider-step='0.01' data-slider-value='0.05'></input>
   <br/>

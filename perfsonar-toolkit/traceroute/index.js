@@ -149,7 +149,7 @@ requirejs([
               .attr("height", 5);
 
           var colorScaleThroughput = d3.scaleThreshold()
-              .domain([0, Math.pow(2, 30) * 1, Math.pow(2, 30) * 5])
+              .domain([0, Math.pow(2, 30) * 5, Math.pow(2, 30) * 7.5])
               .range(["rgb(255, 165, 0)", "rgb(255,0,0)", "rgb(255,200,0)", "rgb(0, 182,0)"]);
 
           var colorScaleLatency = d3.scaleThreshold()
@@ -198,20 +198,22 @@ requirejs([
 
                 circle.nodesnum = groups[groupkey].nodes.length;
                 groups[groupkey]["circle"] = circle;
+                var nodeNumInCircle = 0;
                 groups[groupkey].nodes.forEach( function(host) {
                   host.circle = circle;
+                  host.nodeNumInCircle = nodeNumInCircle++;
                 });
               }
             }
           }
 
           //https://gist.github.com/krosenberg/989204175f68f40dfe3b#file-index-html
-          var circleCoord = function(node, index){
+          var circleCoord = function(node){
               var circle = node.circle;
               var circumference = circle.node().getTotalLength();
               var pointAtLength = function(l){return circle.node().getPointAtLength(l)};
               var sectionLength = (circumference)/circle.nodesnum;
-              var position = sectionLength*index+sectionLength/2;
+              var position = sectionLength*node.nodeNumInCircle+sectionLength/2;
               return pointAtLength(circumference-position)
           }
 
@@ -323,10 +325,9 @@ requirejs([
                       group.circle.text.attr("y", pix_coord[1]);
                     }
                   };
-                  var circleNum = 0;
                   hosts.forEach(function(d, i) {
                     if (d.circle) {
-                      var coord = circleCoord(d, circleNum++);
+                      var coord = circleCoord(d);
                       d.fx = coord.x;
                       d.fy = coord.y;
                     } else {
@@ -493,9 +494,9 @@ requirejs([
                                   .classed("overed", true);
 
                               tip.html("<b>"+d.source.id+" - "+d.target.id + "</b><br/>"+
-                                       "lat: "+humanize.formatNumber(d.latency)+
-                                       " ms; throughput: "+humanize.fileSize(d.throughput)+
-                                       "/s; retransmits: "+d.retransmits);
+                                       "lat: "+((d.latency != -1)?(humanize.formatNumber(d.latency)+"ms"):"unknown")+
+                                       "; throughput: "+((d.throughput != -1)?(humanize.fileSize(d.throughput)+"/s"):"unknown")+
+                                       "; retransmits: "+((d.retransmits != -1)?(humanize.intComma(d.retransmits)):"unknown"));
 
                               var participatingNodes = [];
                               var userNodesCur = usedNodes(false);

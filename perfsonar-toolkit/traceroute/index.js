@@ -182,16 +182,19 @@ requirejs([
               if (groups[groupkey].nodes.length <= 1) {
                 delete groups[groupkey];
               } else {
-                var circle = svg.append("g");
-                circle.append("circle").attr("cx", 0)
+                var r = 2.5*groups[groupkey].nodes.length;
+                var circle = svg.append("circle").attr("cx", 0)
                                         .attr("cy", 0)
-                                        .attr("r", 2.5*groups[groupkey].nodes.length)
+                                        .attr("r", r)
                                         .style("fill", "none").style("stroke", "grey").style("stroke-width", "2");
-                circle.append("text")
-                  .attr("text-anchor", "middle")
+                var text = svg.append("text")
+                  // .attr("text-anchor", "middle")
                   .style("font", "14px helvetica")
-                  .attr("dy", "-.5em")
+                  .style("font-weight", "bold")
+                  .attr("dy", -r+"px")
+                  .attr("dx", r+"px")
                   .text(groups[groupkey].name);
+                circle.text = text;
 
                 circle.nodesnum = groups[groupkey].nodes.length;
                 groups[groupkey]["circle"] = circle;
@@ -316,6 +319,8 @@ requirejs([
                       var pix_coord = projection([d.lon, d.lat]);
                       group.circle.attr("cx", pix_coord[0]);
                       group.circle.attr("cy", pix_coord[1]);
+                      group.circle.text.attr("x", pix_coord[0]);
+                      group.circle.text.attr("y", pix_coord[1]);
                     }
                   };
                   var circleNum = 0;

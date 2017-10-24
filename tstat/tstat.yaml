@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: tstat
+  namespace: ucsd-edu
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: tstat
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: tstat
+        image: dimm0/tstat
+        imagePullPolicy: IfNotPresent
+        command: ["tstat", "-l", "-N", "/opt/tstat/tstat-conf/net.all"]

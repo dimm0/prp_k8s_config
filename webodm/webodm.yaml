@@ -34,7 +34,7 @@ spec:
         image: opendronemap/webodm_webapp
         imagePullPolicy: IfNotPresent
         command: ["/bin/sh"]
-        args: ["-c", "sed -i \"s/'db'/'localhost'/g\" /webodm/webodm/settings.py && chmod +x /webodm/*.sh && /webodm/wait-for-it.sh localhost:5432 -- /webodm/start.sh"]
+        args: ["-c", "sed -i \"s/'db'/'localhost'/g\" /webodm/webodm/settings.py && chmod +x /webodm/*.sh && /webodm/wait-for-it.sh localhost:5432 -- /webodm/start.sh --create-default-pnode"]
       volumes:
       - name: webodmpv
         persistentVolumeClaim:
@@ -52,6 +52,10 @@ spec:
   ports:
   - port: 80
     targetPort: 8000
+    name: web
+  - port: 3000
+    targetPort: 3000
+    name: node
   selector:
     k8s-app: webodm
 ---

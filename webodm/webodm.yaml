@@ -34,11 +34,16 @@ spec:
         image: opendronemap/webodm_webapp
         imagePullPolicy: IfNotPresent
         command: ["/bin/sh"]
-        args: ["-c", "sed -i \"s/'db'/'localhost'/g\" /webodm/webodm/settings.py && chmod +x /webodm/*.sh && /webodm/wait-for-it.sh localhost:5432 -- /webodm/start.sh --create-default-pnode"]
+        args: ["-c", "sed -i \"s/'db'/'localhost'/g\" /webodm/webodm/settings.py && chmod +x /webodm/*.sh && /webodm/wait-for-it.sh localhost:5432 -- /webodm/start.sh"]
+      - name: node-odm-1
+        image: opendronemap/node-opendronemap
+        imagePullPolicy: IfNotPresent
       volumes:
       - name: webodmpv
         persistentVolumeClaim:
           claimName: webodm
+      nodeSelector:
+        kubernetes.io/hostname: k8s-epyc-01.sdsc.optiputer.net
 ---
 kind: Service
 apiVersion: v1

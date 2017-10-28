@@ -33,6 +33,7 @@ type Site struct {
 
 type Host struct {
 	IP          []string
+	IPh         []string
 	Description string
 }
 
@@ -97,14 +98,14 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 							found := false
 							for hind, host := range org.Site.Host {
 								if host.Description == pod.Spec.NodeName {
-									org.Site.Host[hind].IP = append(org.Site.Host[hind].IP, pod.Status.PodIP)
+									org.Site.Host[hind].IPh = append(org.Site.Host[hind].IPh, pod.Status.PodIP)
 									found = true
 									conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
 								}
 							}
 
 							if !found {
-								org.Site.Host = append(org.Site.Host, Host{IP: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
+								org.Site.Host = append(org.Site.Host, Host{IPh: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
 								conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
 							}
 

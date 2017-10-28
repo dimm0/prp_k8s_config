@@ -39,7 +39,7 @@ spec:
       - name: testpoint-h
         securityContext:
           privileged: true
-        image: us.gcr.io/prp-k8s/perfsonar_testpoint:latest
+        image: us.gcr.io/prp-k8s/perfsonar_testpoint_h:latest
         imagePullPolicy: Always
         command:
           - "/usr/bin/supervisord"

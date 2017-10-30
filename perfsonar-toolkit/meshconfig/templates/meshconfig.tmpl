@@ -40,6 +40,11 @@ description K8s Mesh Config
         {{ range $host.IP }}
           <address>
             address {{.}}
+          </address>
+        {{end}}
+        {{ range $host.IPh }}
+          <address>
+            address {{.}}
             pscheduler_address {{.}}:8443
           </address>
         {{end}}

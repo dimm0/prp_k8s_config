@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: caffe-example
+  labels:
+    k8s-app: caffe
+spec:
+  imagePullSecrets:
+    - name: gcr-json-key
+  containers:
+  - name: gpu-container
+    image: us.gcr.io/prp-k8s/caffe
+    imagePullPolicy: Always
+    # args: ["sleep", "36500000"]
+    args: ["python", "/usr/local/bin/jupyter-notebook", "--allow-root", "--NotebookApp.iopub_data_rate_limit=2147483647"]
+    resources:
+      limits:
+        alpha.kubernetes.io/nvidia-gpu: 1
+      requests:
+        alpha.kubernetes.io/nvidia-gpu: 1
+    volumeMounts:
+    - name: nvidia-driver
+      mountPath: /usr/local/nvidia
+      readOnly: true
+  restartPolicy: Never
+  volumes:
+    - name: nvidia-driver
+      hostPath:
+        path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90/
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: caffe
+  name: caffe
+  namespace: ucsd-edu
+spec:
+  type: NodePort
+  ports:
+  - port: 8888
+    name: web
+  selector:
+    k8s-app: caffe

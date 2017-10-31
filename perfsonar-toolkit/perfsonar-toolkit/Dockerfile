@@ -86,8 +86,12 @@ COPY rsyslog/owamp_bwctl-syslog.conf /etc/rsyslog.d/owamp_bwctl-syslog.conf
 ADD meshconfig-agent.conf meshconfig-guiagent.conf /etc/perfsonar/
 RUN chown perfsonar:perfsonar /etc/perfsonar/meshconfig*
 
+ADD maddash.yaml /etc/maddash/maddash-server/
 
-RUN sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/mycert\/ssl.crt/' /etc/httpd/conf.d/ssl.conf && sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/mycert\/ssl.key/' /etc/httpd/conf.d/ssl.conf
+RUN sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/mycert\/ssl.crt/' /etc/httpd/conf.d/ssl.conf && \
+  sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/mycert\/ssl.key/' /etc/httpd/conf.d/ssl.conf && \
+  sed -i 's/My Sites/K8s Mesh Config/' /etc/maddash/maddash-webui/config.json && \
+  chown maddash:maddash /etc/maddash/maddash-server/maddash.yaml
 
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisord.conf

@@ -6,11 +6,11 @@ metadata:
 spec:
   metadataPool:
     replicated:
-      size: 3
+      size: 2
   dataPools:
     - erasureCoded:
-       codingChunks: 2
        dataChunks: 2
+       codingChunks: 1
   metadataServer:
     activeCount: 1
     activeStandby: true

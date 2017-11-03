@@ -1,0 +1,155 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: berkeley-edu-mem
+  namespace: berkeley-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: eng-ucsd-edu-mem
+  namespace: eng-ucsd-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: jupcpu-mem
+  namespace: jupcpu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: jupnocuda-mem
+  namespace: jupnocuda
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: northwestern-edu-mem
+  namespace: northwestern-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: nps-edu-mem
+  namespace: nps-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: sdsu-edu-mem
+  namespace: sdsu-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: telascience-org-mem
+  namespace: telascience-org
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: uchicago-edu-mem
+  namespace: uchicago-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ucsd-edu-mem
+  namespace: ucsd-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: umich-edu-mem
+  namespace: umich-edu
+spec:
+  limits:
+  - default:
+      memory: 2Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: gmail-com-mem
+  namespace: gmail-com
+spec:
+  limits:
+  - default:
+      memory: 1Gi
+    defaultRequest:
+      memory: 256Mi
+    type: Container

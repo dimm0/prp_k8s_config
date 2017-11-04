@@ -103,7 +103,7 @@ spec:
       - name: "sdd"
       - name: "sde"
       - name: "sdf"
-    - name: "k8s-epyc-01.sdsc.optiputer.net" # sda,sdb boot sdc,sdc docker
+    - name: "k8s-epyc-01.sdsc.optiputer.net" # sda,sdb boot sdc,sdd docker
       devices:
       - name: "nvme0n1"
       - name: "nvme1n1"

@@ -11,6 +11,8 @@ spec:
     volumeMounts:
     - mountPath: /examplevol
       name: examplevol
+  nodeSelector:
+    kubernetes.io/hostname: coreos-01.calit2.optiputer.net
   volumes:
     - name: examplevol
       flexVolume:
@@ -35,6 +37,8 @@ spec:
     volumeMounts:
     - mountPath: /examplevol
       name: examplevol
+  nodeSelector:
+    kubernetes.io/hostname: coreos-02.calit2.optiputer.net
   volumes:
     - name: examplevol
       flexVolume:

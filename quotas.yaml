@@ -6,7 +6,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -19,7 +19,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -32,7 +32,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -45,7 +45,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -58,7 +58,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -71,7 +71,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -84,7 +84,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -97,7 +97,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -110,7 +110,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -123,7 +123,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container
@@ -136,7 +136,7 @@ metadata:
 spec:
   limits:
   - default:
-      memory: 2Gi
+      memory: 4Gi
     defaultRequest:
       memory: 256Mi
     type: Container

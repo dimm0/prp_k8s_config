@@ -103,7 +103,12 @@ spec:
       - name: "sdd"
       - name: "sde"
       - name: "sdf"
-    - name: "k8s-epyc-01.sdsc.optiputer.net" # sda,sdb boot sdc,sdd docker
+    - name: "k8s-epyc-01.sdsc.optiputer.net" 
+    # sda,sdb boot 
+    # sdc,sdd docker
+    # zpool create -m /var/lib/docker docker -f /dev/sdc /dev/sdd
+    # zpool export docker
+    # zpool import -d /dev/disk/by-id docker
       devices:
       - name: "nvme0n1"
       - name: "nvme1n1"

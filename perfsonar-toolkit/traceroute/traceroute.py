@@ -17,7 +17,7 @@ i = 0
 
 for org in meshconfig["organizations"]:
     for site in org["sites"]:
-        for host in site["hosts"]:
+        for host in site.get("hosts") or []:
             hosts[host["description"]] = {"addr": [], "lat": float(site["location"]["latitude"]), "lon": float(site["location"]["longitude"]), "id": i, "org": org["description"]}
             i += 1
             for addr in host["addresses"]:

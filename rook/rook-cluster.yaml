@@ -113,13 +113,13 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
-      - name: "sda" #10TB SAS3
-      - name: "sdb" #10TB SAS3
-      - name: "sdc" #10TB SAS3
-      - name: "sdd" #10TB SAS3
-      - name: "sde" #10TB SAS3
-      - name: "sdf" #10TB SAS3
+      - name: "sde" #480GB SSD
+      - name: "sdf" #480GB SSD
       - name: "sdg" #10TB SAS3
       - name: "sdh" #10TB SAS3
-      - name: "sdm" #480GB SSD
-      - name: "sdn" #480GB SSD
+      - name: "sdi" #10TB SAS3
+      - name: "sdj" #10TB SAS3
+      - name: "sdk" #10TB SAS3
+      - name: "sdl" #10TB SAS3
+      - name: "sdm" #10TB SAS3
+      - name: "sdn" #10TB SAS3

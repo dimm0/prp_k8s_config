@@ -5,7 +5,7 @@ metadata:
   namespace: perfsonar
 spec:
   serviceName: esmond-cassandra
-  replicas: 2
+  replicas: 4
   template:
     metadata:
       labels:
@@ -76,25 +76,22 @@ spec:
         volumeMounts:
         - name: cassandra-data
           mountPath: /cassandra_data
-      nodeSelector:
-        core: "true"
-      volumes:
-      - name: cassandra-data
-        emptyDir: {}
-  # These are converted to volume claims by the controller
-  # and mounted at the paths mentioned above.
-  # do not use these in production until ssd GCEPersistentDisk or other ssd pd
-  # volumeClaimTemplates:
-  # - metadata:
-  #     name: cassandra-data
-  #     annotations:
-  #       volume.beta.kubernetes.io/storage-class: rook-block
-  #   spec:
-  #     storageClassName: rook-block
-  #     accessModes: [ "ReadWriteOnce" ]
-  #     resources:
-  #       requests:
-  #         storage: 1Gi
+      # nodeSelector:
+      #   core: "true"
+      # volumes:
+      # - name: cassandra-data
+      #   emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: cassandra-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: rook-block
+    spec:
+      storageClassName: rook-block
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 50Gi
 ---
 apiVersion: v1
 kind: Service

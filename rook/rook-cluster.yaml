@@ -103,8 +103,8 @@ spec:
       - name: "sdd"
       - name: "sde"
       - name: "sdf"
-    - name: "k8s-epyc-01.sdsc.optiputer.net" 
-    # sda,sdb boot 
+    - name: "k8s-epyc-01.sdsc.optiputer.net"
+    # sda,sdb boot
     # sdc,sdd docker
     # zpool create -m /var/lib/docker docker -f /dev/sdc /dev/sdd
     # zpool export docker
@@ -118,6 +118,8 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
+      - name: "sde" #480GB SSD
+      - name: "sdf" #480GB SSD
       - name: "sdg" #10TB SAS3
       - name: "sdh" #10TB SAS3
       - name: "sdi" #10TB SAS3
@@ -126,5 +128,3 @@ spec:
       - name: "sdl" #10TB SAS3
       - name: "sdm" #10TB SAS3
       - name: "sdn" #10TB SAS3
-      - name: "sde" #480GB SSD
-      - name: "sdf" #480GB SSD

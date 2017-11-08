@@ -1,0 +1,13 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: alexk-ns
+  namespace: alexk
+subjects:
+- kind: User
+  name: https://test.cilogon.org#http://cilogon.org/serverT/users/203938
+  apiGroup: "rbac.authorization.k8s.io"
+roleRef:
+  kind: Role
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io

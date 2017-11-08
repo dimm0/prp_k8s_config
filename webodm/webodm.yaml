@@ -22,7 +22,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 250Gi
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -85,7 +85,7 @@ metadata:
 spec:
   podManagementPolicy: Parallel
   serviceName: webodmnode
-  replicas: 4
+  replicas: 2
   template:
     metadata:
       labels:
@@ -95,6 +95,11 @@ spec:
       - name: node-odm
         image: opendronemap/node-opendronemap
         imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "16Gi"
+      nodeSelector:
+        webodm-worker: "true"
 ---
 apiVersion: v1
 kind: Service

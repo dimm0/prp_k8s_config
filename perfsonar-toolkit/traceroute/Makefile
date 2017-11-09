@@ -13,3 +13,6 @@ cleanup:
 	rm traceroute
 
 buildrelease: buildgo builddocker pushdocker cleanup
+
+restartpod:
+	kubectl delete pods --selector=k8s-app=traceroute -n perfsonar

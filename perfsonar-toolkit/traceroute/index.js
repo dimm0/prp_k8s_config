@@ -182,7 +182,7 @@ requirejs([
               if (groups[groupkey].nodes.length <= 1) {
                 delete groups[groupkey];
               } else {
-                var r = 2.5*groups[groupkey].nodes.length;
+                var r = 4.0*groups[groupkey].nodes.length;
                 var circle = svg.append("circle").attr("cx", 0)
                                         .attr("cy", 0)
                                         .attr("r", r)
@@ -343,6 +343,9 @@ requirejs([
 
           svg.call(mapzoom.transform, transform);
           svg.call(mapzoom);
+
+          mapzoom.translateBy(svg, 0.12, -0.25);
+          mapzoom.scaleBy(svg, 8);
 
           d3.select(window).on("resize", function() {
               width = window.innerWidth, height = window.innerHeight;

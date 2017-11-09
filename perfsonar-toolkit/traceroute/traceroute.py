@@ -5,8 +5,11 @@ import re
 import itertools
 import socket
 import requests
+import urllib3
 
 from networkx.readwrite.json_graph import node_link_data
+
+urllib3.disable_warnings()
 
 meshconfigreq = requests.get('https://perfsonar.k8s.optiputer.net/k8s.json', verify=False)
 meshconfig = meshconfigreq.json()
@@ -146,9 +149,9 @@ for pair in [pair for pair in itertools.permutations(hosts, 2)]:
     [throughput_value, retransmits_value, traceroute] = get_cen_link_stats(pair[0], pair[1])
 
     latency = 0 # to store previous value
+    cur_latency = 0
     last_nodes = {pair[0]:[0]} # to store previous values
 
-    cur_query = 1
     if(not traceroute):
         continue
 
@@ -200,9 +203,9 @@ for pair in [pair for pair in itertools.permutations(hosts, 2)]:
             cur_values[cur_host] = []
         cur_values[cur_host].append(float(trace_step["rtt"]))
 
-    if(pair[0] in last_nodes):
-        print("Error building path from %s to %s: no nodes found"%(pair[0], pair[1]))
-    elif(not done): # not ended with the destination
+    # if(pair[0] in last_nodes):
+        # print("Error building path from %s to %s: no nodes found"%(pair[0], pair[1]))
+    if(not done): # not ended with the destination
         for last_node, last_lat_unused in last_nodes.iteritems():
             add_new_edge(last_node, pair[1], sgroup, tgroup, False, throughput_value, cur_latency - latency, retransmits_value)
         #print "Not finished %s-%s with %s, finished with %s"%(pair[0], pair[1], pair[1], last_nodes)

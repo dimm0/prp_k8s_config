@@ -26,6 +26,8 @@ spec:
         volumeMounts:
         - name: ssl-key
           mountPath: /etc/pki/tls/mycert
+      nodeSelector:
+        kubernetes.io/hostname: k8s-nvme-01.sdsc.optiputer.net
       volumes:
         - name: ssl-key
           secret:

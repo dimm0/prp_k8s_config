@@ -33,10 +33,6 @@ echo "Esmond DB created"
 
 TOKEN=`cd /usr/lib/esmond && . bin/activate && python esmond/manage.py add_ps_metadata_post_user user 1>/dev/null 2>&1 && python esmond/manage.py add_timeseries_post_user user 2>/dev/null | grep Key: | awk '{print $2}'`
 echo "Token is $TOKEN"
-# cd /usr/lib/esmond && . bin/activate && python esmond/manage.py add_ps_metadata_post_user user && python esmond/manage.py add_timeseries_post_user user
-# echo "Token is $TOKEN"
-
-# mkdir -p /etc/perfsonar
 
 cat >> /etc/perfsonar/meshconfig-agent-tasks.conf <<EOL
 <measurement_archive>

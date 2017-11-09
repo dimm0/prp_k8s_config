@@ -19,6 +19,17 @@ spec:
           - "/usr/bin/supervisord"
           - "-c"
           - "/etc/supervisord.conf"
+        volumeMounts:
+        - name: config
+          mountPath: "/etc/perfsonar_secret"
+          readOnly: true
+      volumes:
+      - name: config
+        secret:
+          secretName: meshconfig-agent-tasks
+          items:
+          - key: meshconfig-agent-tasks.conf
+            path: meshconfig-agent-tasks.conf
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -45,3 +56,14 @@ spec:
           - "/usr/bin/supervisord"
           - "-c"
           - "/etc/supervisord.conf"
+        volumeMounts:
+        - name: config
+          mountPath: "/etc/perfsonar_secret"
+          readOnly: true
+      volumes:
+      - name: config
+        secret:
+          secretName: meshconfig-agent-tasks
+          items:
+          - key: meshconfig-agent-tasks.conf
+            path: meshconfig-agent-tasks.conf

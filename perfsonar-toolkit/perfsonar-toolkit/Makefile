@@ -14,5 +14,8 @@ buildgoogle:
 submitkeys:
 	kubectl create secret generic ssl-key --from-file=key=k8s_optiputer_net.key --from-file=cert=k8s_optiputer_net_cert.cer -n perfsonar
 
+submitesmondsecret:
+	kubectl create secret generic meshconfig-agent-tasks --from-file=meshconfig-agent-tasks.conf -n perfsonar
+
 markcore:
 	for i in `seq -w 1 8`; do kubectl label nodes coreos-0$i.calit2.optiputer.net core=true; done

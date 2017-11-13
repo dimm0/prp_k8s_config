@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sflow
+  namespace: ucsd-edu
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: sflow
+    spec:
+      imagePullSecrets:
+        - name: gcr-json-key
+      containers:
+      - name: sflow
+        image: us.gcr.io/prp-k8s/sflow
+        imagePullPolicy: Always
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: sflow-agent
+  namespace: ucsd-edu
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: sflow-agent
+    spec:
+      imagePullSecrets:
+        - name: gcr-json-key
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: sflow
+        image: us.gcr.io/prp-k8s/sflow_agent
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sflow
+  namespace: ucsd-edu
+spec:
+  selector:
+    k8s-app: sflow
+  type: NodePort
+  ports:
+  - name: web
+    port: 8008
+    protocol: TCP
+  - name: collect
+    port: 6343
+    protocol: UDP

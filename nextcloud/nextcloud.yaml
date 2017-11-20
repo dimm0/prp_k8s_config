@@ -1,0 +1,161 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloudvol
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextclouddbvol
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: nextcloud
+spec:
+  selector:
+    matchLabels:
+      k8s-app: nextcloud
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: nextcloud
+    spec:
+      containers:
+        - name: nginx
+          image: sameersbn/nextcloud:11.0.1
+          args: ["app:nginx"]
+          env:
+            - name: NEXTCLOUD_URL
+              value: https://nextcloud.k8s.optiputer.net
+            - name: NEXTCLOUD_PHP_FPM_HOST
+              value: localhost
+            - name: NEXTCLOUD_PHP_FPM_PORT
+              value: "9000"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 120
+            timeoutSeconds: 1
+        - name: postgresql
+          image: sameersbn/postgresql:9.6-2
+          env:
+            - name: DB_USER
+              value: nextcloud
+            - name: DB_PASS
+              value: nextpassword
+            - name: DB_NAME
+              value: nextcloud_db
+          volumeMounts:
+            - mountPath: /var/lib/postgresql
+              name: dbdata
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 120
+            timeoutSeconds: 5
+        - name: nextcloud
+          image: sameersbn/nextcloud:11.0.1
+          args: ["app:nextcloud"]
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: DEBUG
+              value: "false"
+
+            - name: NEXTCLOUD_URL
+              value: http://nextcloud.k8s.optiputer.net
+
+            - name: NEXTCLOUD_ADMIN_USER
+              value: admin
+            - name: NEXTCLOUD_ADMIN_PASSWORD
+              value: password
+
+            - name: NEXTCLOUD_UPLOAD_MAX_FILESIZE
+              value: 4G
+            - name: NEXTCLOUD_MAX_FILE_UPLOADS
+              value: "20"
+
+            - name: DB_TYPE
+              value: pgsql
+            - name: DB_HOST
+              value: localhost
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: nextcloud
+            - name: DB_PASS
+              value: nextpassword
+            - name: DB_NAME
+              value: nextcloud_db
+
+          ports:
+            - name: php-fpm
+              containerPort: 9000
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/nextcloud
+              name: data
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 120
+            timeoutSeconds: 1
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: nextcloudvol
+        - name: dbdata
+          persistentVolumeClaim:
+            claimName: nextclouddbvol
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud
+  labels:
+    k8s-app: nextcloud
+spec:
+  type: NodePort
+  ports:
+    - name: web
+      port: 80
+      protocol: TCP
+  selector:
+    k8s-app: nextcloud
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nextcloud
+  namespace: ucsd-edu
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: nextcloud.k8s.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nextcloud
+          servicePort: 80

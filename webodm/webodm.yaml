@@ -97,7 +97,7 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            memory: "16Gi"
+            memory: "90Gi"
       nodeSelector:
         webodm-worker: "true"
 ---

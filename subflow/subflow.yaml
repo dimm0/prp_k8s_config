@@ -10,10 +10,16 @@ spec:
       labels:
         k8s-app: subflow
     spec:
-      imagePullSecrets:
-        - name: gcr-json-key
       containers:
       - name: subflow
-        image: us.gcr.io/prp-k8s/subflow
+        image: phusion/baseimage:0.9.19
         imagePullPolicy: IfNotPresent
         args: ["sleep", "36500000"]
+        volumeMounts:
+        - name: nfs
+          mountPath: /opt/subflow
+      volumes:
+      - name: nfs
+        nfs:
+          server: fiona.sdsu.edu
+          path: "/export/subflow"

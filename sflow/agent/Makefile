@@ -12,4 +12,4 @@ buildgoogle:
 	gcloud container builds submit --tag us.gcr.io/prp-k8s/sflow_agent:latest .
 
 restartcontainer:
-	kubectl delete pod --selector=k8s-app=sflow_agent
+	kubectl delete pod --selector=k8s-app=sflow-agent

@@ -35,6 +35,19 @@ spec:
       - name: sflow
         image: us.gcr.io/prp-k8s/sflow_agent
         imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /var/run
+            name: docker-sock
+          - mountPath: /sys/fs/cgroup/
+            name: cgroup
+            readOnly: true
+      volumes:
+        - name: docker-sock
+          hostPath:
+              path: /var/run
+        - name: cgroup
+          hostPath:
+              path: /sys/fs/cgroup
 ---
 apiVersion: v1
 kind: Service

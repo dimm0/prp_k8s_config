@@ -15,6 +15,9 @@ spec:
         image: phusion/baseimage:0.9.19
         imagePullPolicy: IfNotPresent
         args: ["sleep", "36500000"]
+        resources:
+          limits:
+            memory: "16Gi"
         volumeMounts:
         - name: nfs
           mountPath: /opt/subflow

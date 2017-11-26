@@ -4,7 +4,7 @@ metadata:
   name: subflow
   namespace: sdsu-edu
 spec:
-  replicas: 1
+  replicas: 8
   template:
     metadata:
       labels:
@@ -17,10 +17,12 @@ spec:
         args: ["sleep", "36500000"]
         resources:
           limits:
-            memory: "16Gi"
+            memory: "12Gi"
         volumeMounts:
         - name: nfs
           mountPath: /opt/subflow
+      nodeSelector:
+        core: "true"
       volumes:
       - name: nfs
         nfs:

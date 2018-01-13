@@ -10,13 +10,10 @@ defaultEntryPoints = ["http","https"]
   address = ":443"
     [entryPoints.https.tls]
       [[entryPoints.https.tls.certificates]]
-      CertFile = "/ssl/k8s_optiputer_net_cert.cer"
-      KeyFile = "/ssl/k8s_optiputer_net.key"
-    # [entryPoints.https.redirect]
-    #   regex = "(https:\\/\\/[^\\/]+\\/([^\\?]+)[^\\/])$"
-    #   replacement = "$1/"
+      CertFile = "/ssl/k8s_cert.cer"
+      KeyFile = "/ssl/k8s.key"
 [web]
-  CertFile = "/ssl/k8s_optiputer_net_cert.cer"
-  KeyFile = "/ssl/k8s_optiputer_net.key"
+  CertFile = "/ssl/k8s_cert.cer"
+  KeyFile = "/ssl/k8s.key"
   [web.auth.basic]
   users = ["admin:***REMOVED***"]

@@ -15,5 +15,7 @@ defaultEntryPoints = ["http","https"]
 [web]
   CertFile = "/ssl/k8s_cert.cer"
   KeyFile = "/ssl/k8s.key"
+  address = ":8081"
+  readOnly = true
   [web.auth.basic]
   users = ["admin:***REMOVED***"]

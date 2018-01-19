@@ -71,7 +71,7 @@ spec:
           containerPort: 443
           hostPort: 443
         - name: admin
-          containerPort: 8080
+          containerPort: 8081
         securityContext:
           privileged: true
         args:
@@ -107,6 +107,6 @@ spec:
       port: 443
       name: sweb
     - protocol: TCP
-      port: 8080
+      port: 8081
       name: admin
   type: NodePort

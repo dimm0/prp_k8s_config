@@ -1,0 +1,67 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: nautilus-admins
+subjects:
+- kind: User
+  name: http://cilogon.org/serverA/users/15761
+  apiGroup: "rbac.authorization.k8s.io"
+- kind: User
+  name: http://cilogon.org/serverA/users/23651
+  apiGroup: "rbac.authorization.k8s.io"
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: psp:nautilus-admins
+subjects:
+- kind: User
+  name: http://cilogon.org/serverA/users/15761
+  apiGroup: "rbac.authorization.k8s.io"
+- kind: User
+  name: http://cilogon.org/serverA/users/23651
+  apiGroup: "rbac.authorization.k8s.io"
+roleRef:
+  kind: ClusterRole
+  name: psp:privileged-user
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: psp:privileged-user
+rules:
+- apiGroups:
+  - extensions
+  resources:
+  - podsecuritypolicies
+  resourceNames:
+  - privileged
+  verbs:
+  - use
+---
+apiVersion: extensions/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: privileged
+spec:
+  fsGroup:
+    rule: RunAsAny
+  privileged: true
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  volumes:
+  - '*'
+  allowedCapabilities:
+  - '*'
+  hostPID: true
+  hostIPC: true
+  hostNetwork: false

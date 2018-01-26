@@ -10,20 +10,11 @@ spec:
     args: ["sleep", "36500000"]
     resources:
       limits:
-        alpha.kubernetes.io/nvidia-gpu: 1
-      requests:
-        alpha.kubernetes.io/nvidia-gpu: 1
+        nvidia.com/gpu: 2
     volumeMounts:
-    - name: nvidia-driver
-      mountPath: /usr/local/nvidia
-      readOnly: true
     - mountPath: /examples
       name: tensor-examples
-  restartPolicy: Never
   volumes:
-    - name: nvidia-driver
-      hostPath:
-        path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90/
     - name: tensor-examples
       gitRepo:
         repository: "https://github.com/tensorflow/models.git"

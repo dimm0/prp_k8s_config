@@ -1,0 +1,247 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rook
+---
+apiVersion: rook.io/v1alpha1
+kind: Cluster
+metadata:
+  name: rook
+  namespace: rook
+spec:
+  versionTag: master
+  dataDirHostPath: /var/lib/rook
+  storage:                # cluster level storage configuration and selection
+    useAllNodes: false
+    useAllDevices: false
+    deviceFilter:
+    metadataDevice:
+    location:
+    storeConfig:
+      storeType: bluestore
+    nodes:
+    - name: "dtn-main.ucr.edu"
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "fiona-dtn-1.ucsc.edu"
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "fiona-dtn.usc.edu"
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "fiona.its.hawaii.edu"
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "fiona.nwsc.ucar.edu"
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "fiona.tools.ucla.net"
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+   - name: "k8s-epyc-01.sdsc.optiputer.net"
+    # sda,sdb boot
+    # sdc,sdd docker
+      devices:
+      - name: "nvme0n1"
+      - name: "nvme1n1"
+      - name: "nvme2n1"
+      - name: "nvme3n1"
+      - name: "nvme4n1"
+      - name: "nvme5n1"
+      - name: "nvme6n1"
+      - name: "nvme7n1"
+      - name: "sde" #480GB SSD
+      - name: "sdf" #480GB SSD
+      - name: "sdg" #10TB SAS3
+      - name: "sdh" #10TB SAS3
+      - name: "sdi" #10TB SAS3
+      - name: "sdj" #10TB SAS3
+      - name: "sdk" #10TB SAS3
+      - name: "sdl" #10TB SAS3
+      - name: "sdm" #10TB SAS3
+      - name: "sdn" #10TB SAS3
+    - name: "k8s-gpu-02.calit2.optiputer.net"
+      devices:
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "nvme0n1"
+      - name: "nvme1n1"
+      - name: "sde"
+      - name: "sdf"
+    - name: "k8s-gpu-03.sdsc.optiputer.net"
+      devices:
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "nvme0n1"
+      - name: "nvme1n1"
+      - name: "sde"
+      - name: "sdf"
+    - name: "netw-fiona.stanford.edu"
+      devices:
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "prp-dtn.noc.ucsb.edu"
+      devices:
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "ps-100g.sdsu.edu"
+      devices:
+      # sdc,sdd boot
+      # sda,sdb docker
+      - name: "nvme0n1"
+      - name: "nvme1n1"
+      - name: "nvme2n1"
+      - name: "nvme3n1"
+      - name: "nvme4n1"
+      - name: "nvme5n1"
+      - name: "nvme6n1"
+      - name: "nvme7n1"
+#    - name: "siderea.ucsc.edu"
+#      devices:
+#      - name: "nvme0n1"
+#      - name: "nvme1n1"
+#      - name: "nvme2n1"
+#      - name: "nvme3n1"
+#      - name: "nvme4n1"
+#      - name: "nvme5n1"
+#      - name: "nvme6n1"
+#      - name: "nvme7n1"
+#    - name: "k8s-nvme-01.ultralight.org"
+#      devices:
+#      - name: "nvme0n1"
+#      - name: "nvme1n1"
+#      - name: "nvme2n1"
+#      - name: "nvme3n1"
+#      - name: "nvme4n1"
+#      - name: "nvme5n1"
+#      - name: "nvme6n1"
+#      - name: "nvme7n1"
+#    - name: "k8s-nvme-01.sdsc.optiputer.net"
+#      devices:
+#   #  - name: "nvme0n1" Docker ZFS
+#   #  - name: "nvme1n1" Docker ZFS
+#      - name: "nvme2n1"
+#      - name: "nvme3n1"
+#      - name: "nvme4n1"
+#      - name: "nvme5n1"
+#      - name: "nvme6n1"
+#      - name: "nvme7n1"
+#    - name: "fiona8.calit2.uci.edu"
+#      devices:
+#      - name: "nvme0n1"
+#      - name: "nvme1n1"
+#      - name: "sdd"
+#      - name: "sde"
+#      - name: "sdf"

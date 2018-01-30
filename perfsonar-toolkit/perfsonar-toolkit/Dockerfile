@@ -10,7 +10,6 @@ ADD *.patch /tmp/
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install epel-release httpd && \
-    #yum -y --setopt=tsflags=nodocs install http://software.internet2.edu/rpms/el7/x86_64/main/RPMS/Internet2-repo-0.7-1.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs install http://software.internet2.edu/rpms/el7/x86_64/main/RPMS/perfSONAR-repo-0.8-1.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs clean all && \
     yum -y --setopt=tsflags=nodocs install perfsonar-toolkit perfsonar-toolkit-ntp net-tools sysstat tcpdump htop traceroute nmap mlocate && \
@@ -22,9 +21,6 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     cd /usr/lib/esmond && \
     easy_install pip && \
     pip install -r requirements.txt --exists-action=s
-
-ADD startfoo.sh /startfoo.sh
-RUN chmod -v +x /startfoo.sh
 
 # -----------------------------------------------------------------------
 
@@ -87,10 +83,10 @@ ADD meshconfig-agent.conf meshconfig-guiagent.conf /etc/perfsonar/
 RUN chown perfsonar:perfsonar /etc/perfsonar/meshconfig*
 
 ADD maddash.yaml /etc/maddash/maddash-server/
+ADD maddash_config.json /etc/maddash/maddash-webui/config.json
 
 RUN sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/mycert\/ssl.crt/' /etc/httpd/conf.d/ssl.conf && \
   sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/mycert\/ssl.key/' /etc/httpd/conf.d/ssl.conf && \
-  sed -i 's/My Sites/K8s Mesh Config/' /etc/maddash/maddash-webui/config.json && \
   chown maddash:maddash /etc/maddash/maddash-server/maddash.yaml
 
 RUN mkdir -p /var/log/supervisor

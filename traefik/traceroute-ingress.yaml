@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: traceroute.k8s.optiputer.net
+  - host: traceroute.nautilus.optiputer.net
     http:
       paths:
       - path: /

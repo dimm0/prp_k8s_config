@@ -11,7 +11,7 @@ from networkx.readwrite.json_graph import node_link_data
 
 urllib3.disable_warnings()
 
-meshconfigreq = requests.get('https://perfsonar.k8s.optiputer.net/k8s.json', verify=False)
+meshconfigreq = requests.get('https://perfsonar-toolkit.perfsonar/k8s.json', verify=False)
 meshconfig = meshconfigreq.json()
 
 hosts = {}
@@ -30,7 +30,7 @@ for org in meshconfig["organizations"]:
 g_cen = nx.MultiDiGraph()
 g_cen.add_nodes_from(list(hosts.keys()), type="primary")
 
-base_url = "https://perfsonar.k8s.optiputer.net" #"https://ps-dashboard.cenic.net"
+base_url = "https://perfsonar-toolkit.perfsonar" #"https://ps-dashboard.cenic.net"
 
 def get_lat(hostname):
     if(hostname in hosts):

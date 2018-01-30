@@ -8,7 +8,7 @@ LABEL Vendor="UCSD" \
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install epel-release httpd && \
-    yum -y --setopt=tsflags=nodocs install http://software.internet2.edu/rpms/el7/x86_64/main/RPMS/Internet2-repo-0.7-1.noarch.rpm && \
+    yum -y --setopt=tsflags=nodocs install http://software.internet2.edu/rpms/el7/x86_64/main/RPMS/perfSONAR-repo-0.8-1.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs clean all && \
     yum -y --setopt=tsflags=nodocs install ntp && \
     yum -y --setopt=tsflags=nodocs install git wget nmap htop mlocate net-tools sysstat tcpdump rsyslog && \

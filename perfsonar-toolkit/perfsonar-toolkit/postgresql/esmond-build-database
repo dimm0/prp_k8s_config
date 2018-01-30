@@ -28,7 +28,7 @@ echo "Password set"
 
 source /etc/profile.d/esmond.sh
 
-cd /usr/lib/esmond && . bin/activate && python esmond/manage.py syncdb --noinput
+cd /usr/lib/esmond && . bin/activate && python esmond/manage.py migrate --noinput
 echo "Esmond DB created"
 
 TOKEN=`cd /usr/lib/esmond && . bin/activate && python esmond/manage.py add_ps_metadata_post_user user 1>/dev/null 2>&1 && python esmond/manage.py add_timeseries_post_user user 2>/dev/null | grep Key: | awk '{print $2}'`

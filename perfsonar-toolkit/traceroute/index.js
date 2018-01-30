@@ -36,7 +36,7 @@ requirejs([
     "https://cdnjs.cloudflare.com/ajax/libs/topojson/2.0.0/topojson.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/humanize-plus/1.8.2/humanize.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"], function(d3, topojson, humanize, _) {
-      d3.json("https://traceroute.k8s.optiputer.net/graph.json", function(error, graph) {
+      d3.json("https://traceroute.nautilus.optiputer.net/graph.json", function(error, graph) {
       // d3.json("graph.json", function(error, graph) {
 
 
@@ -502,17 +502,17 @@ requirejs([
                                        "; retransmits: "+((d.retransmits != -1)?(humanize.intComma(d.retransmits)):"unknown"));
 
                               var participatingNodes = [];
-                              var userNodesCur = usedNodes(false);
+                              var usedNodesCur = usedNodes(false);
                               for(var j = 0; j<d.source_group.length; j++) {
-                                  for(var i=0; i<userNodesCur.length; i++){
-                                      if(userNodesCur[i].source_group.contains(d.source_group[j]))
-                                          participatingNodes.push(userNodesCur[i]);
+                                  for(var i=0; i<usedNodesCur.length; i++){
+                                      if(usedNodesCur[i].type=="primary" && usedNodesCur[i].source_group.contains(d.source_group[j]))
+                                          participatingNodes.push(usedNodesCur[i]);
                                   }
                               }
                               for(var j = 0; j<d.target_group.length; j++) {
-                                  for(var i=0; i<userNodesCur.length; i++){
-                                      if(userNodesCur[i].source_group.contains(d.target_group[j]))
-                                          participatingNodes.push(userNodesCur[i]);
+                                  for(var i=0; i<usedNodesCur.length; i++){
+                                      if(usedNodesCur[i].type=="primary" && usedNodesCur[i].source_group.contains(d.target_group[j]))
+                                          participatingNodes.push(usedNodesCur[i]);
                                   }
                               }
                               nodesDiv.html("<b>Nodes having path through the segment:</b><br/>"+window._.uniq(participatingNodes.map(function(d) {

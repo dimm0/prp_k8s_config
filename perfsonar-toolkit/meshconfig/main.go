@@ -66,7 +66,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			conf.Organizations[orgID] = org
 		}
 
-		pods, err := clientset.Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint"})
+		pods, err := clientset.Core().Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint"})
 		if err != nil {
 			log.Printf("Error getting testpoint pods: %s", err.Error())
 		} else {
@@ -86,7 +86,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		pods, err = clientset.Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint-h"})
+		pods, err = clientset.Core().Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint-h"})
 		if err != nil {
 			log.Printf("Error getting htestpoint pods: %s", err.Error())
 		} else {

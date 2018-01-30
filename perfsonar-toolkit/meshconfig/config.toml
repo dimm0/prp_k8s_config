@@ -1,4 +1,4 @@
-cluster_url="k8s.optiputer.net"
+cluster_url="nautilus.optiputer.net"
 
 [org]
 
@@ -8,7 +8,7 @@ lon=-117.2318
 city="San Diego"
 state="CA"
 description="University of California, San Diego"
-domain=["optiputer.net", "ucsd.edu"]
+domain=["calit2.optiputer.net", "ucsd.edu", "sdsc.optiputer.net"]
 
 [org.caltech]
 lat=34.1377
@@ -40,4 +40,76 @@ lon=-117.0712
 city="San Diego"
 state="CA"
 description="San Diego State University"
-domain=["sdsu.edu"]
+domain=["sdsu.edu", "sdsu.optiputer.net"]
+
+[org.stanford]
+lat=37.424107
+lon=-122.166077
+city="Stanford"
+state="CA"
+description="Stanford University"
+domain=["stanford.edu"]
+
+[org.ucr]
+lat=33.9533
+lon=-117.3962
+city="Riverside"
+state="CA"
+description="University of California, Riverside"
+domain=["ucr.edu"]
+
+[org.usc]
+lat=34.0224
+lon=-118.2851
+city="Los Angeles"
+state="CA"
+description="University of South California"
+domain=["usc.edu"]
+
+[org.washington]
+lat=47.6553
+lon=-122.3035
+city="Seattle"
+state="WA"
+description="University of Washington"
+domain=["washington.edu"]
+
+[org.ucdavis]
+lat=38.5382
+lon=-121.7617
+city="Davis"
+state="WA"
+description="University of California, Davis"
+domain=["noc.ucdavis.edu"]
+
+[org.hawaii]
+lat=21.2969
+lon=-157.8171
+city="Honolulu"
+state="HI"
+description="University of Hawaii"
+domain=["hawaii.edu"]
+
+[org.ucar.nwsc]
+lat=41.1288
+lon=-104.8973
+city="Cheyenne"
+state="WY"
+description="NCAR-Wyoming Supercomputing Center"
+domain=["nwsc.ucar.edu"]
+
+[org.ucla]
+lat=34.0689
+lon=-118.4452
+city="Los Angeles"
+state="CA"
+description="University of California, Los Angeles"
+domain=["ucla.edu"]
+
+[org.ucsb]
+lat=34.4140
+lon=-119.8489
+city="Santa Barbara"
+state="CA"
+description="University of California, Santa Barbara"
+domain=["ucsb.edu"]

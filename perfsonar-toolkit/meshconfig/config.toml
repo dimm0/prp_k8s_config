@@ -90,7 +90,7 @@ state="HI"
 description="University of Hawaii"
 domain=["hawaii.edu"]
 
-[org.ucar.nwsc]
+[org.ucarnwsc]
 lat=41.1288
 lon=-104.8973
 city="Cheyenne"
@@ -104,7 +104,7 @@ lon=-118.4452
 city="Los Angeles"
 state="CA"
 description="University of California, Los Angeles"
-domain=["ucla.edu"]
+domain=["ucla.net"]
 
 [org.ucsb]
 lat=34.4140

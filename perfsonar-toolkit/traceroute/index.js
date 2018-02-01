@@ -150,7 +150,7 @@ requirejs([
 
           var colorScaleThroughput = d3.scaleThreshold()
               .domain([0, Math.pow(2, 30) * 5, Math.pow(2, 30) * 7.5])
-              .range(["rgb(255, 165, 0)", "rgb(255,0,0)", "rgb(255,200,0)", "rgb(0, 182,0)"]);
+              .range(["rgb(140, 140, 140)", "rgb(255,0,0)", "rgb(255,200,0)", "rgb(0, 182,0)"]);
 
           var colorScaleLatency = d3.scaleThreshold()
               .domain([40, 100])

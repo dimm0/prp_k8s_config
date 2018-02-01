@@ -21,6 +21,7 @@ spec:
       storeType: bluestore
     nodes:
     - name: "dtn-main.ucr.edu"
+      devices:
       # sda,sdb boot
       # sdc,sdd docker
       - name: "sde"
@@ -38,6 +39,7 @@ spec:
       - name: "sdq"
       - name: "sdr"
     - name: "fiona-dtn-1.ucsc.edu"
+      devices:
       # sda,sdb boot
       # sdc,sdd docker
       - name: "sde"
@@ -54,24 +56,26 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
-    - name: "fiona-dtn.usc.edu"
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
+    # - name: "fiona-dtn.usc.edu"
+    #   devices:
+    #   # sda,sdb boot
+    #   # sdc,sdd docker
+    #   - name: "sde"
+    #   - name: "sdf"
+    #   - name: "sdg"
+    #   - name: "sdh"
+    #   - name: "sdi"
+    #   - name: "sdj"
+    #   - name: "sdk"
+    #   - name: "sdl"
+    #   - name: "sdn"
+    #   - name: "sdn"
+    #   - name: "sdo"
+    #   - name: "sdp"
+    #   - name: "sdq"
+    #   - name: "sdr"
     - name: "fiona.its.hawaii.edu"
+      devices:
       # sda,sdb boot
       # sdc,sdd docker
       - name: "sde"
@@ -88,24 +92,26 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
-    - name: "fiona.nwsc.ucar.edu"
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
+    # - name: "fiona.nwsc.ucar.edu"
+    #   devices:
+    #   # sda,sdb boot
+    #   # sdc,sdd docker
+    #   - name: "sde"
+    #   - name: "sdf"
+    #   - name: "sdg"
+    #   - name: "sdh"
+    #   - name: "sdi"
+    #   - name: "sdj"
+    #   - name: "sdk"
+    #   - name: "sdl"
+    #   - name: "sdn"
+    #   - name: "sdn"
+    #   - name: "sdo"
+    #   - name: "sdp"
+    #   - name: "sdq"
+    #   - name: "sdr"
     - name: "fiona.tools.ucla.net"
+      devices:
       # sda,sdb boot
       # sdc,sdd docker
       - name: "sde"
@@ -122,7 +128,7 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
-   - name: "k8s-epyc-01.sdsc.optiputer.net"
+    - name: "k8s-epyc-01.sdsc.optiputer.net"
       devices:
       # sda,sdb boot
       # sdc,sdd docker
@@ -136,14 +142,14 @@ spec:
       - name: "nvme7n1"
       - name: "sde" #480GB SSD
       - name: "sdf" #480GB SSD
-      - name: "sdg" #10TB SAS3
-      - name: "sdh" #10TB SAS3
-      - name: "sdi" #10TB SAS3
-      - name: "sdj" #10TB SAS3
-      - name: "sdk" #10TB SAS3
-      - name: "sdl" #10TB SAS3
-      - name: "sdm" #10TB SAS3
-      - name: "sdn" #10TB SAS3
+      # - name: "sdg" #10TB SAS3
+      # - name: "sdh" #10TB SAS3
+      # - name: "sdi" #10TB SAS3
+      # - name: "sdj" #10TB SAS3
+      # - name: "sdk" #10TB SAS3
+      # - name: "sdl" #10TB SAS3
+      # - name: "sdm" #10TB SAS3
+      # - name: "sdn" #10TB SAS3
     - name: "k8s-gpu-02.calit2.optiputer.net"
       devices:
       # sda,sdb boot
@@ -191,24 +197,24 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
-    - name: "prp-dtn.noc.ucsb.edu"
-      devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
+    # - name: "prp-dtn.noc.ucsb.edu"
+    #   devices:
+    #   # sda,sdb boot
+    #   # sdc,sdd docker
+    #   - name: "sde"
+    #   - name: "sdf"
+    #   - name: "sdg"
+    #   - name: "sdh"
+    #   - name: "sdi"
+    #   - name: "sdj"
+    #   - name: "sdk"
+    #   - name: "sdl"
+    #   - name: "sdn"
+    #   - name: "sdn"
+    #   - name: "sdo"
+    #   - name: "sdp"
+    #   - name: "sdq"
+    #   - name: "sdr"
     - name: "ps-100g.sdsu.edu"
       devices:
       # sdc,sdd boot
@@ -224,7 +230,7 @@ spec:
     - name: "siderea.ucsc.edu"
       devices:
       # sdc,sdd boot
-      # sda,sdb docker      
+      # sda,sdb docker
       - name: "nvme0n1"
       - name: "nvme1n1"
       - name: "nvme2n1"

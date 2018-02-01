@@ -7,7 +7,7 @@ spec:
   dnsPolicy: ClusterFirstWithHostNet
   containers:
   - name: rook-tools
-    image: rook/toolbox:v0.5.0-274.gae28075
+    image: rook/toolbox:master
     imagePullPolicy: IfNotPresent
     env:
       - name: ROOK_ADMIN_SECRET

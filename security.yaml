@@ -65,6 +65,9 @@ spec:
   - '*'
   allowedCapabilities:
   - '*'
+  hostPorts:
+  - min: 0
+    max: 65535
   hostPID: true
   hostIPC: true
   hostNetwork: true
@@ -79,8 +82,20 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: Group
-  name: system:serviceaccounts:kube-system
+  name: "system:serviceaccounts:kube-system"
   apiGroup: rbac.authorization.k8s.io
-# - kind: Group
-#   name: system:authenticated:kube-system
-#   apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: system:nodes
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: system:serviceaccounts:perfsonar
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: system:serviceaccounts:monitoring
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: system:serviceaccounts:rook
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: "system:serviceaccounts:rook-system"
+  apiGroup: rbac.authorization.k8s.io

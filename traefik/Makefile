@@ -11,7 +11,7 @@ makeselfcerts:
 	rm server.csr
 
 pushcerts:
-	kubectl create secret generic ssl-key -n kube-system --from-file=dev/k8s_cert.cer --from-file=dev/k8s.key
+	kubectl create secret generic ssl-key -n kube-system --from-file=prod/k8s_cert.cer --from-file=prod/k8s.key
 
 pushgooglecert:
 	kubectl --namespace=kube-system create secret docker-registry gcr-json-key \

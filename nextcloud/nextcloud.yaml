@@ -36,9 +36,11 @@ spec:
       labels:
         k8s-app: nextcloud
     spec:
+      imagePullSecrets:
+        - name: gcr-json-key
       containers:
         - name: nginx
-          image: sameersbn/nextcloud:11.0.1
+          image: us.gcr.io/prp-k8s/nextcloud
           args: ["app:nginx"]
           env:
             - name: NEXTCLOUD_URL
@@ -74,7 +76,7 @@ spec:
             initialDelaySeconds: 120
             timeoutSeconds: 5
         - name: nextcloud
-          image: sameersbn/nextcloud:11.0.1
+          image: us.gcr.io/prp-k8s/nextcloud
           args: ["app:nextcloud"]
           env:
             - name: TZ
@@ -88,7 +90,7 @@ spec:
             - name: NEXTCLOUD_ADMIN_USER
               value: admin
             - name: NEXTCLOUD_ADMIN_PASSWORD
-              value: password
+              value:  
 
             - name: NEXTCLOUD_UPLOAD_MAX_FILESIZE
               value: 4G
@@ -127,35 +129,35 @@ spec:
         - name: dbdata
           persistentVolumeClaim:
             claimName: nextclouddbvol
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nextcloud
-  labels:
-    k8s-app: nextcloud
-spec:
-  type: NodePort
-  ports:
-    - name: web
-      port: 80
-      protocol: TCP
-  selector:
-    k8s-app: nextcloud
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: nextcloud
-  namespace: ucsd-edu
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  rules:
-  - host: nextcloud.k8s.optiputer.net
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nextcloud
-          servicePort: 80
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: nextcloud
+#   labels:
+#     k8s-app: nextcloud
+# spec:
+#   type: NodePort
+#   ports:
+#     - name: web
+#       port: 80
+#       protocol: TCP
+#   selector:
+#     k8s-app: nextcloud
+# ---
+# apiVersion: extensions/v1beta1
+# kind: Ingress
+# metadata:
+#   name: nextcloud
+#   namespace: ucsd-edu
+#   annotations:
+#     kubernetes.io/ingress.class: traefik
+# spec:
+#   rules:
+#   - host: nextcloud.k8s.optiputer.net
+#     http:
+#       paths:
+#       - path: /
+#         backend:
+#           serviceName: nextcloud
+#           servicePort: 80

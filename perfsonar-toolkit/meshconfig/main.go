@@ -71,7 +71,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error getting testpoint pods: %s", err.Error())
 		} else {
 			for _, pod := range pods.Items {
-				if pod.Status.Phase != v1.PodRunning {
+				if pod.Status.Phase != v1.PodRunning || pod.Status.PodIP == "" {
 					continue
 				}
 				for orgID, org := range conf.Organizations {
@@ -91,6 +91,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error getting htestpoint pods: %s", err.Error())
 		} else {
 			for _, pod := range pods.Items {
+				if pod.Status.Phase != v1.PodRunning || pod.Status.PodIP == "" {
+					continue
+				}
 				for orgID, org := range conf.Organizations {
 					for _, orgDomain := range org.Domain {
 						if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {

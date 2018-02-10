@@ -90,7 +90,7 @@ spec:
             - name: NEXTCLOUD_ADMIN_USER
               value: admin
             - name: NEXTCLOUD_ADMIN_PASSWORD
-              value:  
+              value: password
 
             - name: NEXTCLOUD_UPLOAD_MAX_FILESIZE
               value: 4G

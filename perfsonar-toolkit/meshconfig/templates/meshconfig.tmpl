@@ -1,4 +1,4 @@
-description K8s Mesh Config
+description Nautilus Mesh
 
 <administrator>
   name       Dmitry Mishin
@@ -86,7 +86,21 @@ description K8s Mesh Config
 
 <group k8s_group>
     type       mesh
-    {{ range .BWIPs }}
+    {{ range .BW40GIPs }}
+      member {{.}}
+    {{end}}
+</group>
+
+<group k8s_10g_group>
+    type       mesh
+    {{ range .BW10GIPs }}
+      member {{.}}
+    {{end}}
+</group>
+
+<group k8s_40g_group>
+    type       mesh
+    {{ range .BW40GIPs }}
       member {{.}}
     {{end}}
 </group>
@@ -99,8 +113,14 @@ description K8s Mesh Config
 </group>
 
 <test>
-  description       K8s Throughput Testing
-  group             k8s_group
+  description       K8s Throughput 10 Testing
+  group             k8s_10g_group
+  test_spec         bwctl_test
+</test>
+
+<test>
+  description       K8s Throughput 40 Testing
+  group             k8s_40g_group
   test_spec         bwctl_test
 </test>
 

@@ -39,7 +39,8 @@ type Host struct {
 
 type MeshConfig struct {
 	Organizations map[string]Organization
-	BWIPs         []string
+	BW10GIPs      []string
+	BW40GIPs      []string
 	TraceIPs      []string
 }
 
@@ -66,53 +67,68 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			conf.Organizations[orgID] = org
 		}
 
-		pods, err := clientset.Core().Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint"})
-		if err != nil {
-			log.Printf("Error getting testpoint pods: %s", err.Error())
+		if nodes, err := clientset.Core().Nodes().List(metav1.ListOptions{}); err != nil {
+			log.Printf("Error getting testpoint nodes: %s", err.Error())
 		} else {
-			for _, pod := range pods.Items {
-				if pod.Status.Phase != v1.PodRunning || pod.Status.PodIP == "" {
-					continue
-				}
-				for orgID, org := range conf.Organizations {
-					for _, orgDomain := range org.Domain {
-						if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
-							org.Site.Host = append(org.Site.Host, Host{IP: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
-							conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
-							conf.BWIPs = append(conf.BWIPs, pod.Status.PodIP)
+			pods, err := clientset.Core().Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint"})
+			if err != nil {
+				log.Printf("Error getting testpoint pods: %s", err.Error())
+			} else {
+				for _, pod := range pods.Items {
+					if pod.Status.Phase != v1.PodRunning || pod.Status.PodIP == "" {
+						continue
+					}
+					for orgID, org := range conf.Organizations {
+						for _, orgDomain := range org.Domain {
+							if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
+								org.Site.Host = append(org.Site.Host, Host{IP: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
+								conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
+								for _, node := range nodes.Items {
+									for _, addr := range node.Status.Addresses {
+										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
+											switch node.Labels["nw"] {
+											case "10G":
+												conf.BW10GIPs = append(conf.BW10GIPs, pod.Status.PodIP)
+											case "40G":
+												conf.BW40GIPs = append(conf.BW40GIPs, pod.Status.PodIP)
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
 			}
-		}
 
-		pods, err = clientset.Core().Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint-h"})
-		if err != nil {
-			log.Printf("Error getting htestpoint pods: %s", err.Error())
-		} else {
-			for _, pod := range pods.Items {
-				if pod.Status.Phase != v1.PodRunning || pod.Status.PodIP == "" {
-					continue
-				}
-				for orgID, org := range conf.Organizations {
-					for _, orgDomain := range org.Domain {
-						if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
+			pods, err = clientset.Core().Pods("perfsonar").List(metav1.ListOptions{LabelSelector: "k8s-app=testpoint-h"})
+			if err != nil {
+				log.Printf("Error getting htestpoint pods: %s", err.Error())
+			} else {
+				for _, pod := range pods.Items {
+					if pod.Status.Phase != v1.PodRunning || pod.Status.PodIP == "" {
+						continue
+					}
+					for orgID, org := range conf.Organizations {
+						for _, orgDomain := range org.Domain {
+							if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
 
-							found := false
-							for hind, host := range org.Site.Host {
-								if host.Description == pod.Spec.NodeName {
-									org.Site.Host[hind].IPh = append(org.Site.Host[hind].IPh, pod.Status.PodIP)
-									found = true
+								found := false
+								for hind, host := range org.Site.Host {
+									if host.Description == pod.Spec.NodeName {
+										org.Site.Host[hind].IPh = append(org.Site.Host[hind].IPh, pod.Status.PodIP)
+										found = true
+										conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
+									}
+								}
+
+								if !found {
+									org.Site.Host = append(org.Site.Host, Host{IPh: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
 									conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
 								}
-							}
 
-							if !found {
-								org.Site.Host = append(org.Site.Host, Host{IPh: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
-								conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
+								conf.TraceIPs = append(conf.TraceIPs, pod.Status.PodIP)
 							}
-
-							conf.TraceIPs = append(conf.TraceIPs, pod.Status.PodIP)
 						}
 					}
 				}

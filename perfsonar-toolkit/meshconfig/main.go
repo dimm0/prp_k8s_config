@@ -41,6 +41,7 @@ type MeshConfig struct {
 	Organizations map[string]Organization
 	BW10GIPs      []string
 	BW40GIPs      []string
+	BW100GIPs     []string
 	TraceIPs      []string
 }
 
@@ -91,6 +92,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 												conf.BW10GIPs = append(conf.BW10GIPs, pod.Status.PodIP)
 											case "40G":
 												conf.BW40GIPs = append(conf.BW40GIPs, pod.Status.PodIP)
+											case "100G":
+												conf.BW100GIPs = append(conf.BW100GIPs, pod.Status.PodIP)
 											}
 										}
 									}

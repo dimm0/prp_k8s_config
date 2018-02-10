@@ -1,6 +1,6 @@
 {
     "title":"My perfSONAR Dashboard",
-    "defaultDashboard": "K8s Mesh Config",
+    "defaultDashboard": "Nautilus Mesh",
     "enableAdminUI": true,
     "grids":{
         "OWAMP":{

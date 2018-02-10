@@ -86,7 +86,11 @@ description Nautilus Mesh
 
 <group k8s_group>
     type       mesh
-    {{ range .BW40GIPs }}
+    {{ range .BW10GIPs }}
+      member {{.}}
+    {{end}}{{ range .BW40GIPs }}
+      member {{.}}
+    {{end}}{{ range .BW100GIPs }}
       member {{.}}
     {{end}}
 </group>
@@ -105,6 +109,13 @@ description Nautilus Mesh
     {{end}}
 </group>
 
+<group k8s_100g_group>
+    type       mesh
+    {{ range .BW100GIPs }}
+      member {{.}}
+    {{end}}
+</group>
+
 <group k8s_trace_group>
     type       mesh
     {{ range .TraceIPs }}
@@ -113,14 +124,20 @@ description Nautilus Mesh
 </group>
 
 <test>
-  description       K8s Throughput 10 Testing
+  description       K8s Throughput 10G Testing
   group             k8s_10g_group
   test_spec         bwctl_test
 </test>
 
 <test>
-  description       K8s Throughput 40 Testing
+  description       K8s Throughput 40G Testing
   group             k8s_40g_group
+  test_spec         bwctl_test
+</test>
+
+<test>
+  description       K8s Throughput 100G Testing
+  group             k8s_100g_group
   test_spec         bwctl_test
 </test>
 

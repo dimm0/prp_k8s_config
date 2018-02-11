@@ -59,11 +59,12 @@ description Nautilus Mesh
   type              perfsonarbuoy/bwctl  # Perform a bwctl test (i.e. achievable bandwidth)
   tool              bwctl/iperf3         # Use 'iperf' to do the bandwidth test
   protocol          tcp                  # Run a TCP bandwidth test
-  interval          21600                # Run the test every 6 hours
+  interval          10800                # Run the test every 3 hours
   duration          20                   # Perform a 20 second test
   force_bidirectional 1                  # do bidirectional test
   random_start_percentage 10             # randomize start time
   omit_interval     5                    # ignore first few seconds of test
+  streams           16
 </test_spec>
 
 <test_spec owamp_test>

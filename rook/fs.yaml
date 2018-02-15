@@ -14,3 +14,20 @@ spec:
   metadataServer:
     activeCount: 1
     activeStandby: true
+---
+apiVersion: rook.io/v1alpha1
+kind: Filesystem
+metadata:
+  name: ucicompvis
+  namespace: rook
+spec:
+  metadataPool:
+    replicated:
+      size: 3
+  dataPools:
+    - erasureCoded:
+       dataChunks: 2
+       codingChunks: 1
+  metadataServer:
+    activeCount: 1
+    activeStandby: true

@@ -18,4 +18,4 @@ defaultEntryPoints = ["http","https"]
   address = ":8081"
   readOnly = true
   [web.auth.basic]
-  users = ["admin:***REMOVED***"]
+  users = ["admin:$apr1$iDCPy4sV$AX7/4homFxf.DLDWPMIPU0"]

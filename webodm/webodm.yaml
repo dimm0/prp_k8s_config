@@ -1,8 +1,10 @@
+# # Nodes: webodmnode-0.webodmnode.webodm.svc.cluster.local
+# # examples https://github.com/OpenDroneMap/odm_data
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: webodmdb
-  namespace: ucsd-edu
+  namespace: webodm
 spec:
   storageClassName: rook-block
   accessModes:
@@ -15,7 +17,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: webodmmedia
-  namespace: ucsd-edu
+  namespace: webodm
 spec:
   storageClassName: rook-block
   accessModes:
@@ -28,7 +30,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: webodm
-  namespace: ucsd-edu
+  namespace: webodm
 spec:
   replicas: 1
   template:
@@ -58,8 +60,6 @@ spec:
       - name: webodmmedia
         persistentVolumeClaim:
           claimName: webodmmedia
-      nodeSelector:
-        kubernetes.io/hostname: k8s-epyc-01.sdsc.optiputer.net
 ---
 kind: Service
 apiVersion: v1
@@ -67,7 +67,7 @@ metadata:
   labels:
     k8s-app: webodm
   name: webodm
-  namespace: ucsd-edu
+  namespace: webodm
 spec:
   type: NodePort
   ports:
@@ -81,7 +81,7 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: webodmnode
-  namespace: ucsd-edu
+  namespace: webodm
 spec:
   podManagementPolicy: Parallel
   serviceName: webodmnode
@@ -97,9 +97,7 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            memory: "90Gi"
-      nodeSelector:
-        webodm-worker: "true"
+            memory: "40Gi"
 ---
 apiVersion: v1
 kind: Service
@@ -107,7 +105,7 @@ metadata:
   labels:
     k8s-app: webodmnode
   name: webodmnode
-  namespace: ucsd-edu
+  namespace: webodm
 spec:
   clusterIP: None
   ports:
@@ -119,12 +117,12 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: webodm
-  namespace: ucsd-edu
+  namespace: webodm
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: webodm.k8s.optiputer.net
+  - host: webodm.nautilus.optiputer.net
     http:
       paths:
       - path: /

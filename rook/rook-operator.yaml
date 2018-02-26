@@ -119,7 +119,7 @@ spec:
       serviceAccountName: rook-operator
       containers:
       - name: rook-operator
-        image: rook/rook:master
+        image: rook/rook:v0.6.2
         args: ["operator"]
         imagePullPolicy: Always
         env:

@@ -9,7 +9,8 @@ metadata:
   name: rook
   namespace: rook
 spec:
-  versionTag: master
+  versionTag: v0.6.2
+  monCount: 5
   dataDirHostPath: /var/lib/rook
   storage:                # cluster level storage configuration and selection
     useAllNodes: false

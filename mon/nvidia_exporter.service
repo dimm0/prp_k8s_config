@@ -1,0 +1,8 @@
+[Unit]
+After=docker.service
+
+[Service]
+ExecStart=/opt/nvidia_exporter
+
+[Install]
+WantedBy=default.target

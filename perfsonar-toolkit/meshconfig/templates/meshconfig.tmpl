@@ -87,11 +87,7 @@ description Nautilus Mesh
 
 <group k8s_group>
     type       mesh
-    {{ range .BW10GIPs }}
-      member {{.}}
-    {{end}}{{ range .BW40GIPs }}
-      member {{.}}
-    {{end}}{{ range .BW100GIPs }}
+    {{ range .IntIPs }}
       member {{.}}
     {{end}}
 </group>
@@ -119,7 +115,7 @@ description Nautilus Mesh
 
 <group k8s_trace_group>
     type       mesh
-    {{ range .TraceIPs }}
+    {{ range .ExtIPs }}
       member {{.}}
     {{end}}
 </group>

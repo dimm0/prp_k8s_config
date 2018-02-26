@@ -42,7 +42,8 @@ type MeshConfig struct {
 	BW10GIPs      []string
 	BW40GIPs      []string
 	BW100GIPs     []string
-	TraceIPs      []string
+	ExtIPs        []string
+	IntIPs        []string
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -84,20 +85,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 							if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
 								org.Site.Host = append(org.Site.Host, Host{IP: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
 								conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
-								for _, node := range nodes.Items {
-									for _, addr := range node.Status.Addresses {
-										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
-											switch node.Labels["nw"] {
-											case "10G":
-												conf.BW10GIPs = append(conf.BW10GIPs, pod.Status.PodIP)
-											case "40G":
-												conf.BW40GIPs = append(conf.BW40GIPs, pod.Status.PodIP)
-											case "100G":
-												conf.BW100GIPs = append(conf.BW100GIPs, pod.Status.PodIP)
-											}
-										}
-									}
-								}
+								conf.IntIPs = append(conf.IntIPs, pod.Status.PodIP)
 							}
 						}
 					}
@@ -130,7 +118,22 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 									conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
 								}
 
-								conf.TraceIPs = append(conf.TraceIPs, pod.Status.PodIP)
+								conf.ExtIPs = append(conf.ExtIPs, pod.Status.PodIP)
+
+								for _, node := range nodes.Items {
+									for _, addr := range node.Status.Addresses {
+										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
+											switch node.Labels["nw"] {
+											case "10G":
+												conf.BW10GIPs = append(conf.BW10GIPs, pod.Status.PodIP)
+											case "40G":
+												conf.BW40GIPs = append(conf.BW40GIPs, pod.Status.PodIP)
+											case "100G":
+												conf.BW100GIPs = append(conf.BW100GIPs, pod.Status.PodIP)
+											}
+										}
+									}
+								}
 							}
 						}
 					}

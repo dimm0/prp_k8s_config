@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rocketchat
+  namespace: rocketchat
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: rocketchat
+    spec:
+      containers:
+      - name: rocketchat-app
+        image: rocketchat/rocket.chat:latest
+        env:
+        - name: ROOT_URL
+          value: "https://rocket.nautilus.optiputer.net"
+        - name: MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              name: mongodb
+              key: connectstring
+        - name: MONGODB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb
+              key: username
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb
+              key: password
+        - name: MONGODB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mongodb
+              key: database
+        ports:
+          - name: http
+            containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rocketchat
+  namespace: rocketchat
+  labels:
+    k8s-app: rocketchat
+spec:
+  ports:
+  - port: 3000
+  selector:
+    k8s-app: rocketchat
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rocketchat
+  namespace: rocketchat
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: rocket.nautilus.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rocketchat
+          servicePort: 3000

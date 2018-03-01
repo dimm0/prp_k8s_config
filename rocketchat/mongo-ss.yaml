@@ -1,0 +1,151 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb
+  namespace: rocketchat
+data:
+  username: "cm9ja2V0Y2hhdA=="
+  password: ""
+  database: "cm9ja2V0Y2hhdA=="
+  connectstring: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  namespace: rocketchat
+  labels:
+    name: mongo
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    role: mongo
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: rocketchat
+spec:
+  serviceName: "mongo"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        role: mongo
+        environment: test
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mongo
+          image: mongo
+          command:
+            - mongod
+            - "--replSet"
+            - rs0
+            - "--smallfiles"
+            - "--noprealloc"
+            - "--bind_ip"
+            - "0.0.0.0"
+            - "--sslMode"
+            - "requireSSL"
+            - "--sslPEMKeyFile"
+            - "/data/ssl/mongodb.pem"
+            - "--sslAllowInvalidCertificates"
+            - "--sslAllowInvalidHostnames"
+            - "--auth"
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: password
+            - name: MONGO_INITDB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: database
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+            - name: mongo-ssl
+              mountPath: /data/ssl
+        - name: mongo-sidecar
+          image: cvallance/mongo-k8s-sidecar
+          env:
+            - name: MONGO_SIDECAR_POD_LABELS
+              value: "role=mongo,environment=test"
+            - name: KUBE_NAMESPACE
+              value: "rocketchat"
+            - name: KUBERNETES_MONGO_SERVICE_NAME
+              value: "mongo"
+            - name: MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: username
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: password
+            - name: MONGODB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: database
+            - name: MONGO_SSL_ENABLED
+              value: "true"
+            - name: MONGO_SSL_ALLOW_INVALID_CERTIFICATES
+              value: "true"
+            - name: MONGO_SSL_ALLOW_INVALID_HOSTNAMES
+              value: "true"
+      volumes:
+      - name: mongo-ssl
+        secret:
+          secretName: mongo-ssl
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-persistent-storage
+      namespace: rocketchat
+    spec:
+      storageClassName: rook-block
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: rocketchat
+  name: mongo-pod-read
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mongo-pod-read
+  namespace: rocketchat
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: rocketchat
+roleRef:
+  kind: Role
+  name: mongo-pod-read
+  apiGroup: rbac.authorization.k8s.io

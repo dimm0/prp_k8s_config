@@ -11,6 +11,7 @@ makeselfcerts:
 	rm server.csr
 
 pushcerts:
+	-kubectl delete secret ssl-key -n kube-system
 	kubectl create secret generic ssl-key -n kube-system --from-file=prod/k8s_cert.cer --from-file=prod/k8s.key
 
 pushgooglecert:

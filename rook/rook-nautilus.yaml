@@ -9,7 +9,6 @@ metadata:
   name: rook
   namespace: rook
 spec:
-  versionTag: v0.6.2
   monCount: 5
   dataDirHostPath: /var/lib/rook
   storage:                # cluster level storage configuration and selection
@@ -40,46 +39,6 @@ spec:
       - name: "sdq"
       - name: "sdr"
     - name: "fiona-dtn-1.ucsc.edu"
-      devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
-    - name: "fiona-dtn.usc.edu"
-      devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
-
-
-
-
-    - name: "fiona.its.hawaii.edu"
       devices:
       # sda,sdb boot
       # sdc,sdd docker
@@ -223,6 +182,48 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
+
+
+
+
+
+
+   #  - name: "fiona-dtn.usc.edu"
+   #    devices:
+   #    # sda,sdb boot
+   #    # sdc,sdd docker
+   #    - name: "sde"
+   #    - name: "sdf"
+   #    - name: "sdg"
+   #    - name: "sdh"
+   #    - name: "sdi"
+   #    - name: "sdj"
+   #    - name: "sdk"
+   #    - name: "sdl"
+   #    - name: "sdn"
+   #    - name: "sdn"
+   #    - name: "sdo"
+   #    - name: "sdp"
+   #    - name: "sdq"
+   #    - name: "sdr"
+   #  - name: "fiona.its.hawaii.edu"
+   #    devices:
+   #    # sda,sdb boot
+   #    # sdc,sdd docker
+   #    - name: "sde"
+   #    - name: "sdf"
+   #    - name: "sdg"
+   #    - name: "sdh"
+   #    - name: "sdi"
+   #    - name: "sdj"
+   #    - name: "sdk"
+   #    - name: "sdl"
+   #    - name: "sdn"
+   #    - name: "sdn"
+   #    - name: "sdo"
+   #    - name: "sdp"
+   #    - name: "sdq"
+   #    - name: "sdr"
 
 
 

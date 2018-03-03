@@ -63,7 +63,7 @@ def get_cen_link_stats(source, target):
     result_fields = {'throughput':0, 'packet-retransmits':1}
 
     try:
-        r = requests.get("%s/esmond/perfsonar/archive/?format=json&source=%s&destination=%s&event-type=throughput"%(base_url, hosts[source]["addr"][0], hosts[target]["addr"][0]), verify=False).json()
+        r = requests.get("%s/esmond/perfsonar/archive/?format=json&source=%s&destination=%s&event-type=throughput"%(base_url, hosts[source]["addr"][1], hosts[target]["addr"][1]), verify=False).json()
         data_path_first_record = r[0]
 
         for event in data_path_first_record['event-types']:

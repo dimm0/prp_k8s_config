@@ -3,6 +3,7 @@ from networkx import set_node_attributes
 import json
 import re
 import itertools
+from IPy import IP
 import socket
 import requests
 import urllib3
@@ -59,8 +60,8 @@ set_node_attributes(g_cen, name="lon", values={host:[get_lon(host)] for host in 
 set_node_attributes(g_cen, name="org", values={host:[get_org(host)] for host in hosts})
 
 def get_cen_link_stats(source, target):
-    result = [-1, -1, None]
-    result_fields = {'throughput':0, 'packet-retransmits':1}
+    result = [-1, -1, None, -1]
+    result_fields = {'throughput':0, 'packet-retransmits':1, 'packet-trace':2, 'packet-count-lost':3}
 
     try:
         r = requests.get("%s/esmond/perfsonar/archive/?format=json&source=%s&destination=%s&event-type=throughput"%(base_url, hosts[source]["addr"][1], hosts[target]["addr"][1]), verify=False).json()
@@ -76,6 +77,15 @@ def get_cen_link_stats(source, target):
                 result[result_fields[event['event-type']]] = r1.pop()['val']
     except Exception, ex:
         print "Error getting throughput value for %s %s %s"%(source, target, ex)
+
+    try:
+        r = requests.get("%s/esmond/perfsonar/archive/?format=json&source=%s&destination=%s&event-type=packet-count-lost"%(base_url, hosts[source]["addr"][0], hosts[target]["addr"][0]), verify=False).json()
+        data_path_first_record = r[0]
+        meta_key = data_path_first_record['metadata-key']
+        r1 = requests.get("%s/esmond/perfsonar/archive/%s/packet-loss-rate/aggregations/3600?format=json&time-range=3600"%(base_url,meta_key), verify=False).json()
+        result[result_fields['packet-count-lost']] = r1.pop()['val']
+    except Exception, ex:
+        print "Error getting packet loss value for %s %s %s"%(source, target, ex)
 
 
     try:
@@ -110,14 +120,13 @@ def ip_to_host(ip):
 def gen_key(host_pair):
     return "%s %s"%(host_pair[0], host_pair[1])
 
-def add_new_edge(source, target, sgroup, tgroup, flap_route, throughput, latency, retransmits):
-#     print "Adding edge!!!"
+def add_new_edge(source, target, sgroup, tgroup, flap_route, throughput, latency, retransmits, packets_lost):
     if(latency < 0):
         latency = -1
     if(source == target):
         return
     if(not g_cen.has_edge(source, target)):
-        g_cen.add_edge(source, target, source_group=[sgroup], target_group=[tgroup], flap_route=flap_route, throughput=throughput, latency=latency, retransmits=retransmits)
+        g_cen.add_edge(source, target, source_group=[sgroup], target_group=[tgroup], flap_route=flap_route, throughput=throughput, latency=latency, retransmits=retransmits, packets_lost=packets_lost)
     else:
         if(sgroup not in g_cen[source][target][0]["source_group"]):
             g_cen[source][target][0]["source_group"].append(sgroup)
@@ -127,13 +136,14 @@ def add_new_edge(source, target, sgroup, tgroup, flap_route, throughput, latency
             g_cen[source][target][0]["throughput"] = throughput
         if(g_cen[source][target][0]["retransmits"] == -1 or (g_cen[source][target][0]["retransmits"] > retransmits and retransmits != -1)):
             g_cen[source][target][0]["retransmits"] = retransmits
+        if(g_cen[source][target][0]["packets_lost"] < packets_lost):
+            g_cen[source][target][0]["packets_lost"] = packets_lost
 
         g_cen[source][target][0]["latency"] = min(latency, g_cen[source][target][0]["latency"])
     return 0
 
 def add_new_node(node, sgroup, tgroup):
     if(node not in g_cen):
-#         print "Add node %s"%node
         g_cen.add_node(node, type="", source_group=[sgroup], target_group=[tgroup])
     else:
         if(sgroup not in g_cen.node[node]["source_group"]):
@@ -146,7 +156,7 @@ for pair in [pair for pair in itertools.permutations(hosts, 2)]:
     tgroup = get_cen_group(pair[1])
     key = gen_key(pair)
 
-    [throughput_value, retransmits_value, traceroute] = get_cen_link_stats(pair[0], pair[1])
+    [throughput_value, retransmits_value, traceroute, packets_lost] = get_cen_link_stats(pair[0], pair[1])
 
     latency = 0 # to store previous value
     cur_latency = 0
@@ -186,7 +196,7 @@ for pair in [pair for pair in itertools.permutations(hosts, 2)]:
                     cur_smallest_latency = min(cur_latency, cur_smallest_latency)
 
                 for last_node, last_lat_unused in last_nodes.iteritems():
-                    add_new_edge(last_node, host, sgroup, tgroup, flap_route, throughput_value, cur_latency - latency, retransmits_value)
+                    add_new_edge(last_node, host, sgroup, tgroup, flap_route, throughput_value, cur_latency - latency, retransmits_value, packets_lost)
 
             if(cur_values):
                 last_nodes = cur_values
@@ -207,7 +217,7 @@ for pair in [pair for pair in itertools.permutations(hosts, 2)]:
         # print("Error building path from %s to %s: no nodes found"%(pair[0], pair[1]))
     if(not done): # not ended with the destination
         for last_node, last_lat_unused in last_nodes.iteritems():
-            add_new_edge(last_node, pair[1], sgroup, tgroup, False, throughput_value, cur_latency - latency, retransmits_value)
+            add_new_edge(last_node, pair[1], sgroup, tgroup, False, throughput_value, cur_latency - latency, retransmits_value, packets_lost)
         #print "Not finished %s-%s with %s, finished with %s"%(pair[0], pair[1], pair[1], last_nodes)
 
 f1=open('/web/graph.json', 'w+')

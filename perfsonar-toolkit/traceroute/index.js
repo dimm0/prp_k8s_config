@@ -33,11 +33,10 @@ var attachPoints = [], overNode = null;
 
 requirejs([
     "//cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/topojson/2.0.0/topojson.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/humanize-plus/1.8.2/humanize.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"], function(d3, topojson, humanize, _) {
-      d3.json("https://traceroute.nautilus.optiputer.net/graph.json", function(error, graph) {
-      // d3.json("graph.json", function(error, graph) {
+    "//cdnjs.cloudflare.com/ajax/libs/topojson/2.0.0/topojson.min.js",
+    "//cdnjs.cloudflare.com/ajax/libs/humanize-plus/1.8.2/humanize.min.js",
+    "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"], function(d3, topojson, humanize, _) {
+      d3.json("/graph.json", function(error, graph) {
 
 
 
@@ -76,7 +75,7 @@ requirejs([
           });
       }
 
-      d3.json("https://sentinel.sdsc.edu/lustre-usage/gz_2010_us_040_00_500k_2.json", function(error, mapData) {
+      d3.json("/gz_2010_us_040_00_500k_2.json", function(error, mapData) {
           if (error) throw error;
           var svg = d3.select("svg"),
               map = svg.append("g"),
@@ -159,6 +158,10 @@ requirejs([
           var colorScaleRetransmits = d3.scaleThreshold()
               .domain([100, 500])
               .range(["rgb(0, 182,0)", "rgb(255,200,0)", "rgb(255,0,0)"]);
+
+          var colorScalePacketsLost = d3.scaleThreshold()
+              .domain([0, 0.0000001, 0.0001])
+              .range(["rgb(140, 140, 140)", "rgb(0, 182,0)", "rgb(255,200,0)", "rgb(255,0,0)"]);
 
           var features = mapData.features;
           var projection = d3.geoAlbers().fitSize([width, height], mapData);
@@ -460,6 +463,8 @@ requirejs([
                               return colorScaleLatency(d.latency);
                           case 2:
                               return colorScaleRetransmits(d.retransmits);
+                          case 3:
+                              return colorScalePacketsLost(d.packets_lost);
                       }
                   }).merge(link);
 
@@ -499,7 +504,9 @@ requirejs([
                               tip.html("<b>"+d.source.id+" - "+d.target.id + "</b><br/>"+
                                        "lat: "+((d.latency != -1)?(humanize.formatNumber(d.latency)+"ms"):"unknown")+
                                        "; throughput: "+((d.throughput != -1)?(humanize.fileSize(d.throughput)+"/s"):"unknown")+
-                                       "; retransmits: "+((d.retransmits != -1)?(humanize.intComma(d.retransmits)):"unknown"));
+                                       ";<br/>retransmits: "+((d.retransmits != -1)?(humanize.intComma(d.retransmits)):"unknown")+
+                                       "; packets-lost: "+((d.packets_lost != -1)?(humanize.formatNumber(d.packets_lost*100.0,5)+"%"):"unknown")
+                                     );
 
                               var participatingNodes = [];
                               var usedNodesCur = usedNodes(false);
@@ -598,7 +605,7 @@ requirejs([
                   .attr("id","allButtons")
 
       //fontawesome button labels
-      var labels= [{'icon': '\uf061', 'title':'Bandwidth'},{'icon': '\uf017', 'title':'Latency'}, {'icon': '\uf0ec', 'title':'Retransmits'}];
+      var labels= [{'icon': '\uf061', 'title':'Bandwidth'},{'icon': '\uf017', 'title':'Latency'}, {'icon': '\uf0ec', 'title':'Retransmits'}, {'icon': '\u2620', 'title':'Packets lost'}];
       var defaultColor= "#7777BB";
       var hoverColor= "#0000ff";
       var pressedColor= "#000077";
@@ -630,6 +637,12 @@ requirejs([
                       link
                           .attr("stroke", function(d) {
                               return colorScaleRetransmits(d.retransmits)
+                      });
+                      break;
+                  case 3:
+                      link
+                          .attr("stroke", function(d) {
+                              return colorScalePacketsLost(d.packets_lost)
                       });
                       break;
               }
@@ -693,7 +706,7 @@ function handleClusterClick(cb) {
 }
 
 requirejs([
-    "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"
+    "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"
     ], function(slider) {
         $("#strength").bootstrapSlider({tooltip: 'always'});
         $("#strength").on("slideStop", function(slideEvt) {

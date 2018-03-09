@@ -37,9 +37,9 @@ spec:
         volumeMounts:
           - name: sage2Uploads
             mountPath: /root/Documents/SAGE2_Media
-          - name: sage2Keys
+          - name: sage2keys
             mountPath: /sage2/keys
-          - name: sage2Config
+          - name: sage2config
             mountPath: /sage2/config
       volumes:
       - name: sage2config

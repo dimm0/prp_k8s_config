@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sage2Uploads
+  name: sage2uploads
   namespace: sage2
 spec:
   storageClassName: rook-block
@@ -48,9 +48,9 @@ spec:
       - name: sage2keys
         secret:
           secretName: sage2keys
-      - name: sage2Uploads
+      - name: sage2uploads
         persistentVolumeClaim:
-          claimName: sage2Uploads
+          claimName: sage2uploads
 ---
 apiVersion: v1
 kind: Service

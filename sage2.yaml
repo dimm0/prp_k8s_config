@@ -44,10 +44,10 @@ spec:
       volumes:
       - name: sage2config
         secret:
-          secretName: sage2Config
+          secretName: sage2config
       - name: sage2keys
         secret:
-          secretName: sage2Keys
+          secretName: sage2keys
       - name: sage2-persistent-storage
         persistentVolumeClaim:
           claimName: sage2-pv-claim

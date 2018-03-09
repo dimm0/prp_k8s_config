@@ -37,17 +37,17 @@ spec:
         volumeMounts:
           - name: sage2uploads
             mountPath: /root/Documents/SAGE2_Media
-          - name: sage2keys
-            mountPath: /sage2/keys
-          - name: sage2config
-            mountPath: /sage2/config
+#          - name: sage2keys
+#            mountPath: /sage2/keys
+#          - name: sage2config
+#            mountPath: /sage2/config
       volumes:
-      - name: sage2config
-        secret:
-          secretName: sage2config
-      - name: sage2keys
-        secret:
-          secretName: sage2keys
+#      - name: sage2config
+#        secret:
+#          secretName: sage2config
+#      - name: sage2keys
+#        secret:
+#          secretName: sage2keys
       - name: sage2uploads
         persistentVolumeClaim:
           claimName: sage2uploads

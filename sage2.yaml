@@ -1,0 +1,83 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sage2-pv-claim
+  namespace: sage2
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sage2
+  namespace: sage2
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: sage2
+    spec:
+      containers:
+      - name: sage2-app
+        image: sage2/master
+        env:
+        - name: ROOT_URL
+          value: "https://sage2.nautilus.optiputer.net"
+        ports:
+          - name: sage-port-9090
+            containerPort: 9090
+          - name: sage-port-9292
+            containerPort: 9292
+        volumeMounts:
+          - name: sage2Uploads
+            mountPath: /root/Documents/SAGE2_Media
+          - name: sage2Keys
+            mountPath: /sage2/keys
+          - name: sage2Config
+            mountPath: /sage2/config
+      volumes:
+      - name: sage2Config
+        secret:
+          secretName: sage2Config
+      - name: sage2Keys
+        secret:
+          secretName: sage2Keys
+      - name: sage2-persistent-storage
+        persistentVolumeClaim:
+          claimName: sage2-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sage2
+  namespace: sage2
+  labels:
+    k8s-app: sage2
+spec:
+  ports:
+  - port: 9090
+  selector:
+    k8s-app: sage2
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sage2
+  namespace: sage2
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: sage2.nautilus.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sage2
+          servicePort: 9090

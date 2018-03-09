@@ -42,10 +42,10 @@ spec:
           - name: sage2Config
             mountPath: /sage2/config
       volumes:
-      - name: sage2Config
+      - name: sage2config
         secret:
           secretName: sage2Config
-      - name: sage2Keys
+      - name: sage2keys
         secret:
           secretName: sage2Keys
       - name: sage2-persistent-storage

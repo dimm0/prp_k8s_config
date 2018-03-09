@@ -35,7 +35,7 @@ spec:
           - name: sage-port-9292
             containerPort: 9292
         volumeMounts:
-          - name: sage2Uploads
+          - name: sage2uploads
             mountPath: /root/Documents/SAGE2_Media
           - name: sage2keys
             mountPath: /sage2/keys

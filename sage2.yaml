@@ -35,7 +35,7 @@ spec:
           - name: sage-port-9292
             containerPort: 9292
         volumeMounts:
-          - name: sage2uploads
+          - name: sage2Uploads
             mountPath: /root/Documents/SAGE2_Media
           - name: sage2keys
             mountPath: /sage2/keys
@@ -48,9 +48,9 @@ spec:
       - name: sage2keys
         secret:
           secretName: sage2keys
-      - name: sage2uploads
+      - name: sage2Uploads
         persistentVolumeClaim:
-          claimName: sage2uploads
+          claimName: sage2Uploads
 ---
 apiVersion: v1
 kind: Service

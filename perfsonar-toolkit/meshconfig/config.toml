@@ -113,3 +113,11 @@ city="Santa Barbara"
 state="CA"
 description="University of California, Santa Barbara"
 domain=["ucsb.edu"]
+
+[org.kreonet]
+lat=36.365717
+lon=127.359511
+city="Daejeon"
+state=""
+description="KISTI"
+domain=["kreonet.net"]

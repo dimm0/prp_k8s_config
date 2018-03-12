@@ -182,11 +182,18 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
-
-
-
-
-
+    - name: "dtn2-daejeon.kreonet.net"
+      devices:
+      # sda boot  #500GB SSD
+      # sdb,sdc docker  #2x 1TB SSD
+      - name: "sdd" #1TB SSD
+      - name: "sde" #1TB SSD
+      - name: "sdf" #4TB SATA
+      - name: "sdg" #4TB SATA
+      - name: "sdh" #4TB SATA
+      - name: "sdi" #4TB SATA
+      - name: "sdj" #4TB SATA
+      - name: "sdk" #4TB SATA
 
    #  - name: "fiona-dtn.usc.edu"
    #    devices:

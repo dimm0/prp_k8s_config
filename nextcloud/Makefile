@@ -10,3 +10,5 @@ buildrelease: builddocker pushdocker
 
 buildgoogle:
 	gcloud container builds submit --tag us.gcr.io/prp-k8s/nextcloud:latest .
+
+# edit /var/www/html/config/config.php - add trusted_domains

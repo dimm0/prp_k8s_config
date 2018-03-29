@@ -72,30 +72,52 @@ spec:
   hostIPC: true
   hostNetwork: true
 ---
-kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
-  name: psp:system
+  name: psp:privileged
 roleRef:
+  apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: psp:privileged-user
-  apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: Group
-  name: "system:serviceaccounts:kube-system"
-  apiGroup: rbac.authorization.k8s.io
-- kind: Group
+- namespace: kube-system
+  kind: ServiceAccount
+  name: default
+- namespace: kube-system
+  kind: ServiceAccount
+  name: kube-proxy
+- namespace: kube-system
+  kind: ServiceAccount
+  name: kube-router
+- namespace: kube-dns
+  kind: ServiceAccount
+  name: kube-router
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
   name: system:nodes
-  apiGroup: rbac.authorization.k8s.io
-- kind: Group
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
   name: system:serviceaccounts:perfsonar
-  apiGroup: rbac.authorization.k8s.io
-- kind: Group
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
   name: system:serviceaccounts:monitoring
-  apiGroup: rbac.authorization.k8s.io
-- kind: Group
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
   name: system:serviceaccounts:rook
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts:rook-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: psp:nautilus-user
+roleRef:
   apiGroup: rbac.authorization.k8s.io
-- kind: Group
-  name: "system:serviceaccounts:rook-system"
-  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: psp:nautilus-user
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts:kube-system

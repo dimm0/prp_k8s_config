@@ -90,10 +90,10 @@ subjects:
 - namespace: kube-system
   kind: ServiceAccount
   name: kube-router
-- namespace: kube-dns
+- namespace: kube-system
   kind: ServiceAccount
-  name: kube-router
-- namespace: kube-dns
+  name: kube-dns
+- namespace: kube-system
   kind: ServiceAccount
   name: traefik-ingress-controller
 - apiGroup: rbac.authorization.k8s.io

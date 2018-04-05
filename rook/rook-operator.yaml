@@ -107,6 +107,8 @@ subjects:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
+  annotations:
+    scheduler.alpha.kubernetes.io/node-selector: monitor=true
   name: rook-operator
   namespace: rook-system
 spec:

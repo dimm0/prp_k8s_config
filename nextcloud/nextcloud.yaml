@@ -21,7 +21,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 2Ti
+      storage: 16Ti
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -34,7 +34,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
 ---
 apiVersion: apps/v1beta2
 kind: Deployment
@@ -80,11 +80,6 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: dbdata
-          livenessProbe:
-            tcpSocket:
-              port: 3306
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
         - name: nextcloud
           image: nextcloud
           env:
@@ -108,7 +103,7 @@ spec:
                   key: password
 
             - name: NEXTCLOUD_UPLOAD_MAX_FILESIZE
-              value: 4G
+              value: 8G
             - name: NEXTCLOUD_MAX_FILE_UPLOADS
               value: "20"
 

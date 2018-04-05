@@ -10,6 +10,7 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install epel-release httpd && \
     yum -y --setopt=tsflags=nodocs install http://software.internet2.edu/rpms/el7/x86_64/main/RPMS/perfSONAR-repo-0.8-1.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs clean all && \
+    yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install ntp && \
     yum -y --setopt=tsflags=nodocs install git wget nmap htop mlocate net-tools sysstat tcpdump rsyslog && \
     yum -y --setopt=tsflags=nodocs install supervisor perfsonar-testpoint postgresql95 postgresql95-server
@@ -52,6 +53,8 @@ COPY postgresql/pscheduler-build-database /tmp/pscheduler-build-database
 RUN  /tmp/pscheduler-build-database
 RUN  rm -f /tmp/pscheduler-build-database
 
+# disable huge pages
+RUN sed -i 's/#huge_pages = try/huge_pages = off/' /var/lib/pgsql/9.5/data/postgresql.conf
 
 # -----------------------------------------------------------------------------
 

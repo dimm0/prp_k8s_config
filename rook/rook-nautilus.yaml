@@ -42,22 +42,22 @@ spec:
       - name: "sdr"
     - name: "fiona-dtn-1.ucsc.edu"
       devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
+      # sdq,sdah boot
+      # sdr,sds docker
+      - name: "sdt"
+      - name: "sdu"
+      - name: "sdv"
+      - name: "sdw"
+      - name: "sdx"
+      - name: "sdy"
+      - name: "sdz"
+      - name: "sdaa"
+      - name: "sdab"
+      - name: "sdac"
+      - name: "sdad"
+      - name: "sdae"
+      - name: "sdaf"
+      - name: "sdag"
     - name: "fiona.nwsc.ucar.edu"
       devices:
       # sda,sdb boot

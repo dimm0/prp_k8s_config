@@ -22,61 +22,15 @@ spec:
     storeConfig:
       storeType: bluestore
     nodes:
-    - name: "dtn-main.ucr.edu"
+    - name: "k8s-gpu-03.sdsc.optiputer.net"
       devices:
       # sda,sdb boot
       # sdc,sdd docker
+      - name: "nvme0n1"
+      - name: "nvme1n1"
       - name: "sde"
       - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
-    - name: "fiona-dtn-1.ucsc.edu"
-      devices:
-      # sdq,sdah boot
-      # sdr,sds docker
-      - name: "sdt"
-      - name: "sdu"
-      - name: "sdv"
-      - name: "sdw"
-      - name: "sdx"
-      - name: "sdy"
-      - name: "sdz"
-      - name: "sdaa"
-      - name: "sdab"
-      - name: "sdac"
-      - name: "sdad"
-      - name: "sdae"
-      - name: "sdaf"
-      - name: "sdag"
     - name: "fiona.nwsc.ucar.edu"
-      devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "sdj"
-      - name: "sdk"
-      - name: "sdl"
-      - name: "sdn"
-      - name: "sdn"
-      - name: "sdo"
-      - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
-    - name: "fiona.tools.ucla.net"
       devices:
       # sda,sdb boot
       # sdc,sdd docker
@@ -116,23 +70,17 @@ spec:
       - name: "sdl" #10TB SAS3
       - name: "sdm" #10TB SAS3
       - name: "sdn" #10TB SAS3
-    - name: "k8s-gpu-02.calit2.optiputer.net"
+    - name: "k8s-nvme-01.sdsc.optiputer.net"
       devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "nvme0n1"
-      - name: "nvme1n1"
-      - name: "sde"
-      - name: "sdf"
-    - name: "k8s-gpu-03.sdsc.optiputer.net"
-      devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "nvme0n1"
-      - name: "nvme1n1"
-      - name: "sde"
-      - name: "sdf"
-    - name: "netw-fiona.stanford.edu"
+   #  - name: "nvme0n1" Docker ZFS
+   #  - name: "nvme1n1" Docker ZFS
+      - name: "nvme2n1"
+      - name: "nvme3n1"
+      - name: "nvme4n1"
+      - name: "nvme5n1"
+      - name: "nvme6n1"
+      - name: "nvme7n1"
+    - name: "fiona.tools.ucla.net"
       devices:
       # sda,sdb boot
       # sdc,sdd docker
@@ -150,6 +98,24 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
+    - name: "fiona-dtn-1.ucsc.edu"
+      devices:
+      # sdq,sdah boot
+      # sdr,sds docker
+      - name: "sdt"
+      - name: "sdu"
+      - name: "sdv"
+      - name: "sdw"
+      - name: "sdx"
+      - name: "sdy"
+      - name: "sdz"
+      - name: "sdaa"
+      - name: "sdab"
+      - name: "sdac"
+      - name: "sdad"
+      - name: "sdae"
+      - name: "sdaf"
+      - name: "sdag"
     - name: "ps-100g.sdsu.edu"
       devices:
       # sdc,sdd boot
@@ -174,30 +140,76 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
-    - name: "k8s-nvme-01.sdsc.optiputer.net"
+    - name: "fiona-dtn.usc.edu"
       devices:
-   #  - name: "nvme0n1" Docker ZFS
-   #  - name: "nvme1n1" Docker ZFS
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "k8s-nvme-01.ultralight.org"
+      devices:
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "nvme0n1"
+      - name: "nvme1n1"
       - name: "nvme2n1"
       - name: "nvme3n1"
       - name: "nvme4n1"
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
-    - name: "dtn2-daejeon.kreonet.net"
+      - name: "sde"
+    - name: "netw-fiona.stanford.edu"
       devices:
-      # sda boot  #500GB SSD
-      # sdb,sdc docker  #2x 1TB SSD
-      - name: "sdd" #1TB SSD
-      - name: "sde" #1TB SSD
-      - name: "sdf" #4TB SATA
-      - name: "sdg" #4TB SATA
-      - name: "sdh" #4TB SATA
-      - name: "sdi" #4TB SATA
-      - name: "sdj" #4TB SATA
-      - name: "sdk" #4TB SATA
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
+    - name: "fiona.its.hawaii.edu"
+      devices:
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
 
-   #  - name: "fiona-dtn.usc.edu"
+
+   #  - name: "dtn-main.ucr.edu"
    #    devices:
    #    # sda,sdb boot
    #    # sdc,sdd docker
@@ -215,32 +227,26 @@ spec:
    #    - name: "sdp"
    #    - name: "sdq"
    #    - name: "sdr"
-   #  - name: "fiona.its.hawaii.edu"
+   #  - name: "k8s-gpu-02.calit2.optiputer.net"
    #    devices:
    #    # sda,sdb boot
    #    # sdc,sdd docker
+   #    - name: "nvme0n1"
+   #    - name: "nvme1n1"
    #    - name: "sde"
    #    - name: "sdf"
-   #    - name: "sdg"
-   #    - name: "sdh"
-   #    - name: "sdi"
-   #    - name: "sdj"
-   #    - name: "sdk"
-   #    - name: "sdl"
-   #    - name: "sdn"
-   #    - name: "sdn"
-   #    - name: "sdo"
-   #    - name: "sdp"
-   #    - name: "sdq"
-   #    - name: "sdr"
-
-
-
-
-
-
-
-
+   #  - name: "dtn2-daejeon.kreonet.net"
+   #    devices:
+   #    # sda boot  #500GB SSD
+   #    # sdb,sdc docker  #2x 1TB SSD
+   #    - name: "sdd" #1TB SSD
+   #    - name: "sde" #1TB SSD
+   #    - name: "sdf" #4TB SATA
+   #    - name: "sdg" #4TB SATA
+   #    - name: "sdh" #4TB SATA
+   #    - name: "sdi" #4TB SATA
+   #    - name: "sdj" #4TB SATA
+   #    - name: "sdk" #4TB SATA
   # - name: "fiona8.calit2.uci.edu"
   #   devices:
   #   - name: "nvme0n1"
@@ -248,19 +254,6 @@ spec:
   #   - name: "sdd"
   #   - name: "sde"
   #   - name: "sdf"
-  # - name: "k8s-nvme-01.ultralight.org"
-  #   devices:
-  #   # sda,sdb boot
-  #   # sdc,sdd docker
-  #   - name: "nvme0n1"
-  #   - name: "nvme1n1"
-  #   - name: "nvme2n1"
-  #   - name: "nvme3n1"
-  #   - name: "nvme4n1"
-  #   - name: "nvme5n1"
-  #   - name: "nvme6n1"
-  #   - name: "nvme7n1"
-  #   - name: "sde"
   # - name: "prp-dtn.noc.ucsb.edu"
   #   devices:
   #   # sda,sdb boot

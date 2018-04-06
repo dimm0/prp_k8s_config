@@ -15,6 +15,7 @@ PASSWD=`random-string --safe --length 60 --randlength`
 echo "Password generated"
 
 sed -i "s/sql_db_password = changeit/sql_db_password = $PASSWD/" /etc/esmond/esmond.conf
+cp /etc/esmond/esmond.conf /var/lib/pgsql/$PG_VERSION/data/
 
 su - postgres -c "createuser esmond && createdb -O esmond esmond"
 
@@ -137,6 +138,8 @@ cat >> /etc/perfsonar/meshconfig-agent-tasks.conf <<EOL
     username   user
 </measurement_archive>
 EOL
+
+cp /etc/perfsonar/meshconfig-agent-tasks.conf /var/lib/pgsql/$PG_VERSION/data/
 
 echo "Meshconfig patched"
 

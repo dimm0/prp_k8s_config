@@ -8,4 +8,7 @@ if [ ! -f /var/lib/pgsql/$PG_VERSION/data/init_done ]; then
 
   /opt/postgresql/esmond-build-database
   touch /var/lib/pgsql/$PG_VERSION/data/init_done
+else
+  cp /var/lib/pgsql/$PG_VERSION/data/meshconfig-agent-tasks.conf /etc/perfsonar/
+  cp /var/lib/pgsql/$PG_VERSION/data/esmond.conf /etc/esmond/
 fi

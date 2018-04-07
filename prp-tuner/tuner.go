@@ -3,20 +3,59 @@ package main
 //https://github.com/golang/go/issues/22688
 
 import (
+	"encoding/json"
+	"fmt"
+	"log"
 	"net"
+	"net/http"
 
 	"github.com/vishvananda/netlink"
 )
 
-func main() {
-	link, _ := getDefaultInterface()
-
+type NodeConfig struct {
+	FQ string `json:"fq"`
 }
 
-func getDefaultInterface() (Link, error) {
+func main() {
+	http.HandleFunc("/", RootHandler)
+	log.Fatal(http.ListenAndServe(":10015", nil))
+}
+
+func RootHandler(w http.ResponseWriter, r *http.Request) {
+	conf := &NodeConfig{}
+
+	if fq, err := getFQ(); err == nil {
+		conf.FQ = fq
+	}
+
+	b, err := json.Marshal(conf)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	w.Write(b)
+}
+
+func getFQ() (string, error) {
+	link, _ := getDefaultInterface()
+	qdiscs, err := netlink.QdiscList(link)
+	if err != nil {
+		return "", err
+	}
+
+	fq, ok := qdiscs[0].(*netlink.Fq)
+	if !ok {
+		return "", nil
+	}
+
+	return fmt.Sprintf("%.2fgbit", float64(fq.FlowMaxRate)*8.0/1000000000.0), nil
+}
+
+func getDefaultInterface() (netlink.Link, error) {
 	dstIP := net.IPv4(8, 8, 8, 8)
 	routeToDstIP, _ := netlink.RouteGet(dstIP)
 	link, _ := netlink.LinkByIndex(routeToDstIP[0].LinkIndex)
+	return link, nil
 }
 
 var netconf string = `default_iface=$(awk '$2 == 00000000 { print $1 }' /proc/net/route)

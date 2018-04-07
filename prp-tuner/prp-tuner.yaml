@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    k8s-app: prp-tuner
+  name: prp-tuner
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: prp-tuner
+    spec:
+      hostNetwork: true
+      imagePullSecrets:
+        - name: gcr-json-key
+      containers:
+      - name: prp-tuner
+        image: us.gcr.io/prp-k8s/prp-tuner:latest
+        imagePullPolicy: Always

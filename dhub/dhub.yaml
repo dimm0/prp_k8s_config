@@ -39,3 +39,16 @@ spec:
       - name: datavol
         persistentVolumeClaim:
           claimName: datavol
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dhub
+  namespace: digital-humanities
+  labels:
+    k8s-app: dhub
+spec:
+  ports:
+  - port: 8000
+  selector:
+    k8s-app: dhub

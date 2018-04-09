@@ -12,7 +12,7 @@ RUN apt update -y && \
  pip3 install --upgrade pip && \
  pip3 install jupyterlab --upgrade && \
  pip3 install jupyterhub --upgrade && \
- pip3 install --upgrade notebook && \
+ pip3 install notebook --upgrade  && \
  pip3 install git+https://github.com/jupyterhub/wrapspawner && \
  pip3 install oauthenticator --upgrade && \
  pip3 install dockerspawner --upgrade && \

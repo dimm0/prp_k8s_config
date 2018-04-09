@@ -10,3 +10,11 @@ buildrelease: builddocker pushdocker
 
 buildgoogle:
 	gcloud container builds submit --tag us.gcr.io/prp-k8s/dhub:latest --timeout=1h .
+
+pushgooglecert:
+	kubectl --namespace=digital-humanities create secret docker-registry gcr-json-key \
+          --docker-server=https://us.gcr.io \
+          --docker-username=_json_key \
+          --docker-password="`cat ../prp-k8s-4a9119125faa.json`" \
+          --docker-email=dmishin@sdsc.edu
+	kubectl --namespace=digital-humanities patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'

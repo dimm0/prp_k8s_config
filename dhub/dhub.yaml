@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datavol
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 512Gi
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -12,19 +24,20 @@ spec:
     spec:
       containers:
       - name: dhub
-        image: phusion/baseimage:0.9.19
-        imagePullPolicy: IfNotPresent
+        image: gcr.io/tensorflow/tensorflow:latest-gpu
+        imagePullPolicy: Always
         args: ["sleep", "36500000"]
         resources:
           limits:
             memory: "12Gi"
+            nvidia.com/gpu: 2
         volumeMounts:
-        - name: nfs
-          mountPath: /opt/subflow
+        - name: datavol
+        mountPath: /datavol
+      restartPolicy: Never
       nodeSelector:
         core: "true"
-      volumes:
-      - name: nfs
-        nfs:
-          server: fiona.sdsu.edu
-          path: "/export/subflow"
+        volumes:
+        - name: datavol
+          persistentVolumeClaim:
+            claimName: datavol

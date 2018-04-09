@@ -3,6 +3,7 @@ FROM gcr.io/tensorflow/tensorflow:latest-gpu
 MAINTAINER John Graham jjgraham@ucsd.edu
 
 # # install everything
+COPY setup_petsc.sh /root/
 RUN apt update
 RUN apt-get install npm nodejs-legacy --upgrade
 RUN npm install -g configurable-http-proxy
@@ -20,3 +21,5 @@ RUN npm cache clean -f
 RUN npm install -g n
 RUN n stable
 RUN jupyter labextension install @jupyterlab/hub-extension
+WORKDIR /root/
+RUN jupyterhub

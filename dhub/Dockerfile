@@ -9,9 +9,9 @@ RUN apt update -y && \
  npm install -g configurable-http-proxy  && \
  apt install python3-pip -y && \
  apt install git -y && \
+ pip3 install --upgrade pip && \
  pip3 install jupyterlab --upgrade && \
  pip3 install jupyterhub --upgrade && \
- pip3 install --upgrade pip && \
  pip3 install --upgrade notebook && \
  pip3 install git+https://github.com/jupyterhub/wrapspawner && \
  pip3 install oauthenticator --upgrade && \

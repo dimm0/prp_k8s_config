@@ -2,10 +2,14 @@
 apt-get install npm nodejs-legacy --upgrade
 npm install -g configurable-http-proxy
 apt install python3-pip
+apt install git
 pip3 install jupyterlab --upgrade
 pip3 install jupyterhub --upgrade
 pip3 install --upgrade pip
 pip3 install --upgrade notebook
+pip3 install git+https://github.com/jupyterhub/wrapspawner
+pip3 install oauthenticator --upgrade
+pip3 install dockerspawner --upgrade
 jupyterhub --generate-config
 npm cache clean -f
 npm install -g n

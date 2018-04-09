@@ -20,5 +20,5 @@ RUN apt update -y && \
  npm cache clean -f && \
  npm install -g n && \
  n stable && \
- jupyter labextension install @jupyterlab/hub-extension && \
+ jupyter labextension install @jupyterlab/hub-extension
 COPY jupyterhub_config.py /root/

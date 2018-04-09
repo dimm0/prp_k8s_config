@@ -17,23 +17,22 @@
 <div id='tip'></div>
 <div id='nodes'></div>
 
-<div style="background-color:rgba(230,230,230, 0.3); border-radius: 20px; width:400px; padding:20px; position: absolute; bottom: 10; left: 0;">
-  <h3>Many-body force params:</h3><br/>
+<div style="background-color:rgba(230,230,230, 0.3); border-radius: 5px; width:400px; padding:5px; position: absolute; bottom: 10; left: 0;">
+  <h4>Many-body force params:</h4><br/>
   Strength: <input id='strength' data-slider-id='strengthSlider' type='text' data-slider-min='-100' data-slider-max='5' data-slider-step='1' data-slider-value='-2'></input>
   <br/>
   Max distance: <input id='dist' data-slider-id='distSlider' type='text' data-slider-min='0' data-slider-max='300' data-slider-step='1' data-slider-value='40'></input>
 </div>
-<div style="background-color:rgba(230,230,230,0.3); border-radius: 20px; width:300px; padding:20px; position: absolute; bottom: 10; left: 425;">
-  <h3>Cluster force params:</h3><br/>
+<div style="background-color:rgba(230,230,230,0.3); border-radius: 5px; width:300px; padding:5px; position: absolute; bottom: 10; left: 425;">
+  <h4>Cluster force params:</h4><br/>
   Strength: <input id='clust' type='checkbox' onclick='handleClusterClick(this);'></input>
 </div>
-<div style="background-color:rgba(230,230,230,0.3); border-radius: 20px; width:300px; padding:20px; position: absolute; bottom: 10; left: 750;">
-  <h3>Links force params:</h3><br/>
+<div style="background-color:rgba(230,230,230,0.3); border-radius: 5px; width:350px; padding:5px; position: absolute; bottom: 10; left: 750;">
+  <h4>Links force params:</h4><br/>
   Strength: <input id='link_strength' data-slider-id='linkStrengthSlider' type='text' data-slider-min='0' data-slider-max='0.5' data-slider-step='0.01' data-slider-value='0.05'></input>
   <br/>
   Max distance: <input id='link_dist' data-slider-id='linkDistSlider' type='text' data-slider-min='0' data-slider-max='600' data-slider-step='1' data-slider-value='50'></input>
 </div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>

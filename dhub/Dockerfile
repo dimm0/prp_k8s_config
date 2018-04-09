@@ -3,7 +3,7 @@ FROM gcr.io/tensorflow/tensorflow:latest-gpu
 MAINTAINER John Graham jjgraham@ucsd.edu
 
 # # install everything
-COPY jupyterhub_config.py /root/
+WORKDIR /root/
 RUN apt update -y
 RUN apt-get install npm nodejs-legacy --upgrade  -y
 RUN npm install -g configurable-http-proxy 
@@ -21,5 +21,4 @@ RUN npm cache clean -f
 RUN npm install -g n
 RUN n stable
 RUN jupyter labextension install @jupyterlab/hub-extension
-WORKDIR /root/
-RUN jupyterhub
+COPY jupyterhub_config.py /root/

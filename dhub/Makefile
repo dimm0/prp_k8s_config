@@ -9,4 +9,4 @@ pushdocker:
 buildrelease: builddocker pushdocker
 
 buildgoogle:
-	gcloud container builds submit --tag us.gcr.io/prp-k8s/dhub:latest .
+	gcloud container builds submit --tag us.gcr.io/prp-k8s/dhub:latest --timeout=1h .

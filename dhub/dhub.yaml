@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dhub
+  namespace: digital-humanities
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        k8s-app: dhub
+    spec:
+      containers:
+      - name: dhub
+        image: phusion/baseimage:0.9.19
+        imagePullPolicy: IfNotPresent
+        args: ["sleep", "36500000"]
+        resources:
+          limits:
+            memory: "12Gi"
+        volumeMounts:
+        - name: nfs
+          mountPath: /opt/subflow
+      nodeSelector:
+        core: "true"
+      volumes:
+      - name: nfs
+        nfs:
+          server: fiona.sdsu.edu
+          path: "/export/subflow"

@@ -4,11 +4,11 @@ MAINTAINER John Graham jjgraham@ucsd.edu
 
 # # install everything
 COPY jupyterhub_config.py /root/
-RUN apt update
-RUN apt-get install npm nodejs-legacy --upgrade
-RUN npm install -g configurable-http-proxy
-RUN apt install python3-pip
-RUN apt install git
+RUN apt update -y
+RUN apt-get install npm nodejs-legacy --upgrade  -y
+RUN npm install -g configurable-http-proxy 
+RUN apt install python3-pip -y
+RUN apt install git -y
 RUN pip3 install jupyterlab --upgrade
 RUN pip3 install jupyterhub --upgrade
 RUN pip3 install --upgrade pip

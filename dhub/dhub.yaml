@@ -6,6 +6,7 @@ metadata:
 data:
   id: ""
   secret: ""
+  callback: "aHR0cHM6Ly9kaHViLm5hdXRpbHVzLm9wdGlwdXRlci5uZXQvaHViL29hdXRoX2NhbGxiYWNr"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -48,6 +49,11 @@ spec:
               secretKeyRef:
                 name: dhub
                 key: secret
+          - name: OAUTH_CALLBACK_URL
+            valueFrom:
+              secretKeyRef:
+                name: dhub
+                key: callback
         resources:
           limits:
             memory: "12Gi"

@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: dhub
-        image: gcr.io/tensorflow/tensorflow:latest-gpu
+        image: us.gcr.io/prp-k8s/dhub
         imagePullPolicy: Always
         args: ["sleep", "36500000"]
         resources:

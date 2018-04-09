@@ -35,9 +35,7 @@ spec:
         - name: datavol
         mountPath: /datavol
       restartPolicy: Never
-      nodeSelector:
-        core: "true"
-        volumes:
-        - name: datavol
-          persistentVolumeClaim:
-            claimName: datavol
+      volumes:
+      - name: datavol
+        persistentVolumeClaim:
+          claimName: datavol

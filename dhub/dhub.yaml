@@ -69,7 +69,7 @@ spec:
           claimName: datavol
       - name: config-volume
         configMap:
-          name: jupyterhub_config
+          name: jupyterhub-config
 ---
 apiVersion: v1
 kind: Service

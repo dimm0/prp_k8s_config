@@ -207,26 +207,25 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
+    - name: "dtn-main.ucr.edu"
+      devices:
+      # sda,sdb boot
+      # sdc,sdd docker
+      - name: "sde"
+      - name: "sdf"
+      - name: "sdg"
+      - name: "sdh"
+      - name: "sdi"
+      - name: "sdj"
+      - name: "sdk"
+      - name: "sdl"
+      - name: "sdn"
+      - name: "sdn"
+      - name: "sdo"
+      - name: "sdp"
+      - name: "sdq"
+      - name: "sdr"
 
-
-   #  - name: "dtn-main.ucr.edu"
-   #    devices:
-   #    # sda,sdb boot
-   #    # sdc,sdd docker
-   #    - name: "sde"
-   #    - name: "sdf"
-   #    - name: "sdg"
-   #    - name: "sdh"
-   #    - name: "sdi"
-   #    - name: "sdj"
-   #    - name: "sdk"
-   #    - name: "sdl"
-   #    - name: "sdn"
-   #    - name: "sdn"
-   #    - name: "sdo"
-   #    - name: "sdp"
-   #    - name: "sdq"
-   #    - name: "sdr"
    #  - name: "k8s-gpu-02.calit2.optiputer.net"
    #    devices:
    #    # sda,sdb boot

@@ -31,11 +31,9 @@ spec:
           name: thrift
         resources:
           limits:
-            cpu: "500m"
-            memory: 3Gi
+            memory: 5Gi
           requests:
-           cpu: "500m"
-           memory: 3Gi
+           memory: 5Gi
         securityContext:
           capabilities:
             add:

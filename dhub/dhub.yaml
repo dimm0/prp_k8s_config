@@ -37,7 +37,7 @@ spec:
       - name: dhub
         image: us.gcr.io/prp-k8s/dhub
         imagePullPolicy: Always
-        args: ["jupyterhub"]
+        args: ["jupyterhub -f /config/jupyterhub_config.py"]
         env:
           - name: CILOGON_CLIENT_ID
             valueFrom:

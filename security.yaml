@@ -84,6 +84,9 @@ subjects:
 - namespace: kube-system
   kind: ServiceAccount
   name: default
+- namespace: nfs-servers
+  kind: ServiceAccount
+  name: default
 - namespace: kube-system
   kind: ServiceAccount
   name: kube-proxy

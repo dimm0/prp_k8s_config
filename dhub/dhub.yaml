@@ -61,10 +61,15 @@ spec:
         volumeMounts:
         - name: datavol
           mountPath: /datavol
+        - name: config-volume
+          mountPath: /config
       volumes:
       - name: datavol
         persistentVolumeClaim:
           claimName: datavol
+      - name: config-volume
+        configMap:
+          name: jupyterhub_config
 ---
 apiVersion: v1
 kind: Service

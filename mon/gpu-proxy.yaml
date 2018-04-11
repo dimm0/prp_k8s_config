@@ -39,6 +39,8 @@ metadata:
     k8s-app: gpu-mon
 subsets:
   - addresses:
+      - ip: 128.114.109.78
+      - ip: 128.114.109.79
       - ip: 67.58.53.155
       - ip: 67.58.53.156
       - ip: 198.17.101.69

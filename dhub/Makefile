@@ -18,3 +18,6 @@ pushgooglecert:
           --docker-password="`cat ../prp-k8s-4a9119125faa.json`" \
           --docker-email=dmishin@sdsc.edu
 	kubectl --namespace=digital-humanities patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
+pushconfig:
+	-kubectl delete configmap jupyterhub_config -n digital-humanities
+	kubectl create configmap jupyterhub_config --from-file=jupyterhub_config.py=jupyterhub_config.py -n digital-humanities

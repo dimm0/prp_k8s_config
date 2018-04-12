@@ -63,6 +63,8 @@ spec:
           mountPath: /datavol
         - name: config-volume
           mountPath: /config
+        - name: nfs
+          mountPath: /nfs
       volumes:
       - name: datavol
         persistentVolumeClaim:
@@ -70,6 +72,10 @@ spec:
       - name: config-volume
         configMap:
           name: jupyterhub-config
+      - name: nfs
+        nfs:
+          server: 10.109.206.102
+          path: "/"
 ---
 apiVersion: v1
 kind: Service

@@ -15,31 +15,13 @@ from oauthenticator.cilogon import *
 class LocalCILogonOAuthenticator(LocalAuthenticator, CILogonOAuthenticator):
     """A version that mixes in local system user creation"""
     @gen.coroutine
-    def username_from_token(self, token):
-        """Turn a user token into a username"""
-        uri = url_concat(ujoin(self.oauth_url, 'getcert'), {
-            'oauth_token': token,
-        })
-        uri, _, _ = self.oauth_client.sign(uri)
-        resp = yield self.client.fetch(uri)
-        # FIXME: handle failure
-        reply = resp.body.decode('utf8', 'replace')
-        _, cert_txt = reply.split('\n', 1)
-        cert = load_certificate(FILETYPE_PEM, cert_txt)
-        username = None
-        for i in range(cert.get_extension_count()):
-            ext = cert.get_extension(i)
-            if ext.get_short_name().decode('ascii', 'replace') == 'subjectAltName':
-                data = ext.get_data()
-                # cert starts with some weird bytes. Not sure why or if they are consistent
-                username = data[4:].decode('utf8').lower()
-                # workaround notebook bug not handling @
-                username = username.replace('@', '.')
-                break
-        if username is None:
-            raise ValueError("Failed to get username from cert: %s", cert_txt)
-        
-        return username.replace(".",""), cert_txt
+    def normalize_username(self, username):
+    # we are given emails, turn it into a valid username
+    # by replacing @ with .
+    # other substitutions needed?
+    # possible collisions from foo.bar@ucsd.edu vs
+    # foo@bar.ucsd.edu. Do we care? If so, use proper escaping
+    return username.replace('@', '.').lower()
 
 c.JupyterHub.authenticator_class = LocalCILogonOAuthenticator
 c.LocalCILogonOAuthenticator.create_system_users = True

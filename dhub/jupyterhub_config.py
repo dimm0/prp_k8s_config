@@ -45,12 +45,4 @@ c.JupyterHub.admin_access = True
 
 ## Spawner
 from jupyterhub.spawner import LocalProcessSpawner
-from wrapspawner import ProfilesSpawner
-from dockerspawner import SystemUserSpawner
-c.JupyterHub.spawner_class = ProfilesSpawner
-
-c.ProfilesSpawner.profiles = [
-      ( "Host process", 'local', 'jupyterhub.spawner.LocalProcessSpawner', {'ip':'0.0.0.0'} ),
-      ('Docker CPU-only', 'systemuser', 'dockerspawner.SystemUserSpawner',
-         dict(container_image="jupyterhub/systemuser")),
-]
+c.JupyterHub.spawner_class = 'LocalProcessSpawner'

@@ -1,6 +1,10 @@
 c.Spawner.cmd = ['jupyter-labhub']
 c.Spawner.default_url = '/lab'
 
+## FIXME LATER
+import os
+os.system("pip install jupyterhub-systemdspawner")
+
 c.JupyterHub.confirm_no_ssl = True
 c.JupyterHub.hub_ip = '127.0.0.1'
 
@@ -44,5 +48,7 @@ c.Authenticator.admin_users = {'dmishin', 'jjgraham'}
 c.JupyterHub.admin_access = True
 
 ## Spawner
-from jupyterhub.spawner import LocalProcessSpawner
-c.JupyterHub.spawner_class = 'LocalProcessSpawner'
+#from jupyterhub.spawner import LocalProcessSpawner
+#c.JupyterHub.spawner_class = 'LocalProcessSpawner'
+c.JupyterHub.spawner_class = 'systemdspawner.SystemdSpawner'
+

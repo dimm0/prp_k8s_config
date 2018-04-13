@@ -14,8 +14,8 @@ class LocalCILogonOAuthenticator(LocalAuthenticator, CILogonOAuthenticator):
     """A version that mixes in local system user creation"""
     username = None
     def normalize_username(self, username):       
+        username.replace(".","")
         return username.replace('@', '.').lower()
-    username.replace(".","")
     
 c.JupyterHub.authenticator_class = LocalCILogonOAuthenticator
 c.LocalCILogonOAuthenticator.create_system_users = True

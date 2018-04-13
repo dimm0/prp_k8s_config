@@ -13,7 +13,7 @@ c.CILogonOAuthenticator.username_claim = 'email'
 class LocalCILogonOAuthenticator(LocalAuthenticator, CILogonOAuthenticator):
     """A version that mixes in local system user creation"""
     def normalize_username(self, username):       
-        return username.replace('@', '.').lower(), cert_txt
+        return username.replace('@', '.').lower()
     
 c.JupyterHub.authenticator_class = LocalCILogonOAuthenticator
 c.LocalCILogonOAuthenticator.create_system_users = True

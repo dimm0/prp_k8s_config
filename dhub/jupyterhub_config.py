@@ -10,7 +10,6 @@ from jupyterhub.auth import LocalAuthenticator
 from oauthenticator.cilogon import *
 class LocalCILogonOAuthenticator(LocalAuthenticator, CILogonOAuthenticator):
     """A version that mixes in local system user creation"""
-    @gen.coroutine
     def normalize_username(self, username):
         return username.replace('@', '.').lower()
 

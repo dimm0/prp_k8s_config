@@ -23,9 +23,8 @@ c.JupyterHub.admin_access = True
 ## Spawner
 #from jupyterhub.spawner import LocalProcessSpawner
 #c.JupyterHub.spawner_class = 'LocalProcessSpawner'
-#import os
+import os
 #os.system("pip install jupyterhub-systemdspawner")
 #c.JupyterHub.spawner_class = 'systemdspawner.SystemdSpawner'
-import pip
-pip.main(['install', 'jupyterhub-simplespawner'])
+os.system("pip install jupyterhub-simplespawner")
 c.JupyterHub.spawner_class = 'simplespawner.SimpleLocalProcessSpawner'

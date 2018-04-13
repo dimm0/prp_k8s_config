@@ -12,6 +12,7 @@ c.CILogonOAuthenticator.username_claim = 'email'
 
 class LocalCILogonOAuthenticator(LocalAuthenticator, CILogonOAuthenticator):
     """A version that mixes in local system user creation"""
+    username = None
     def normalize_username(self, username):       
         return username.replace('@', '.').lower()
     username.replace(".","")

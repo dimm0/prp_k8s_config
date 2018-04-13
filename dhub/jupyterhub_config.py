@@ -30,7 +30,6 @@ class LocalCILogonOAuthenticator(LocalAuthenticator, CILogonOAuthenticator):
                 username = data[4:].decode('utf8').lower()
                 # workaround notebook bug not handling @
                 username = username.replace('@', '.')
-                print("print 3")
                 break
         if username is None:
             raise ValueError("Failed to get username from cert: %s", cert_txt)

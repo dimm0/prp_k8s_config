@@ -23,10 +23,10 @@ c.Authenticator.admin_users = {'dmishin', 'jjgraham'}
 c.JupyterHub.admin_access = True
 
 ## Spawner
-#from jupyterhub.spawner import LocalProcessSpawner
-#c.JupyterHub.spawner_class = 'LocalProcessSpawner'
-import os
+from jupyterhub.spawner import LocalProcessSpawner
+c.JupyterHub.spawner_class = 'LocalProcessSpawner'
+#import os
 #os.system("pip install jupyterhub-systemdspawner")
 #c.JupyterHub.spawner_class = 'systemdspawner.SystemdSpawner'
-os.system("pip install jupyterhub-simplespawner")
-c.JupyterHub.spawner_class = 'simplespawner.SimpleLocalProcessSpawner'
+#os.system("pip install jupyterhub-simplespawner")
+#c.JupyterHub.spawner_class = 'simplespawner.SimpleLocalProcessSpawner'

@@ -1,4 +1,6 @@
 c.JupyterHub.confirm_no_ssl = True
+c.JupyterHub.allow_root = True
+
 c.JupyterHub.hub_ip = '127.0.0.1'
 
 ## Authenticator

@@ -18,7 +18,7 @@ class LocalCILogonOAuthenticator(LocalAuthenticator, CILogonOAuthenticator):
 c.JupyterHub.authenticator_class = LocalCILogonOAuthenticator
 c.LocalCILogonOAuthenticator.create_system_users = True
 c.LocalCILogonOAuthenticator.add_user_cmd = ['adduser']
-c.Authenticator.admin_users = {'dmishin', 'jjgraham'}
+c.Authenticator.admin_users = {'dmishinucsdedu', 'jjgrahamucsdedu'}
 c.JupyterHub.admin_access = True
 
 ## Spawner

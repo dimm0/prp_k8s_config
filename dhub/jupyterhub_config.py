@@ -22,7 +22,7 @@ c.Authenticator.admin_users = {'dmishin', 'jjgraham'}
 c.JupyterHub.admin_access = True
 
 ## Spawner
-c.Spawner.cmd = ['runuser', '-u', username, 'jupyter-labhub', '--allow-root']
+c.Spawner.cmd = ['jupyter-labhub', '--allow-root']
 c.Spawner.default_url = '/lab'
 
 import os

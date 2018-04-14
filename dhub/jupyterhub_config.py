@@ -22,10 +22,6 @@ c.Authenticator.admin_users = {'dmishin', 'jjgraham'}
 c.JupyterHub.admin_access = True
 
 ## Spawner
-c.Spawner.cmd = ['jupyter-labhub', '--allow-root']
+c.Spawner.cmd = ['jupyter-labhub']
 c.Spawner.default_url = '/lab'
 c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
-
-#import os
-#os.system("pip install jupyterhub-simplespawner")
-#c.JupyterHub.spawner_class = 'simplespawner.SimpleLocalProcessSpawner'

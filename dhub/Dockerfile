@@ -33,10 +33,5 @@ RUN  apt update -y && \
  jupyter labextension install  --no-build @jupyterlab/geojson-extension && \
  jupyter labextension install  --no-build @jupyterlab/plotly-extension && \
  jupyter labextension install  --no-build @jupyterlab/vega2-extension && \
- jupyter lab clean && jupyter lab build && \
- echo << EOF > /run_jupyter.sh \
- #!/usr/bin/env bash \
- jupyterhub -f /config/jupyterhub_config.py "$@" \
- EOF
-
+ jupyter lab clean && jupyter lab build
  

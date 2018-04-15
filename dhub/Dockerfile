@@ -4,13 +4,13 @@ MAINTAINER John Graham jjgraham@ucsd.edu
 
 # # install everything
 WORKDIR /root/
-RUN add-apt-repository ppa:deadsnakes/ppa -y && \
+RUN  apt install python3-pip -y && \
+ add-apt-repository ppa:deadsnakes/ppa -y && \
  apt update -y && \
  apt install python3.6 -y && \
  apt install vim -y && \
  apt install git -y && \
  apt install sudo -y && \
- apt install python3-pip -y && \
  apt install npm nodejs-legacy --upgrade -y && \
  apt install libcairo2-dev libjpeg-dev libgif-dev -y && \
  pip3 install pip --upgrade && \

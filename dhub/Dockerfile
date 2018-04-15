@@ -5,6 +5,7 @@ MAINTAINER John Graham jjgraham@ucsd.edu
 # # install everything
 WORKDIR /root/
 RUN apt update -y && \
+ apt install python3.6 && \
  apt install vim -y && \
  apt install git -y && \
  apt install python3-pip -y && \

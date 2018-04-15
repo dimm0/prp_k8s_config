@@ -5,6 +5,8 @@ MAINTAINER John Graham jjgraham@ucsd.edu
 # # install everything
 WORKDIR /root/
 RUN apt update -y && \
+ add-apt-repository ppa:deadsnakes/ppa && \
+ apt update && \
  apt install python3.6 && \
  apt install vim -y && \
  apt install git -y && \

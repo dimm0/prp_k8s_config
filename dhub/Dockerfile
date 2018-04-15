@@ -4,7 +4,8 @@ MAINTAINER John Graham jjgraham@ucsd.edu
 
 # # install everything
 WORKDIR /root/
-RUN  apt install python3-pip -y && \
+RUN  apt update -y && \
+ apt install python3-pip -y && \
  add-apt-repository ppa:deadsnakes/ppa -y && \
  apt update -y && \
  apt install python3.6 -y && \

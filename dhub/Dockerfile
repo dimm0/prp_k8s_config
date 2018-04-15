@@ -13,7 +13,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa -y && \
  apt install python3-pip -y && \
  apt install npm nodejs-legacy --upgrade  -y && \
  apt install libcairo2-dev libjpeg-dev libgif-dev -y && \
- pip3 install --upgrade pip && \
+ pip3 install pip --upgrade && \
  pip3 install jupyterlab --upgrade && \
  pip3 install jupyterhub --upgrade && \
  pip3 install notebook --upgrade  && \

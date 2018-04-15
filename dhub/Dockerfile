@@ -10,6 +10,7 @@ RUN apt update -y && \
  apt install python3.6 && \
  apt install vim -y && \
  apt install git -y && \
+ apt install sudo -y && \
  apt install python3-pip -y && \
  apt install npm nodejs-legacy --upgrade  -y && \
  apt install libcairo2-dev libjpeg-dev libgif-dev -y && \

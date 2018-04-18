@@ -12,6 +12,7 @@ RUN  apt update -y && \
  apt install vim -y && \
  apt install git -y && \
  apt install sudo -y && \
+ apt install python3-tk -y && \
  apt install npm nodejs-legacy --upgrade -y && \
  apt install libcairo2-dev libjpeg-dev libgif-dev -y && \
  pip3 install jupyterlab --upgrade && \

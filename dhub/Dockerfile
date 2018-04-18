@@ -23,6 +23,7 @@ RUN  apt update -y && \
  pip3 install tensorflow-hub --upgrade && \
  pip3 install seaborn --upgrade && \
  pip3 install matplotlib --upgrade && \
+ pip3 install dateparser --upgrade && \
  npm cache clean -f && \
  npm install -g n && \
  npm install -g configurable-http-proxy  && \

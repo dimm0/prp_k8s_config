@@ -19,9 +19,11 @@ RUN  apt update -y && \
  pip3 install notebook --upgrade  && \
  pip3 install oauthenticator --upgrade && \
  pip3 install tensorflow-gpu --upgrade --pre  && \
+ pip3 install sklearn --upgrade && \
  pip3 install tensorflow-hub --upgrade && \
  pip3 install seaborn --upgrade && \
  pip3 install matplotlib --upgrade && \
+ pip3 install dateparser --upgrade && \
  npm cache clean -f && \
  npm install -g n && \
  npm install -g configurable-http-proxy  && \
@@ -34,4 +36,3 @@ RUN  apt update -y && \
  jupyter labextension install  --no-build @jupyterlab/plotly-extension && \
  jupyter labextension install  --no-build @jupyterlab/vega2-extension && \
  jupyter lab clean && jupyter lab build
- 

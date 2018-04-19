@@ -28,8 +28,8 @@ RUN  apt update -y && \
  pip3 install jupyterlab==0.32.0 && \
  pip3 install ipywidgets==7.2.1 && \
  pip3 install ipyvolume==0.4.5 && \
- pip3 install ibqplot==0.10.2 && \
- pip3 install iplotly==2.4.1 && \
+ pip3 install bqplot==0.10.2 && \
+ pip3 install plotly==2.4.1 && \
  pip3 install ipyleaflet==0.7.1 && \
  npm cache clean -f && \
  npm install -g n && \

@@ -36,16 +36,16 @@ RUN  apt update -y && \
  npm install -g configurable-http-proxy  && \
  n stable && \
  npm i -g npm && \
- jupyterhub --generate-config && \
- jupyter labextension install --no-build @jupyterlab/hub-extension && \
- jupyter labextension install --no-build @jupyterlab/fasta-extension && \
- jupyter labextension install --no-build @jupyterlab/geojson-extension && \
- jupyter labextension install --no-build @jupyterlab/plotly-extension && \
- jupyter labextension install --no-build @jupyterlab/vega2-extension && \
- jupyter labextension install --no-build @jupyter-widgets/jupyterlab-manager@0.35.0 && \
- jupyter labextension install --no-build @jupyterlab/plotly-extension@0.14.4 && \
- jupyter labextension install --no-build bqplot@0.3.6 && \
- jupyter labextension install --no-build ipyvolume@0.4.5 && \
- jupyter labextension install --no-build jupyter-leaflet@0.7.1 && \
- jupyter labextension install --no-build jupyterlab_vim@0.7.0 && \
- jupyter lab clean && jupyter lab build
+ #jupyterhub --generate-config && \
+ #jupyter labextension install --no-build @jupyterlab/hub-extension && \
+ #jupyter labextension install --no-build @jupyterlab/fasta-extension && \
+ #jupyter labextension install --no-build @jupyterlab/geojson-extension && \
+ #jupyter labextension install --no-build @jupyterlab/plotly-extension && \
+ #jupyter labextension install --no-build @jupyterlab/vega2-extension && \
+ #jupyter labextension install --no-build @jupyter-widgets/jupyterlab-manager@0.35.0 && \
+ #jupyter labextension install --no-build @jupyterlab/plotly-extension@0.14.4 && \
+ #jupyter labextension install --no-build bqplot@0.3.6 && \
+ #jupyter labextension install --no-build ipyvolume@0.4.5 && \
+ #jupyter labextension install --no-build jupyter-leaflet@0.7.1 && \
+ #jupyter labextension install --no-build jupyterlab_vim@0.7.0 && \
+ #jupyter lab clean && jupyter lab build

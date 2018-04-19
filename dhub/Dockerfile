@@ -15,7 +15,7 @@ RUN  apt update -y && \
  apt install python3-tk -y && \
  apt install npm nodejs-legacy --upgrade -y && \
  apt install libcairo2-dev libjpeg-dev libgif-dev -y && \
- apt install python-igraph && \
+ apt install python-igraph -y && \
  pip3 install jupyterhub --upgrade && \
  pip3 install notebook --upgrade  && \
  pip3 install oauthenticator --upgrade && \

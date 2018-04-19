@@ -35,7 +35,7 @@ RUN  apt update -y && \
  npm install -g n && \
  npm install -g configurable-http-proxy  && \
  n stable && \
- npm i -g npm && \
+ npm i -g npm
  #jupyterhub --generate-config && \
  #jupyter labextension install --no-build @jupyterlab/hub-extension && \
  #jupyter labextension install --no-build @jupyterlab/fasta-extension && \

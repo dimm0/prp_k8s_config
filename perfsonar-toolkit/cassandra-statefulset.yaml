@@ -5,18 +5,25 @@ metadata:
   namespace: perfsonar
 spec:
   serviceName: esmond-cassandra
-  replicas: 4
+  replicas: 6
   template:
     metadata:
       labels:
         app: esmond-cassandra
     spec:
-      # imagePullSecrets:
-        # - name: gcr-json-key
+      initContainers:
+      - name: jmxexport
+        image: busybox
+        command:
+        - sh
+        - "-c"
+        - "wget -O /exporter/jmx_prometheus_javaagent-0.3.0.jar https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.3.0/jmx_prometheus_javaagent-0.3.0.jar && wget -O /exporter/cassandra.yml https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/cassandra.yml"
+        volumeMounts:
+        - name: exporter
+          mountPath: "/exporter"
       containers:
       - name: esmond-cassandra
         image: gcr.io/google-samples/cassandra:v12
-        # image: us.gcr.io/prp-k8s/cassandra:v2
         imagePullPolicy: Always
         ports:
         - containerPort: 7000
@@ -29,6 +36,8 @@ spec:
           name: cql
         - containerPort: 9160
           name: thrift
+        - containerPort: 7070
+          name: exporter
         resources:
           limits:
             memory: 5Gi
@@ -59,6 +68,8 @@ spec:
             value: "false"
           - name: CASSANDRA_START_RPC
             value: "true"
+          - name: JVM_OPTS
+            value: "-javaagent:/exporter/jmx_prometheus_javaagent-0.3.0.jar=7070:/exporter/cassandra.yml"
           - name: POD_IP
             valueFrom:
               fieldRef:
@@ -74,11 +85,11 @@ spec:
         volumeMounts:
         - name: cassandra-data
           mountPath: /cassandra_data
-      # nodeSelector:
-      #   core: "true"
-      # volumes:
-      # - name: cassandra-data
-      #   emptyDir: {}
+        - name: exporter
+          mountPath: "/exporter"
+      volumes:
+      - name: exporter
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: cassandra-data
@@ -102,5 +113,6 @@ spec:
   clusterIP: None
   ports:
   - port: 9160
+    port: 7070
   selector:
     app: esmond-cassandra

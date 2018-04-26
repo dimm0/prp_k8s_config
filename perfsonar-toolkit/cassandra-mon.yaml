@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cassandra-mon
+  namespace: monitoring
+  labels:
+    k8s-app: esmond-cassandra
+spec:
+  selector:
+    matchLabels:
+      app: esmond-cassandra
+  namespaceSelector:
+    matchNames:
+    - perfsonar
+  endpoints:
+  - port: 7070
+    interval: 10s        # scrape the endpoint every 10 seconds
+    path: /metrics

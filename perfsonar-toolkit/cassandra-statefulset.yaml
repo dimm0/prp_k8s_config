@@ -106,7 +106,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: esmond-cassandra
+    k8s-app: esmond-cassandra
   name: esmond-cassandra
   namespace: perfsonar
 spec:

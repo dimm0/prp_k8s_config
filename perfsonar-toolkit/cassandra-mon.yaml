@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: esmond-cassandra
+      k8s-app: esmond-cassandra
   namespaceSelector:
     matchNames:
     - perfsonar

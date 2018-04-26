@@ -35,7 +35,8 @@ spec:
     spec:
       containers:
       - name: dhub
-        image: us.gcr.io/prp-k8s/dhub
+        #image: us.gcr.io/prp-k8s/dhub
+        image: gateway.calit2.optiputer.net:5000/prp-k8s/dhub
         imagePullPolicy: Always
         args: ["jupyterhub", "-f", "/config/jupyterhub_config.py"]
         env:

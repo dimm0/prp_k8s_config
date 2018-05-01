@@ -14,24 +14,22 @@ func handleCORS(h http.Handler) http.HandlerFunc {
 	}
 }
 
-func main() {
-
+func buildGraph() {
 	out, err := exec.Command("/usr/local/bin/python", "/opt/traceroute.py").Output()
 	if err != nil {
 		fmt.Printf("%s", err.Error())
 	}
 	fmt.Printf("%s", out)
+}
 
-	ticker := time.NewTicker(5 * time.Minute)
+func main() {
+	ticker := time.NewTicker(2 * time.Hour)
 	go func() {
+		buildGraph()
 		for {
 			select {
 			case <-ticker.C:
-				out, err := exec.Command("/usr/local/bin/python", "/opt/traceroute.py").Output()
-				if err != nil {
-					fmt.Printf("%s", err.Error())
-				}
-				fmt.Printf("%s", out)
+				buildGraph()
 			}
 		}
 	}()

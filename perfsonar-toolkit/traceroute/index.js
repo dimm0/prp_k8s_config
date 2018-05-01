@@ -605,7 +605,8 @@ requirejs([
                   .attr("id","allButtons")
 
       //fontawesome button labels
-      var labels= [{'icon': '\uf061', 'title':'Bandwidth'},{'icon': '\uf017', 'title':'Latency'}, {'icon': '\uf0ec', 'title':'Retransmits'}, {'icon': '\u2620', 'title':'Packets lost'}];
+      var labels= [{'icon': '\uf061', 'title':'Bandwidth'},{'icon': '\uf017', 'title':'Latency'}, {'icon': '\uf0ec', 'title':'Retransmits'}, {'icon': '\u2620', 'title':'Packets lost'},
+       {'icon': '\uf0ac', 'title':'Global'}, {'icon': 'US', 'title':'US'}, {'icon': 'CA', 'title':'CA'} ];
       var defaultColor= "#7777BB";
       var hoverColor= "#0000ff";
       var pressedColor= "#000077";
@@ -618,32 +619,50 @@ requirejs([
           .style("cursor","pointer")
           .on("click",function(d,i) {
               d3.event.stopPropagation();
-              updateButtonColors(d3.select(this), d3.select(this.parentNode));
-              curColorScale = i;
               switch(i){
                   case 0:
+                      curColorScale = i;
+                      updateButtonColors(d3.select(this), d3.select(this.parentNode));
                       link
                           .attr("stroke", function(d) {
                               return colorScaleThroughput(d.throughput)
                           });
                       break;
                   case 1:
+                      curColorScale = i;
+                      updateButtonColors(d3.select(this), d3.select(this.parentNode));
                       link
                           .attr("stroke", function(d) {
                               return colorScaleLatency(d.latency)
                           });
                       break;
                   case 2:
+                      curColorScale = i;
+                      updateButtonColors(d3.select(this), d3.select(this.parentNode));
                       link
                           .attr("stroke", function(d) {
                               return colorScaleRetransmits(d.retransmits)
                       });
                       break;
                   case 3:
+                      curColorScale = i;
+                      updateButtonColors(d3.select(this), d3.select(this.parentNode));
                       link
                           .attr("stroke", function(d) {
                               return colorScalePacketsLost(d.packets_lost)
                       });
+                      break;
+                  case 4:
+                      mapzoom.translateTo(svg, -0.3, -0.4);
+                      mapzoom.scaleTo(svg, 500);
+                      break;
+                  case 5:
+                      mapzoom.translateTo(svg, -0.3, -0.2);
+                      mapzoom.scaleTo(svg, 1000);
+                      break;
+                  case 6:
+                      mapzoom.translateTo(svg, -0.3, -0.02);
+                      mapzoom.scaleTo(svg, 3500);
                       break;
               }
           })
@@ -666,8 +685,16 @@ requirejs([
           .attr("class","buttonRect")
           .attr("width",bWidth)
           .attr("height",bHeight)
-          .attr("x",function(d,i) {return x0+(bWidth+bSpace)*i;})
-          .attr("y",y0)
+          .attr("x",function(d,i) {
+            if (i>3)
+              i -= 4;
+            return x0+(bWidth+bSpace)*i;
+          })
+          .attr("y", function(d,i){
+            if (i<=3)
+              return y0;
+            return y0+30;
+          })
           .attr("rx",5) //rx and ry give the buttons rounded corners
           .attr("ry",5)
           .attr("fill", function(d,i) {return (i == linkMode)?pressedColor:defaultColor})
@@ -677,9 +704,13 @@ requirejs([
           .attr("class","buttonText")
           .attr("font-family","FontAwesome")
           .attr("x",function(d,i) {
-              return x0 + (bWidth+bSpace)*i + bWidth/2;
+            if (i>3)
+              i -= 4;
+            return x0 + (bWidth+bSpace)*i + bWidth/2;
           })
-          .attr("y",y0+bHeight/2)
+          .attr("y", function(d,i) {
+            return (i<=3)?y0+bHeight/2:y0+30+bHeight/2;
+          })
           .attr("text-anchor","middle")
           .attr("dominant-baseline","central")
           .attr("fill","white")

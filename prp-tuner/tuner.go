@@ -5,9 +5,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
+	"strconv"
+	"strings"
 
 	"github.com/vishvananda/netlink"
 )
@@ -17,15 +20,34 @@ type NodeConfig struct {
 }
 
 func main() {
-	http.HandleFunc("/", RootHandler)
-	log.Fatal(http.ListenAndServe(":10015", nil))
+	// getFQMaxRate()
+	// ticker := time.NewTicker(10 * time.Minute)
+	// go func() {
+	// 	adjustAll()
+	// 	for {
+	// 		select {
+	// 		case <-ticker.C:
+	// 			adjustAll()
+	// 		}
+	// 	}
+	// }()
+
+	// http.HandleFunc("/", RootHandler)
+	// log.Fatal(http.ListenAndServe(":10015", nil))
+	adjustAll()
+}
+
+func adjustAll() {
+	if err := adjustFQMaxRate(); err != nil {
+		log.Printf("Error adjusting FQ: %s", err.Error())
+	}
 }
 
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	conf := &NodeConfig{}
 
-	if fq, err := getFQ(); err == nil {
-		conf.FQ = fq
+	if fq, err := getFQMaxRate(); err == nil {
+		conf.FQ = fmt.Sprintf("%.2fgbit", float64(fq)*8.0/1000000000.0)
 	}
 
 	b, err := json.Marshal(conf)
@@ -36,19 +58,53 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(b)
 }
 
-func getFQ() (string, error) {
+func getFQMaxRate() (uint32, error) {
 	link, _ := getDefaultInterface()
 	qdiscs, err := netlink.QdiscList(link)
 	if err != nil {
-		return "", err
+		return 0, err
 	}
 
 	fq, ok := qdiscs[0].(*netlink.Fq)
 	if !ok {
-		return "", nil
+		return 0, nil
 	}
 
-	return fmt.Sprintf("%.2fgbit", float64(fq.FlowMaxRate)*8.0/1000000000.0), nil
+	// fmt.Printf("Flow: %v", fq.FlowMaxRate)
+
+	return fq.FlowMaxRate, nil
+}
+
+func adjustFQMaxRate() error {
+	link, _ := getDefaultInterface()
+	if speed, err := getInterfaceSpeed(link.Attrs().Name); err != nil {
+		return err
+	} else {
+		if speed >= 10000 {
+			fqMaxRateDesired := uint32(speed / 16 / 8 * 1000000)
+			if fqMaxRate, err := getFQMaxRate(); err != nil || fqMaxRate != fqMaxRateDesired {
+				qdiscs, _ := netlink.QdiscList(link)
+				for _, qdisk := range qdiscs {
+					netlink.QdiscDel(qdisk)
+				}
+
+				qdisc := &netlink.Fq{
+					QdiscAttrs: netlink.QdiscAttrs{
+						LinkIndex: link.Attrs().Index,
+						Handle:    netlink.MakeHandle(1, 0),
+						Parent:    netlink.HANDLE_ROOT,
+					},
+					// Rate:   131072,
+					// Limit:  1220703,
+					// Buffer: 16793,
+					FlowMaxRate: fqMaxRateDesired,
+				}
+
+				netlink.QdiscAdd(qdisc)
+			}
+		}
+		return nil
+	}
 }
 
 func getDefaultInterface() (netlink.Link, error) {
@@ -58,32 +114,16 @@ func getDefaultInterface() (netlink.Link, error) {
 	return link, nil
 }
 
-var netconf string = `default_iface=$(awk '$2 == 00000000 { print $1 }' /proc/net/route)
-/usr/sbin/ethtool -C $default_iface adaptive-rx off
-/sbin/ifconfig $default_iface txqueuelen 10000
-/usr/sbin/tc qdisc add dev $default_iface root fq maxrate 2.5gbit
-`
-
-var netservice string = `[Unit]
-After=network.target
-
-[Service]
-ExecStart=/opt/prp/netconf.sh
-
-[Install]
-WantedBy=default.target
-`
-
-var sysconf string = `net.core.default_qdisc = fq
-net.core.rmem_max=536870912
-net.core.wmem_max=536870912
-net.ipv4.tcp_rmem=4096 87380 268435456
-net.ipv4.tcp_wmem=4096 65536 268435456
-net.core.netdev_max_backlog=250000
-net.ipv4.tcp_congestion_control=htcp
-net.ipv4.tcp_mtu_probing=1
-net.ipv4.tcp_no_metrics_save = 1
-net.ipv4.tcp_timestamps = 1
-net.ipv4.tcp_sack = 1
-net.ipv4.tcp_low_latency = 0
-`
+func getInterfaceSpeed(interf string) (int, error) {
+	if b, err := ioutil.ReadFile(fmt.Sprintf("/sys/class/net/%s/speed", interf)); err != nil {
+		return 0, err
+	} else {
+		speedStr := fmt.Sprintf("%s", b)
+		speedStr = strings.TrimRight(speedStr, "\r\n")
+		if i, err := strconv.Atoi(speedStr); err != nil {
+			return 0, err
+		} else {
+			return i, nil
+		}
+	}
+}

@@ -16,5 +16,8 @@ spec:
         - name: gcr-json-key
       containers:
       - name: prp-tuner
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
         image: us.gcr.io/prp-k8s/prp-tuner:latest
         imagePullPolicy: Always

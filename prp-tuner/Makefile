@@ -2,8 +2,8 @@ buildlinux:
 	GOOS=linux GOARCH=amd64 go build
 
 upload:
-	scp prp-tuner root@k8s-epyc-01.sdsc.optiputer.net:
-	ssh root@k8s-epyc-01.sdsc.optiputer.net ./prp-tuner
+	scp prp-tuner root@dtn-main.ucr.edu:
+	ssh root@dtn-main.ucr.edu ./prp-tuner
 
 buildcontainer:
 	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix "static" .

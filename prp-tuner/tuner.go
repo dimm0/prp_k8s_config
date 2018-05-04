@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/spf13/viper"
 	"io/ioutil"
 	"log"
 	"net"
@@ -10,7 +11,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"github.com/spf13/viper"
 
 	"github.com/vishvananda/netlink"
 )
@@ -43,9 +43,6 @@ func main() {
 }
 
 func adjustAll() {
-	if err := adjustFQMaxRate(); err != nil {
-		log.Printf("Error adjusting FQ: %s", err.Error())
-	}
 	if err := adjustSysctlSettings(); err != nil {
 		log.Printf("Error adjusting sysctl: %s", err.Error())
 	}

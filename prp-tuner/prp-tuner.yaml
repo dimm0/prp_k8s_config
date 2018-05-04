@@ -17,7 +17,26 @@ spec:
       containers:
       - name: prp-tuner
         securityContext:
+          privileged: true
           capabilities:
             add: ["NET_ADMIN"]
         image: us.gcr.io/prp-k8s/prp-tuner:latest
         imagePullPolicy: Always
+---
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: prp-tuner
+#   namespace: kube-system
+# spec:
+#   hostNetwork: true
+#   imagePullSecrets:
+#     - name: gcr-json-key
+#   containers:
+#   - name: prp-tuner
+#     securityContext:
+#       privileged: true
+#       capabilities:
+#         add: ["NET_ADMIN"]
+#     image: us.gcr.io/prp-k8s/prp-tuner:latest
+#     imagePullPolicy: Always

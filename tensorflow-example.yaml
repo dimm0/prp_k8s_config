@@ -10,7 +10,7 @@ spec:
     args: ["sleep", "36500000"]
     resources:
       limits:
-        nvidia.com/gpu: 2
+        nvidia.com/gpu: 1
     volumeMounts:
     - mountPath: /examples
       name: tensor-examples

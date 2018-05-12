@@ -35,7 +35,8 @@ requirejs([
     "//cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.min.js",
     "//cdnjs.cloudflare.com/ajax/libs/topojson/2.0.0/topojson.min.js",
     "//cdnjs.cloudflare.com/ajax/libs/humanize-plus/1.8.2/humanize.min.js",
-    "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"], function(d3, topojson, humanize, _) {
+    "//cdnjs.cloudflare.com/ajax/libs/filesize/3.6.1/filesize.min.js",
+    "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"], function(d3, topojson, humanize, filesize, _) {
       d3.json("/graph.json", function(error, graph) {
 
 
@@ -503,7 +504,7 @@ requirejs([
 
                               tip.html("<b>"+d.source.id+" - "+d.target.id + "</b><br/>"+
                                        "lat: "+((d.latency != -1)?(humanize.formatNumber(d.latency)+"ms"):"unknown")+
-                                       "; throughput: "+((d.throughput != -1)?(humanize.fileSize(d.throughput)+"/s"):"unknown")+
+                                       "; throughput: "+((d.throughput != -1)?(filesize(d.throughput/8, {bits: true})+"ps"):"unknown")+
                                        ";<br/>retransmits: "+((d.retransmits != -1)?(humanize.intComma(d.retransmits)):"unknown")+
                                        "; packets-lost: "+((d.packets_lost != -1)?(humanize.formatNumber(d.packets_lost*100.0,5)+"%"):"unknown")
                                      );

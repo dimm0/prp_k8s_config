@@ -83,7 +83,9 @@ spec:
     - name: "fiona.tools.ucla.net"
       devices:
       # sda,sdb boot
-      # sdc,sdd docker
+   #  - name: "nvme0n1" Docker ZFS
+      - name: "sdc"
+      - name: "sdd"
       - name: "sde"
       - name: "sdf"
       - name: "sdg"

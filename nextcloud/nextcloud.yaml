@@ -21,7 +21,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 16Ti
+      storage: 4Ti
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -103,7 +103,7 @@ spec:
                   key: password
 
             - name: NEXTCLOUD_UPLOAD_MAX_FILESIZE
-              value: 8G
+              value: 36G
             - name: NEXTCLOUD_MAX_FILE_UPLOADS
               value: "20"
 

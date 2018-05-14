@@ -17,4 +17,4 @@ spec:
   volumes:
     - name: tensor-examples
       gitRepo:
-        repository: "https://github.com/tensorflow/models.git"
+        repository: "https://github.com/Hvass-Labs/TensorFlow-Tutorials"

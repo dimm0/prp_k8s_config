@@ -1,0 +1,44 @@
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: hubot
+#   namespace: rocketchat
+# data:
+#   username: ""
+#   password: ""
+# ---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hubot
+  namespace: rocketchat
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: hubot
+    spec:
+      containers:
+      - name: hubot
+        image: rocketchat/hubot-rocketchat
+        env:
+        - name: ROCKETCHAT_URL
+          value: "https://rocket.nautilus.optiputer.net"
+        - name: ROCKETCHAT_ROOM
+          value: ""
+        - name: ROCKETCHAT_USER
+          valueFrom:
+            secretKeyRef:
+              name: hubot
+              key: username
+        - name: ROCKETCHAT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: hubot
+              key: password
+        - name: ROCKETCHAT_AUTH
+          value: "password"
+        - name: BOT_NAME
+          value: "kraken"
+        - name: EXTERNAL_SCRIPTS
+          value: "hubot-pugme,hubot-help,hubot-business-cat,hubot-hello"

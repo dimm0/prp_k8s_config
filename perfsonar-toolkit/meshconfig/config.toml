@@ -121,3 +121,11 @@ city="Daejeon"
 state=""
 description="KISTI"
 domain=["kreonet.net"]
+
+[org.berkeley]
+lat=37.871853
+lon=-122.258423
+city = "Berkeley"
+state="CA"
+description="University of California, Berkeley"
+domain=["berkeley.edu"]

@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -46,6 +47,9 @@ func adjustAll() {
 	if err := adjustSysctlSettings(); err != nil {
 		log.Printf("Error adjusting sysctl: %s", err.Error())
 	}
+	if err := adjustCpuPower(); err != nil {
+		log.Printf("Error adjusting CPU power: %s", err.Error())
+	}
 }
 
 func RootHandler(w http.ResponseWriter, r *http.Request) {
@@ -64,6 +68,27 @@ func getDefaultInterface() (netlink.Link, error) {
 	routeToDstIP, _ := netlink.RouteGet(dstIP)
 	link, _ := netlink.LinkByIndex(routeToDstIP[0].LinkIndex)
 	return link, nil
+}
+
+func adjustCpuPower() error {
+	files, err := filepath.Glob("/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor")
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		if b, err := ioutil.ReadFile(file); err != nil {
+			log.Printf("%s", err.Error())
+		} else {
+			fileValue := strings.TrimRight(fmt.Sprintf("%s", b), "\r\n")
+			if fileValue != "performance" {
+				fmt.Printf("CPU from %s to performance\n", fileValue)
+				if err := ioutil.WriteFile(file, []byte("performance"), 0644); err != nil {
+					fmt.Printf("Error setting CPU governor: %s", err.Error())
+				}
+			}
+		}
+	}
+	return nil
 }
 
 func getInterfaceSpeed(interf string) (uint32, error) {

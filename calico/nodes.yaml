@@ -1,0 +1,21 @@
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: fiona.sdsu.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: fiona.sdsu.edu
+  expectedIPs:
+  - 130.191.49.222
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: ps-100g.sdsu.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: ps-100g.sdsu.edu
+  expectedIPs:
+  - 130.191.103.1

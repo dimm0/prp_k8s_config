@@ -79,6 +79,7 @@ metadata:
   name: allow-outbound-external
 spec:
   order: 10
+  applyOnForward: true
   egress:
     - action: Allow
   selector: has(host-endpoint)

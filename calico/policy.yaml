@@ -48,6 +48,22 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
+  name: allow-kubectl
+spec:
+  order: 16
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+    - action: Allow
+      protocol: TCP
+      destination:
+        ports:
+        - 6443
+  selector: "role==\"master\""
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
   name: drop-other-ingress
 spec:
   order: 20

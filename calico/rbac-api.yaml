@@ -1,5 +1,5 @@
-# Calico Version v3.0.4
-# https://docs.projectcalico.org/v3.0/releases#v3.0.4
+# Calico Version v3.1.1
+# https://docs.projectcalico.org/v3.1/releases#v3.1.1
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
@@ -50,6 +50,12 @@ rules:
       - get
       - list
       - watch
+  - apiGroups: ["networking.k8s.io"]
+    resources:
+      - networkpolicies
+    verbs:
+      - watch
+      - list
   - apiGroups: ["crd.projectcalico.org"]
     resources:
       - globalfelixconfigs
@@ -59,8 +65,10 @@ rules:
       - bgpconfigurations
       - ippools
       - globalnetworkpolicies
+      - globalnetworksets
       - networkpolicies
       - clusterinformations
+      - hostendpoints
     verbs:
       - create
       - get

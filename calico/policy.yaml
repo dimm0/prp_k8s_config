@@ -9,23 +9,22 @@ spec:
   ingress:
     - action: Allow
       source:
-        nets:
-        - 10.244.0.0/16
-        - 128.111.174.188/32
-        - 128.114.109.64/27
-        - 128.117.212.248/32
-        - 128.125.214.139/32
-        - 128.171.123.10/32
-        - 130.191.103.1/32
-        - 130.191.49.222/32
-        - 134.75.115.132/32
-        - 138.23.104.66/32
-        - 171.66.4.10/32
-        - 192.154.2.254/32
-        - 192.84.86.107/32
-        - 198.17.101.0/25
-        - 198.48.92.50/32
-        - 67.58.53.128/26
+        selector: role == 'trusted'
+  selector: has(host-endpoint)
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-ping
+spec:
+  order: 12
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+    - action: Allow
+      source:
+        selector: role == 'icmp'
+      protocol: ICMP
   selector: has(host-endpoint)
 ---
 apiVersion: projectcalico.org/v3
@@ -43,6 +42,22 @@ spec:
         ports:
         - 8443
         - 443
+  selector: has(host-endpoint)
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-portmapper
+spec:
+  order: 5
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+    - action: Deny
+      protocol: TCP
+      destination:
+        ports:
+        - 111
   selector: has(host-endpoint)
 ---
 apiVersion: projectcalico.org/v3

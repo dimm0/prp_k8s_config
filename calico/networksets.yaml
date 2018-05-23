@@ -1,0 +1,35 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkSet
+metadata:
+  name: production-nodes
+  labels:
+    role: trusted
+spec:
+  nets:
+  - 10.244.0.0/16
+  - 128.111.174.188/32
+  - 128.114.109.64/27
+  - 128.117.212.248/32
+  - 128.125.214.139/32
+  - 128.171.123.10/32
+  - 130.191.103.1/32
+  - 130.191.49.222/32
+  - 134.75.115.132/32
+  - 138.23.104.66/32
+  - 171.66.4.10/32
+  - 192.154.2.254/32
+  - 192.84.86.107/32
+  - 198.17.101.0/25
+  - 198.48.92.50/32
+  - 67.58.53.128/26
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkSet
+metadata:
+  name: icmp-nodes
+  labels:
+    role: icmp
+spec:
+  nets:
+  - 128.117.0.0/16
+  - 67.58.50.67/32 #jupyter

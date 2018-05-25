@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: hubot
-        image: rocketchat/hubot-rocketchat
+        image: dimm0/hubot-rocketchat
         env:
         - name: ROCKETCHAT_URL
           value: "https://rocket.nautilus.optiputer.net"
@@ -36,9 +36,14 @@ spec:
             secretKeyRef:
               name: hubot
               key: password
+        - name: MONGODB_URL
+          valueFrom:
+            secretKeyRef:
+              name: mongodb
+              key: connectstring
         - name: ROCKETCHAT_AUTH
           value: "password"
         - name: BOT_NAME
           value: "kraken"
         - name: EXTERNAL_SCRIPTS
-          value: "hubot-pugme,hubot-help,hubot-business-cat,hubot-hello"
+          value: "hubot-pugme,hubot-help,hubot-business-cat,hubot-hello,hubot-mongodb-pinky"

@@ -69,6 +69,7 @@ spec:
         ports:
         - 8443
         - 443
+        - 80
   selector: has(host-endpoint)
 ---
 apiVersion: projectcalico.org/v3

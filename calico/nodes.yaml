@@ -306,4 +306,15 @@ spec:
   node: siderea.ucsc.edu
   expectedIPs:
   - 128.114.109.76
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: perfsonar.csusb.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: perfsonar.csusb.edu
+  expectedIPs:
+  - 139.182.103.10
 

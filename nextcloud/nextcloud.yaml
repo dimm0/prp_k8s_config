@@ -51,6 +51,8 @@ spec:
       labels:
         k8s-app: nextcloud
     spec:
+      imagePullSecrets:
+        - name: gcr-json-key
       initContainers:
         - name: config-data
           image: busybox
@@ -81,7 +83,8 @@ spec:
             - mountPath: /var/lib/mysql
               name: dbdata
         - name: nextcloud
-          image: nextcloud
+          image: us.gcr.io/prp-k8s/nextcloud
+          command: ["/usr/bin/supervisord"]
           env:
             - name: TZ
               value: America/Los_Angeles

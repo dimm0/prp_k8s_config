@@ -1,0 +1,16 @@
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: default
+spec:
+  ipipEnabled: true
+  logSeverityScreen: Info
+  reportingInterval: 0s
+  ipipMTU: 8960
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.perfsonar.csusb.edu
+spec:
+  ipipMTU: 1480

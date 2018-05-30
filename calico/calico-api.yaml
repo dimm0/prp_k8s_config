@@ -218,9 +218,6 @@ spec:
             # Disable IPV6 on Kubernetes.
             - name: FELIX_IPV6SUPPORT
               value: "false"
-            # Set MTU for tunnel device used if ipip is enabled
-            - name: FELIX_IPINIPMTU
-              value: "8960"
             # Wait for the datastore.
             - name: WAIT_FOR_DATASTORE
               value: "true"

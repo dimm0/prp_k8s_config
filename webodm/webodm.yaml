@@ -29,6 +29,22 @@ spec:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
+  name: redis
+  namespace: webodm
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
   name: webodm
   namespace: webodm
 spec:
@@ -49,10 +65,13 @@ spec:
         image: opendronemap/webodm_webapp
         imagePullPolicy: Always
         command: ["/bin/sh"]
-        args: ["-c", "sed -i \"s/'db'/'localhost'/g\" /webodm/webodm/settings.py && chmod +x /webodm/*.sh && /webodm/wait-for-it.sh localhost:5432 -- /webodm/start.sh"]
+        args: ["-c", "sed -i \"s/'db'/'webodmdb'/g\" /webodm/webodm/settings.py && chmod +x /webodm/*.sh && /bin/bash -c \"/webodm/wait-for-postgres.sh webodmdb /webodm/wait-for-it.sh redis:6379 -- /webodm/start.sh\""]
         volumeMounts:
         - mountPath: /webodm/app/media
           name: webodmmedia
+        env:
+        - name: WO_BROKER
+          value: "redis://redis"
       volumes:
       - name: webodmdb
         persistentVolumeClaim:
@@ -77,6 +96,37 @@ spec:
   selector:
     k8s-app: webodm
 ---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: webodm
+  name: webodmdb
+  namespace: webodm
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+    name: db
+  selector:
+    k8s-app: webodm
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: redis
+  name: redis
+  namespace: webodm
+spec:
+  type: NodePort
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: redis
+  selector:
+    k8s-app: redis
+---
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
@@ -93,11 +143,30 @@ spec:
     spec:
       containers:
       - name: node-odm
-        image: opendronemap/node-opendronemap
+        image: opendronemap/webodm_webapp
         imagePullPolicy: Always
+        command: ["/bin/sh"]
+        args: ["-c", "sed -i \"s/'db'/'webodmdb'/g\" /webodm/webodm/settings.py && /webodm/wait-for-postgres.sh webodmdb /webodm/wait-for-it.sh redis:6379 -- /webodm/worker.sh start"]
+        env:
+        - name: WO_BROKER
+          value: "redis://redis"
         resources:
           limits:
             memory: "40Gi"
+        volumeMounts:
+        - name: webodm-node-data
+          mountPath: /webodm/app/media
+  volumeClaimTemplates:
+  - metadata:
+      name: webodm-node-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: rook-block
+    spec:
+      storageClassName: rook-block
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 150Gi
 ---
 apiVersion: v1
 kind: Service
@@ -110,6 +179,7 @@ spec:
   clusterIP: None
   ports:
   - port: 3000
+    name: web
   selector:
     k8s-app: webodmnode
 ---

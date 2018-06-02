@@ -69,6 +69,8 @@ spec:
         resources:
           limits:
             memory: "16Gi"
+          requests:
+            memory: "4Gi"
         volumeMounts:
         - mountPath: /webodm/app/media
           name: webodmmedia

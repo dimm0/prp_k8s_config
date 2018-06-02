@@ -129,3 +129,11 @@ city = "Berkeley"
 state="CA"
 description="University of California, Berkeley"
 domain=["berkeley.edu"]
+
+[org.csusb]
+lat=34.182179
+lon=-117.323565
+city="San Bernerdino"
+state="CA"
+description="California State University, San Bernardino"
+domain=["csusb.edu"]

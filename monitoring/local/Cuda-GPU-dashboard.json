@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
+      "name": "prometheus",
       "label": "prometheus",
       "description": "",
       "type": "datasource",
@@ -50,7 +50,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "prometheus",
           "fill": 1,
           "id": 90,
           "legend": {
@@ -82,7 +82,7 @@
               "intervalFactor": 2,
               "legendFormat": "GPU",
               "refId": "B",
-              "step": 10
+              "step": 240
             },
             {
               "expr": "sum(nvml_memory_percent{instance=\"$node\"})/count(nvml_memory_percent{instance=\"$node\"})",
@@ -90,7 +90,7 @@
               "intervalFactor": 2,
               "legendFormat": "Memory",
               "refId": "A",
-              "step": 10
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -134,7 +134,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "prometheus",
           "fill": 1,
           "id": 91,
           "legend": {
@@ -167,7 +167,7 @@
               "legendFormat": "All cores",
               "metric": "nvml_power_watts",
               "refId": "A",
-              "step": 10
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -211,7 +211,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "prometheus",
           "fill": 1,
           "id": 92,
           "legend": {
@@ -244,7 +244,7 @@
               "legendFormat": "Temperature",
               "metric": "nvml_temperature_celsius",
               "refId": "A",
-              "step": 10
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -300,7 +300,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -372,7 +372,7 @@
                   }
                 ]
               ],
-              "step": 10,
+              "step": 240,
               "tags": [
                 {
                   "key": "host",
@@ -405,7 +405,7 @@
               "intervalFactor": 2,
               "legendFormat": "{{device_name}} Memory",
               "refId": "B",
-              "step": 10
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -450,7 +450,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -521,7 +521,7 @@
                   }
                 ]
               ],
-              "step": 10,
+              "step": 240,
               "tags": [
                 {
                   "key": "host",
@@ -583,7 +583,7 @@
                   }
                 ]
               ],
-              "step": 10,
+              "step": 240,
               "tags": [
                 {
                   "key": "host",
@@ -647,7 +647,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -720,7 +720,7 @@
                   }
                 ]
               ],
-              "step": 10,
+              "step": 240,
               "tags": [
                 {
                   "key": "host",
@@ -784,7 +784,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -856,7 +856,7 @@
                   }
                 ]
               ],
-              "step": 10,
+              "step": 240,
               "tags": [
                 {
                   "key": "host",
@@ -932,7 +932,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "prometheus",
         "hide": 0,
         "includeAll": false,
         "label": "server",
@@ -952,7 +952,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "prometheus",
         "hide": 0,
         "includeAll": true,
         "label": "GPU Core",
@@ -972,7 +972,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -1002,5 +1002,5 @@
   },
   "timezone": "browser",
   "title": "Cuda GPU",
-  "version": 24
+  "version": 25
 }

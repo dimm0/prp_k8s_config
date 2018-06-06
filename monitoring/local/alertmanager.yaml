@@ -1,0 +1,18 @@
+global:
+  resolve_timeout: 5m
+route:
+  group_by: ['job']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 12h
+  receiver: 'rocketchat'
+  routes:
+  - match:
+      alertname: DeadMansSwitch
+    receiver: 'null'
+receivers:
+- name: 'null'
+- name: 'rocketchat'
+  webhook_configs:
+  - send_resolved: false
+    url: https://rocket.nautilus.optiputer.net/hooks

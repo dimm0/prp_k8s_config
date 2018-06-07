@@ -3,7 +3,14 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
     namespace: 'monitoring',
     prometheus+:: {
       replicas: 1,
-    }
+    },
+    grafana+:: {
+      config: {
+        sections: {
+          "auth.anonymous": {enabled: true},
+        },
+      },
+    },
   },
   prometheusAlerts+:: {
     groups+: [
@@ -135,34 +142,74 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
         {
           "addresses": [
             {
-              "ip": "128.114.109.78"
+              "ip": "128.114.109.78",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-gpu-1.ucsc.edu"
+              }
             },
             {
-              "ip": "128.114.109.79"
+              "ip": "128.114.109.79",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-gpu-2.ucsc.edu"
+              }
             },
             {
-              "ip": "67.58.53.155"
+              "ip": "67.58.53.155",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-gpu-01.calit2.optiputer.net"
+              }
             },
             {
-              "ip": "67.58.53.156"
+              "ip": "67.58.53.156",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-gpu-02.calit2.optiputer.net"
+              }
             },
             {
-              "ip": "198.17.101.69"
+              "ip": "198.17.101.69",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-gpu-03.sdsc.optiputer.net"
+              }
             },
             {
-              "ip": "67.58.53.158"
+              "ip": "67.58.53.158",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-chase-ci-01.calit2.optiputer.net"
+              }
             },
             {
-              "ip": "67.58.53.159"
+              "ip": "67.58.53.159",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-chase-ci-02.calit2.optiputer.net"
+              }
             },
             {
-              "ip": "67.58.53.160"
+              "ip": "67.58.53.160",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-chase-ci-03.calit2.optiputer.net"
+              }
             },
             {
-              "ip": "67.58.53.161"
+              "ip": "67.58.53.161",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-chase-ci-04.calit2.optiputer.net"
+              }
             },
             {
-              "ip": "67.58.53.162"
+              "ip": "67.58.53.162",
+              "targetRef":{
+                "kind": "Node",
+                "name": "k8s-bafna-01.calit2.optiputer.net"
+              }
             },
           ],
           "ports": [

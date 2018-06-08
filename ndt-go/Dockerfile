@@ -1,3 +1,0 @@
-FROM golang
-
-WORKDIR /data

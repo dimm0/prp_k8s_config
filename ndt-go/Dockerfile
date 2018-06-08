@@ -1,10 +1,7 @@
-FROM alpine:3.4
+FROM golang
 
-RUN apk -U add ca-certificates
+WORKDIR /data
+COPY . .
 
-EXPOSE 8080
-
-ADD news /bin/news
-ADD config.yml /etc/news/config.yml
-
-CMD ["news", "-config", "/etc/news/config.yml"]
+RUN go get -d -v ./...
+RUN go install -v ./...

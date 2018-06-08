@@ -35,15 +35,15 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
-        - name: config-volume
-          mountPath: /config
+        - name: ndt-server-go
+          mountPath: /ndt-server-go
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: data
-      - name: config-volume
-        configMap:
-          name: ndt-go-config
+      - name: ndt-server-go
+          gitRepo:
+            repository: "https://github.com/m-lab/ndt-server-go.git"
 ---
 apiVersion: v1
 kind: Service
@@ -54,6 +54,6 @@ metadata:
     k8s-app: ndt-go
 spec:
   ports:
-  - port: 8000
+  - port: 3001
   selector:
     k8s-app: ndt-go

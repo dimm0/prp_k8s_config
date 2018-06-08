@@ -1,0 +1,4 @@
+12c13
+< cassandra_servers = localhost:9160
+---
+> cassandra_servers = esmond-cassandra:9160

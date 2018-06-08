@@ -1,0 +1,1 @@
+* * * * * root /usr/bin/curl meshconfig.perfsonar | /usr/lib/perfsonar/bin/build_json -o /var/www/html/k8s.json -

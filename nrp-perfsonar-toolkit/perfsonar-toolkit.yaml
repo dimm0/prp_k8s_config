@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pgsql-pv-claim
+  namespace: nrp-perfsonar
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: perfsonar-toolkit
+  namespace: nrp-perfsonar
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: perfsonar-toolkit
+    spec:
+      # hostNetwork: true
+      imagePullSecrets:
+        - name: gcr-json-key
+      initContainers:
+      - name: volume-mount-chown
+        image: busybox
+        command: ["sh", "-c", "chown -R 26:26 /var/lib/pgsql/9.5/data"]
+        volumeMounts:
+        - name: pgsql-persistent-storage
+          mountPath: /var/lib/pgsql/9.5/data
+      containers:
+      - name: perfsonar-toolkit
+        image: us.gcr.io/prp-k8s/perfsonar-toolkit:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 443
+        command:
+          - "/usr/bin/supervisord"
+          - "-c"
+          - "/etc/supervisord.conf"
+        volumeMounts:
+        - name: ssl-key
+          mountPath: /etc/pki/tls/mycert
+        - name: pgsql-persistent-storage
+          mountPath: /var/lib/pgsql/9.5/data
+      volumes:
+        - name: ssl-key
+          secret:
+            secretName: ssl-key
+            defaultMode: 256
+            items:
+              - key: key
+                path: ssl.key
+              - key: cert
+                path: ssl.crt
+        - name: pgsql-persistent-storage
+          persistentVolumeClaim:
+            claimName: pgsql-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: perfsonar-toolkit
+  namespace: nrp-perfsonar
+  labels:
+    k8s-app: perfsonar-toolkit
+spec:
+  ports:
+  - port: 443
+  type: NodePort
+  selector:
+    k8s-app: perfsonar-toolkit

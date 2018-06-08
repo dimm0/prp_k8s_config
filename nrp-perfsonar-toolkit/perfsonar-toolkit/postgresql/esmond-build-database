@@ -1,0 +1,150 @@
+#!/bin/sh -e
+#
+# Build the pScheduler Database
+#
+
+
+# Start the server
+su - postgres -c "/usr/pgsql-9.5/bin/pg_ctl start -w -t 60"
+echo "Server started"
+
+ROLE="esmond"
+
+# Generate the password file
+PASSWD=`random-string --safe --length 60 --randlength`
+echo "Password generated"
+
+sed -i "s/sql_db_password = changeit/sql_db_password = $PASSWD/" /etc/esmond/esmond.conf
+cp /etc/esmond/esmond.conf /var/lib/pgsql/$PG_VERSION/data/
+
+su - postgres -c "createuser esmond && createdb -O esmond esmond"
+
+# Set the password in the esmond database to match what's on the
+# disk.
+( \
+    printf "ALTER ROLE esmond WITH UNENCRYPTED PASSWORD '$PASSWD" \
+    && printf "';\n" \
+) | postgresql-load
+echo "Password set"
+
+source /etc/profile.d/esmond.sh
+
+cd /usr/lib/esmond && . bin/activate && python esmond/manage.py migrate --noinput
+echo "Esmond DB created"
+
+TOKEN=`cd /usr/lib/esmond && . bin/activate && python esmond/manage.py add_ps_metadata_post_user user 1>/dev/null 2>&1 && python esmond/manage.py add_timeseries_post_user user 2>/dev/null | grep Key: | awk '{print $2}'`
+echo "Token is $TOKEN"
+
+cat >> /etc/perfsonar/meshconfig-agent-tasks.conf <<EOL
+<measurement_archive>
+    database   https://localhost/esmond/perfsonar/archive/
+    password   $TOKEN
+    <summary>
+        summary_window   300
+        event_type   packet-loss-rate
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   300
+        event_type   histogram-owdelay
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   300
+        event_type   histogram-owdelay
+        summary_type   statistics
+    </summary>
+    <summary>
+        summary_window   3600
+        event_type   packet-loss-rate
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   3600
+        event_type   packet-loss-rate-bidir
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   3600
+        event_type   histogram-owdelay
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   3600
+        event_type   histogram-rtt
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   3600
+        event_type   histogram-owdelay
+        summary_type   statistics
+    </summary>
+    <summary>
+        summary_window   3600
+        event_type   histogram-rtt
+        summary_type   statistics
+    </summary>
+    <summary>
+        summary_window   86400
+        event_type   packet-loss-rate
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   86400
+        event_type   packet-loss-rate-bidir
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   86400
+        event_type   histogram-owdelay
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   86400
+        event_type   histogram-owdelay
+        summary_type   statistics
+    </summary>
+    <summary>
+        summary_window   86400
+        event_type   histogram-rtt
+        summary_type   aggregation
+    </summary>
+    <summary>
+        summary_window   86400
+        event_type   histogram-rtt
+        summary_type   statistics
+    </summary>
+    ca_certificate_path   /etc/ssl/certs
+    type   esmond/latency
+    username   user
+</measurement_archive>
+<measurement_archive>
+    database   https://localhost/esmond/perfsonar/archive/
+    password   $TOKEN
+    <summary>
+        summary_window   86400
+        event_type   throughput
+        summary_type   average
+    </summary>
+    ca_certificate_path   /etc/ssl/certs
+    type   esmond/throughput
+    username   user
+</measurement_archive>
+<measurement_archive>
+    database   https://localhost/esmond/perfsonar/archive/
+    password   $TOKEN
+    ca_certificate_path   /etc/ssl/certs
+    type   esmond/traceroute
+    username   user
+</measurement_archive>
+EOL
+
+cp /etc/perfsonar/meshconfig-agent-tasks.conf /var/lib/pgsql/$PG_VERSION/data/
+
+echo "Meshconfig patched"
+
+# Shut down
+su - postgres -c "/usr/pgsql-9.5/bin/pg_ctl stop  -w -t 60"
+echo "Server stopped"
+
+exit 0

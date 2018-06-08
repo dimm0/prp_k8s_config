@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: ndt-go
-        image: gateway.calit2.optiputer.net:5000/prp-k8s/ndt-go
+        image: golang
         imagePullPolicy: Always
         args: ["go ndt-server.go"]
         env:

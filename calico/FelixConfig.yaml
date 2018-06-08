@@ -6,7 +6,7 @@ spec:
   ipipEnabled: true
   logSeverityScreen: Info
   reportingInterval: 0s
-  ipipMTU: 8960
+  ipipMTU: 8980
 ---
 apiVersion: projectcalico.org/v3
 kind: FelixConfiguration

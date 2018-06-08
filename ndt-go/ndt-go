@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  namespace: ndt-go
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ndt-go
+  namespace: ndt-go
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: ndt-go
+    spec:
+      containers:
+      - name: ndt-go
+        image: gateway.calit2.optiputer.net:5000/prp-k8s/ndt-go
+        imagePullPolicy: Always
+        args: ["go ndt-server.go"]
+        env:
+        resources:
+          limits:
+            memory: "12Gi"
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config-volume
+          mountPath: /config
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
+      - name: config-volume
+        configMap:
+          name: ndt-go-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndt-go
+  namespace: ndt-go
+  labels:
+    k8s-app: ndt-go
+spec:
+  ports:
+  - port: 8000
+  selector:
+    k8s-app: ndt-go

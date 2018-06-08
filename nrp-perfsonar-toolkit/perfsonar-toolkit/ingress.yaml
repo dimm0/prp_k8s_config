@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: perfsonar
+  namespace: nrp-perfsonar
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: nrp-perfsonar.nautilus.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: perfsonar-toolkit
+          servicePort: 443

@@ -40,9 +40,6 @@ COPY rsyslog/owamp_bwctl-syslog.conf /etc/rsyslog.d/owamp_bwctl-syslog.conf
 
 # -----------------------------------------------------------------------------
 
-ADD meshconfig-guiagent.conf /etc/perfsonar/
-RUN chown perfsonar:perfsonar /etc/perfsonar/meshconfig*
-
 ADD maddash.yaml /etc/maddash/maddash-server/
 ADD maddash_config.json /etc/maddash/maddash-webui/config.json
 
@@ -52,5 +49,3 @@ RUN sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertif
 
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisord.conf
-
-ADD meshconfig /etc/cron.d/

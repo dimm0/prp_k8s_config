@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gitlab
+  namespace: gitlab
+  labels:
+    name: gitlab
+spec:
+  rules:
+  - host: gitlab.nautilus.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: gitlab
+          servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gitlabreg
+  namespace: gitlab
+  labels:
+    name: gitlabreg
+spec:
+  rules:
+  - host: gitlab-registry.nautilus.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          # serviceName: registry
+          serviceName: gitlab
+          servicePort: 80

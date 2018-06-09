@@ -211,8 +211,11 @@ spec:
       - name: "sdr"
     - name: "dtn-main.ucr.edu"
       devices:
-      # sda,sdb boot
-      # sdc,sdd docker
+      # sdr,sds boot
+      # sda docker
+      - name: "sdb"
+      - name: "sdc"
+      - name: "sdd"
       - name: "sde"
       - name: "sdf"
       - name: "sdg"
@@ -226,8 +229,6 @@ spec:
       - name: "sdo"
       - name: "sdp"
       - name: "sdq"
-      - name: "sdr"
-
    #  - name: "k8s-gpu-02.calit2.optiputer.net"
    #    devices:
    #    # sda,sdb boot

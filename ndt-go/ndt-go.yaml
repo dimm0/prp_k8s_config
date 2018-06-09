@@ -14,9 +14,8 @@ spec:
       - name: ndt-go
         image: golang
         workingDir: /ndt-server-go
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args: ["go build . && ndt-server.go"]
-        env:
         resources:
           limits:
             memory: "12Gi"
@@ -25,8 +24,8 @@ spec:
           mountPath: /ndt-server-go
       volumes:
       - name: ndt-server-go
-          gitRepo:
-            repository: "https://github.com/m-lab/ndt-server-go.git"
+        gitRepo:
+          repository: "https://github.com/m-lab/ndt-server-go.git"
 ---
 apiVersion: v1
 kind: Service

@@ -15,7 +15,7 @@ spec:
         image: golang
         workingDir: /ndt-server-go
         imagePullPolicy: IfNotPresent
-        args: ["go build . && ndt-server.go"]
+        args: ["go build . && ./ndt-server.go"]
         resources:
           limits:
             memory: "12Gi"

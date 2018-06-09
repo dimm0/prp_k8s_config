@@ -98,8 +98,8 @@ spec:
           value: gitlab-registry.nautilus.optiputer.net
         - name: GITLAB_REGISTRY_PORT
           value: "443"
-        # - name: GITLAB_REGISTRY_API_URL
-        #   value: https://gitlab-registry.nautilus.optiputer.net
+        - name: GITLAB_REGISTRY_API_URL
+          value: http://localhost:5000
         - name: GITLAB_REGISTRY_KEY_PATH
           value: /ssl/key.pem
 
@@ -189,7 +189,7 @@ spec:
             memory: 100Mi
         env:
         - name: REGISTRY_HTTP_ADDR
-          value: :5000
+          value: localhost:5000
         - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
           value: /var/lib/registry
         - name: REGISTRY_AUTH_TOKEN_SERVICE
@@ -219,3 +219,16 @@ spec:
       - name: image-store
         persistentVolumeClaim:
           claimName: kube-registry-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+  namespace: gitlab
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    name: gitlab

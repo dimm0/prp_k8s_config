@@ -13,6 +13,7 @@ spec:
       containers:
       - name: ndt-go
         image: golang
+        workingDir: /ndt-server-go
         imagePullPolicy: Always
         args: ["go build . && ndt-server.go"]
         env:

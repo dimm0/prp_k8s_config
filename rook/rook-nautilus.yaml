@@ -229,6 +229,23 @@ spec:
       - name: "sdo"
       - name: "sdp"
       - name: "sdq"
+      
+    - name: "k8s-gpu-02.calit2.optiputer.net"
+      devices:
+    # sdj,sdk boot
+    # sda docker
+    - name: "sdb"
+    - name: "sdc"
+    - name: "sdd"
+    - name: "sde"
+    - name: "sdf"
+    - name: "sdg"
+    - name: "sdh"
+    - name: "sdi"
+    - name: "nvme0n1"
+    - name: "nvme1n1"
+    - name: "nvme2n1"
+    - name: "nvme3n1"
    #  - name: "k8s-gpu-02.calit2.optiputer.net"
    #    devices:
    #    # sda,sdb boot

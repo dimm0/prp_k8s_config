@@ -60,6 +60,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
   prometheus+: {
     prometheus+: {
       spec+: {
+        retention: '8760h',
         storage: {
           volumeClaimTemplate: {
             metadata: {

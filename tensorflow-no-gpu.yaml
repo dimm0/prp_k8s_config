@@ -5,13 +5,9 @@ metadata:
 spec:
   containers:
   - name: gpu-container
-    image: gcr.io/tensorflow/tensorflow:latest-gpu
+    image: tensorflow/tensorflow:latest-gpu
     imagePullPolicy: Always
     args: ["sleep", "36500000"]
-    volumeMounts:
-    - mountPath: /examples
-      name: tensor-examples
-  volumes:
-    - name: tensor-examples
-      gitRepo:
-        repository: "https://github.com/tensorflow/models.git"
+    resources:
+      limits:
+        nvidia.com/gpu: 0

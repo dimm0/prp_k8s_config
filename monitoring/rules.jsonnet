@@ -51,9 +51,9 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
     ],
   },
   grafanaDashboards+:: {
-    'All-Cuda-GPU-dashboard.json': (import 'local/All-Cuda-GPU-dashboard.json'),
+    'K8SNvidiaGPU-Cluster.json': (import 'local/K8SNvidiaGPU-Cluster.json'),
+    'K8SNvidiaGPU-Node.json': (import 'local/K8SNvidiaGPU-Node.json'),
     'Cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
-    'Cuda-GPU-dashboard.json': (import 'local/Cuda-GPU-dashboard.json'),
     'Rook-dashboard.json': (import 'local/Rook-dashboard.json'),
     'Testpoints-mem-dashboard.json': (import 'local/Testpoints-mem-dashboard.json'),
   },
@@ -78,149 +78,6 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
           },
         },
       },
-    },
-    serviceMonitorGPU+: {
-      "apiVersion": "monitoring.coreos.com/v1",
-      "kind": "ServiceMonitor",
-      "metadata": {
-        "name": "gpu-mon",
-        "namespace": "monitoring",
-        "labels": {
-          "k8s-app": "gpu-mon"
-        }
-      },
-      "spec": {
-        "selector": {
-          "matchLabels": {
-            "k8s-app": "gpu-mon"
-          }
-        },
-        "namespaceSelector": {
-          "matchNames": [
-            "monitoring"
-          ]
-        },
-        "endpoints": [
-          {
-            "port": "web",
-            "interval": "10s",
-            "path": "/metrics"
-          }
-        ]
-      }
-    },
-    serviceGPU+: {
-      "kind": "Service",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "gpu-mon",
-        "namespace": "monitoring",
-        "labels": {
-          "k8s-app": "gpu-mon"
-        }
-      },
-      "spec": {
-        "ports": [
-          {
-            "protocol": "TCP",
-            "name": "web",
-            "port": 80
-          }
-        ]
-      }
-    },
-    serviceGPUEndpoints: {
-      "kind": "Endpoints",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "gpu-mon",
-        "namespace": "monitoring",
-        "labels": {
-          "k8s-app": "gpu-mon"
-        }
-      },
-      "subsets": [
-        {
-          "addresses": [
-            {
-              "ip": "128.114.109.78",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-gpu-1.ucsc.edu"
-              }
-            },
-            {
-              "ip": "128.114.109.79",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-gpu-2.ucsc.edu"
-              }
-            },
-            {
-              "ip": "67.58.53.155",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-gpu-01.calit2.optiputer.net"
-              }
-            },
-            {
-              "ip": "67.58.53.156",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-gpu-02.calit2.optiputer.net"
-              }
-            },
-            {
-              "ip": "198.17.101.69",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-gpu-03.sdsc.optiputer.net"
-              }
-            },
-            {
-              "ip": "67.58.53.158",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-chase-ci-01.calit2.optiputer.net"
-              }
-            },
-            {
-              "ip": "67.58.53.159",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-chase-ci-02.calit2.optiputer.net"
-              }
-            },
-            {
-              "ip": "67.58.53.160",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-chase-ci-03.calit2.optiputer.net"
-              }
-            },
-            {
-              "ip": "67.58.53.161",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-chase-ci-04.calit2.optiputer.net"
-              }
-            },
-            {
-              "ip": "67.58.53.162",
-              "targetRef":{
-                "kind": "Node",
-                "name": "k8s-bafna-01.calit2.optiputer.net"
-              }
-            },
-          ],
-          "ports": [
-            {
-              "port": 9114,
-              "name": "web"
-            }
-          ]
-        }
-      ]
     },
   },
   cassandra: {
@@ -278,6 +135,66 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
       roleBinding.new() +
       roleBinding.mixin.metadata.withName('perfsonar-mon') +
       roleBinding.mixin.metadata.withNamespace('perfsonar') +
+      roleBinding.mixin.roleRef.withApiGroup('rbac.authorization.k8s.io') +
+      roleBinding.mixin.roleRef.withName('prometheus-' + $._config.prometheus.name) +
+      roleBinding.mixin.roleRef.mixinInstance({ kind: 'Role' }) +
+      roleBinding.withSubjects([{ kind: 'ServiceAccount', name: 'prometheus-' + $._config.prometheus.name, namespace: 'monitoring' }]),
+  },
+  gpu: {
+    serviceMonitor: {
+       "apiVersion": "monitoring.coreos.com/v1",
+       "kind": "ServiceMonitor",
+       "metadata": {
+          "name": "gpu-mon",
+          "namespace": "monitoring",
+          "labels": {
+             "k8s-app": "gpu-mon"
+          }
+       },
+       "spec": {
+          "selector": {
+             "matchLabels": {
+                "k8s-app": "gpu-mon"
+             }
+          },
+          "namespaceSelector": {
+             "matchNames": [
+                "gpu-mon"
+             ]
+          },
+          "endpoints": [
+             {
+                "port": "exporter",
+                "interval": "10s",
+                "path": "/metrics"
+             }
+          ]
+       }
+    },
+    role:
+      local role = kp.rbac.v1.role;
+      local policyRule = role.rulesType;
+
+      local coreRule = policyRule.new() +
+                       policyRule.withApiGroups(['']) +
+                       policyRule.withResources([
+                         'nodes',
+                         'services',
+                         'endpoints',
+                         'pods',
+                       ]) +
+                       policyRule.withVerbs(['get', 'list', 'watch']);
+
+      role.new() +
+      role.mixin.metadata.withName('prometheus-' + $._config.prometheus.name) +
+      role.mixin.metadata.withNamespace('gpu-mon') +
+      role.withRules(coreRule),
+    roleBinding:
+      local roleBinding = kp.rbac.v1.roleBinding;
+
+      roleBinding.new() +
+      roleBinding.mixin.metadata.withName('gpu-mon') +
+      roleBinding.mixin.metadata.withNamespace('gpu-mon') +
       roleBinding.mixin.roleRef.withApiGroup('rbac.authorization.k8s.io') +
       roleBinding.mixin.roleRef.withName('prometheus-' + $._config.prometheus.name) +
       roleBinding.mixin.roleRef.mixinInstance({ kind: 'Role' }) +
@@ -354,4 +271,5 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
 { ['prometheus-' + name]: kp.prometheus[name] for name in std.objectFields(kp.prometheus) } +
 { ['rook-' + name]: kp.rook[name] for name in std.objectFields(kp.rook) } +
 { ['cassandra-' + name]: kp.cassandra[name] for name in std.objectFields(kp.cassandra) } +
+{ ['gpu-' + name]: kp.gpu[name] for name in std.objectFields(kp.gpu) } +
 { ['grafana-' + name]: kp.grafana[name] for name in std.objectFields(kp.grafana) }

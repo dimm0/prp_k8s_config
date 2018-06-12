@@ -134,6 +134,17 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint
 metadata:
+  name: knuron.calit2.optiputer.net
+  labels:
+    host-endpoint: production
+spec:
+  node: knuron.calit2.optiputer.net
+  expectedIPs:
+  - 67.58.53.164
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
   name: k8s-chase-ci-01.calit2.optiputer.net
   labels:
     host-endpoint: production

@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1528768505101,
+  "iteration": 1528768505104,
   "links": [],
   "panels": [
     {
@@ -83,7 +83,7 @@
       "description": "",
       "format": "percentunit",
       "gauge": {
-        "maxValue": 100,
+        "maxValue": 1,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -127,7 +127,7 @@
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
         "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "show": true
       },
       "tableColumn": "",
       "targets": [
@@ -139,7 +139,7 @@
           "step": 120
         }
       ],
-      "thresholds": "70,90",
+      "thresholds": "0.7,0.9",
       "title": "GPU memory Utilization",
       "type": "singlestat",
       "valueFontSize": "70%",

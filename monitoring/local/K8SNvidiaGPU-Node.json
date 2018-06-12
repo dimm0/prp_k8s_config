@@ -1,37 +1,8 @@
 {
-  "__inputs": [
-    {
-      "name": "prometheus",
-      "label": "prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "5.1.0"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": "5.0.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "5.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:1377",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -46,8 +17,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": null,
-  "iteration": 1528756770866,
+  "iteration": 1528757838542,
   "links": [],
   "panels": [
     {
@@ -199,6 +169,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "$$hashKey": "object:1439",
           "expr": "nvml_gpu_percent * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=\"$host\"}",
           "format": "time_series",
           "interval": "$interval",
@@ -228,7 +199,8 @@
       },
       "yaxes": [
         {
-          "decimals": 3,
+          "$$hashKey": "object:1490",
+          "decimals": null,
           "format": "percent",
           "label": "",
           "logBase": 1,
@@ -237,6 +209,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1491",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -632,7 +605,10 @@
       {
         "allFormat": "glob",
         "allValue": null,
-        "current": {},
+        "current": {
+          "text": "k8s-bafna-01.calit2.optiputer.net",
+          "value": "k8s-bafna-01.calit2.optiputer.net"
+        },
         "datasource": "prometheus",
         "hide": 0,
         "includeAll": false,
@@ -684,5 +660,5 @@
   "timezone": "browser",
   "title": "K8S Nvidia GPU - Node",
   "uid": "Tf9PkuSik",
-  "version": 3
+  "version": 1
 }

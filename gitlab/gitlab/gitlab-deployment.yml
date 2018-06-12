@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 500Gi
+      storage: 100Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,7 +22,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 500Gi
+      storage: 100Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -39,15 +39,15 @@ spec:
     spec:
       containers:
       - name: gitlab
-        image: sameersbn/gitlab
-        # imagePullPolicy: Always
+        image: us.gcr.io/prp-k8s/gitlab
+        imagePullPolicy: Always
         env:
         - name: TZ
           value: America/Los_Angeles
         - name: GITLAB_TIMEZONE
           value: "Pacific Time (US & Canada)"
         - name: DEBUG
-          value: "false"
+          value: "true"
 
         - name: GITLAB_SECRETS_DB_KEY_BASE
           valueFrom:

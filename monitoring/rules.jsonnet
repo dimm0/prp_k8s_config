@@ -8,6 +8,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
       config: {
         sections: {
           "auth.anonymous": {enabled: true},
+          "security": {admin_password: my_password}
         },
       },
     },

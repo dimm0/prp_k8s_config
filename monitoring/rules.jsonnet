@@ -12,6 +12,47 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
       },
     },
   },
+  prometheusRules+:: {
+    groups+: [
+      {
+        name: 'nautilus.rules',
+        rules: [
+          {
+            record: ':node_disk_utilisation:avg_irate',
+            expr: |||
+              avg(irate(node_disk_io_time_ms{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3)
+            ||| % $._config,
+          },
+          {
+            record: 'node:node_disk_utilisation:avg_irate',
+            expr: |||
+              avg by (node) (
+                irate(node_disk_io_time_ms{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3
+              * on (namespace, %(podLabel)s) group_left(node)
+                node_namespace_pod:kube_pod_info:
+              )
+            ||| % $._config,
+          },
+          {
+            record: ':node_disk_saturation:avg_irate',
+            expr: |||
+              avg(irate(node_disk_io_time_weighted{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3)
+            ||| % $._config,
+          },
+          {
+            record: 'node:node_disk_saturation:avg_irate',
+            expr: |||
+              avg by (node) (
+                irate(node_disk_io_time_weighted{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3
+              * on (namespace, %(podLabel)s) group_left(node)
+                node_namespace_pod:kube_pod_info:
+              )
+            ||| % $._config,
+          },
+        ],
+      },
+    ],
+  },
   prometheusAlerts+:: {
     groups+: [
       {

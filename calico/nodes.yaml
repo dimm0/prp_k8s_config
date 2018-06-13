@@ -328,4 +328,15 @@ spec:
   node: perfsonar.csusb.edu
   expectedIPs:
   - 139.182.103.10
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: dtn0.noc.ucdavis.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: dtn0.noc.ucdavis.edu
+  expectedIPs:
+  - 128.120.87.1
 

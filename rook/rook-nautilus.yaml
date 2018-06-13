@@ -175,8 +175,8 @@ spec:
       - name: "sde"
     - name: "netw-fiona.stanford.edu"
       devices:
-      # sda,sdb boot
-      # sdc,sdd docker
+      # sdc,sdd boot
+      # sda,sdb docker
       - name: "sde"
       - name: "sdf"
       - name: "sdg"
@@ -185,12 +185,14 @@ spec:
       - name: "sdj"
       - name: "sdk"
       - name: "sdl"
-      - name: "sdn"
+      - name: "sdm"
       - name: "sdn"
       - name: "sdo"
       - name: "sdp"
-      - name: "sdq"
-      - name: "sdr"
+      # - name: "sdq"
+      # - name: "sdr"
+      # - name: "sds"
+      # - name: "sdt"
     - name: "fiona.its.hawaii.edu"
       devices:
       # sda,sdb boot

@@ -189,10 +189,10 @@ spec:
       - name: "sdn"
       - name: "sdo"
       - name: "sdp"
-      # - name: "sdq"
-      # - name: "sdr"
-      # - name: "sds"
-      # - name: "sdt"
+      - name: "sdq"
+      - name: "sdr"
+      - name: "sds"
+      - name: "sdt"
     - name: "fiona.its.hawaii.edu"
       devices:
       # sda,sdb boot

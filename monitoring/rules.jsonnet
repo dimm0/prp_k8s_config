@@ -151,12 +151,12 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
     ],
   },
   grafanaDashboards+:: {
-    'K8SNvidiaGPU-Cluster.json': (import 'local/K8SNvidiaGPU-Cluster.json'),
-    'K8SNvidiaGPU-Node.json': (import 'local/K8SNvidiaGPU-Node.json'),
-    'Cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
-    'Rook-dashboard.json': (import 'local/Rook-dashboard.json'),
-    'NodePods.json': (import 'local/NodePods.json'),
-    'Testpoints-mem-dashboard.json': (import 'local/Testpoints-mem-dashboard.json'),
+    'k8snvidiagpu-cluster.json': (import 'local/K8SNvidiaGPU-Cluster.json'),
+    'k8snvidiagpu-node.json': (import 'local/K8SNvidiaGPU-Node.json'),
+    'cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
+    'rook-dashboard.json': (import 'local/Rook-dashboard.json'),
+    'nodepods.json': (import 'local/NodePods.json'),
+    'testpoints-mem-dashboard.json': (import 'local/Testpoints-mem-dashboard.json'),
   },
   prometheus+: {
     prometheus+: {

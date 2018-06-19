@@ -6,15 +6,7 @@ spec:
   containers:
   - name: gpu-container
     image: tensorflow/tensorflow:latest-gpu
-    imagePullPolicy: Always
-    args: ["sleep", "36500000"]
+    args: ["sleep", "infinity"]
     resources:
       limits:
         nvidia.com/gpu: 1
-    volumeMounts:
-    - mountPath: /examples
-      name: tensor-examples
-  volumes:
-    - name: tensor-examples
-      gitRepo:
-        repository: "https://github.com/Hvass-Labs/TensorFlow-Tutorials"

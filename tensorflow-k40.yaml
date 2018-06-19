@@ -6,7 +6,6 @@ spec:
   containers:
   - name: gpu-container
     image: tensorflow/tensorflow:latest-gpu
-    imagePullPolicy: Always
     args: ["sleep", "infinity"]
     resources:
       limits:

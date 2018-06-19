@@ -1,6 +1,6 @@
 Add rolebindings:
 
-`kubectl create -n <YOUR_NAMESPACE> -f https://github.com/dimm0/prp_k8s_config/blob/master/mpi/rolebindings.yaml`
+`kubectl create -n <YOUR_NAMESPACE> -f https://gitlab.com/dimm/prp_k8s_config/blob/master/mpi/rolebindings.yaml`
 
 Install helm if not installed:
 

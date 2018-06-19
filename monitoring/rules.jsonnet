@@ -155,6 +155,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
     'K8SNvidiaGPU-Node.json': (import 'local/K8SNvidiaGPU-Node.json'),
     'Cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
     'Rook-dashboard.json': (import 'local/Rook-dashboard.json'),
+    'NodePods.json': (import 'local/NodePods.json'),
     'Testpoints-mem-dashboard.json': (import 'local/Testpoints-mem-dashboard.json'),
   },
   prometheus+: {

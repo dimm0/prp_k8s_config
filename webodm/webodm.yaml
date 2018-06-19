@@ -66,11 +66,6 @@ spec:
         imagePullPolicy: Always
         command: ["/bin/sh"]
         args: ["-c", "sed -i \"s/'db'/'webodm'/g\" /webodm/webodm/settings.py && chmod +x /webodm/*.sh && /bin/bash -c \"/webodm/wait-for-postgres.sh webodm /webodm/wait-for-it.sh redis:6379 -- /webodm/start.sh\""]
-        resources:
-          limits:
-            memory: "16Gi"
-          requests:
-            memory: "4Gi"
         volumeMounts:
         - mountPath: /webodm/app/media
           name: webodmmedia

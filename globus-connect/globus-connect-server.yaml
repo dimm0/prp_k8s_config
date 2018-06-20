@@ -1,8 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  namespace: globus
+  labels:
+    app: globus-connect-server
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+Johns-Air-3:globus-connect johng$ cat globus-connect-server.yaml
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: globus-connect-server
-  namespace: sdsu
+  namespace: globus
 spec:
   replicas: 1
   template:
@@ -12,8 +27,9 @@ spec:
     spec:
       containers:
       - name: globus-connect-server
-        image: us.gcr.io/prp-k8s/globus-connect-server:latest
+        image: gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
         imagePullPolicy: Always
+        args: ["/usr/sbin/globus-gridftp-server", "-c", "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
         volumeMounts:
             - mountPath: /home/data
               name: data
@@ -28,7 +44,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: globus-connect-server
-  namespace: kube-public
+  namespace: globus
   labels:
     k8s-app: globus-connect-server
 spec:

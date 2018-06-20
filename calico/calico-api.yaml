@@ -27,7 +27,7 @@ data:
           "log_level": "info",
           "datastore_type": "kubernetes",
           "nodename": "__KUBERNETES_NODE_NAME__",
-          "mtu": 8980,
+          "mtu": 8960,
           "ipam": {
             "type": "host-local",
             "subnet": "usePodCidr"

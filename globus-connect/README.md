@@ -1,8 +1,10 @@
 ## GridFTP server /Globus Connect container
 
-docker build -t globus-connect .
-docker tag globus-connect gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
-docker push gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
+>docker build -t globus-connect .
+
+>docker tag globus-connect gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
+
+>docker push gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
 
 ## Testing
 test GridFTP from another host with 'globus-data-management-client' installed

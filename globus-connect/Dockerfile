@@ -30,8 +30,8 @@ ENV TERM xterm
 # ranges not supported, so need to use docker run -P to expose all ports
 
 # add GridFTP data directory
-VOLUME /home/data
+### VOLUME /home/data
 # add pid directory
-VOLUME /var/run
+### VOLUME /var/run
 
-CMD ["/usr/sbin/globus-gridftp-server", "-c" "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
+### CMD ["/usr/sbin/globus-gridftp-server", "-c" "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]

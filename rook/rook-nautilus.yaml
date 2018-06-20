@@ -276,19 +276,23 @@ spec:
   #   - name: "sdf"
   # - name: "prp-dtn.noc.ucsb.edu"
   #   devices:
-  #   # sda,sdb boot
-  #   # sdc,sdd docker
-  #   - name: "sde"
-  #   - name: "sdf"
-  #   - name: "sdg"
-  #   - name: "sdh"
-  #   - name: "sdi"
-  #   - name: "sdj"
-  #   - name: "sdk"
-  #   - name: "sdl"
-  #   - name: "sdn"
-  #   - name: "sdn"
-  #   - name: "sdo"
-  #   - name: "sdp"
-  #   - name: "sdq"
-  #   - name: "sdr"
+  #   # sda DEAD
+  #   # sdb docker
+  #   # sdc boot
+  #   # sdd spare SATA DOM
+  #   - name: "sde" #10TB 
+  #   - name: "sdf" #10TB 
+  #   - name: "sdg" #10TB 
+  #   - name: "sdh" #10TB 
+  #   - name: "sdi" # 128GB ?? Missed a disk
+  #   - name: "sdj" #10TB 
+  #   - name: "sdk" #10TB 
+  #   - name: "sdl" #10TB 
+  #   - name: "sdm" #10TB 
+  #   - name: "sdn" #10TB 
+  #   - name: "sdo" #10TB 
+  #   - name: "sdp" #10TB 
+  #   - name: "sdq" #10TB 
+  #   - name: "sdr" #10TB 
+  #   - name: "sds" #10TB 
+  #   - name: "sdt" #10TB 

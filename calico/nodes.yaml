@@ -339,4 +339,15 @@ spec:
   node: dtn0.noc.ucdavis.edu
   expectedIPs:
   - 128.120.87.1
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: dhcp-156-93.banatao.berkeley.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: dhcp-156-93.banatao.berkeley.edu
+  expectedIPs:
+  - 128.32.156.93
 

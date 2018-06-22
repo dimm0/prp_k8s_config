@@ -1,581 +1,1214 @@
-database: /var/lib/maddash/
-
-serverHost: "localhost"
-
-http:
-    port: 8881
-
-groups:
-
-groupMembers:
-
 checks:
-
-grids:
-
+  GridFTP_-_Throughput:
+    checkInterval: 600
+    critical_description: Throughput <= 500Mbps
+    description: GridFTP Throughput from %row to %col
+    name: GridFTP Throughput
+    ok_description: Throughput >= 750Mbps
+    params:
+      command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.75: -c 0.5: -r 86400 -s %row -d %col --tool=gridftp'
+      graphUrl: /perfsonar-graphs/?url=%maUrl&dest=%col&source=%row
+      maUrl:
+        default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive
+    retryAttempts: 3
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Throughput < 750Mbps
+  GridFTP_-_Throughput_Reverse:
+    checkInterval: 600
+    critical_description: Throughput <= 500Mbps
+    description: GridFTP Throughput from %col to %row
+    name: GridFTP Throughput Reverse
+    ok_description: Throughput >= 750Mbps
+    params:
+      command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.75: -c 0.5: -r 86400 -s %col -d %row --tool=gridftp'
+      graphUrl: /perfsonar-graphs/?url=%maUrl&dest=%row&source=%col
+      maUrl:
+        default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive
+    retryAttempts: 3
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Throughput < 750Mbps
+  perfSONAR_-_Traceroute_-_Number_of_Paths:
+    checkInterval: 1800
+    critical_description: Number of Paths is >= 2
+    description: Number of Paths from %row to %col
+    id: perfSONAR_-_Traceroute_-_Number_of_Paths
+    name: Number of Paths
+    ok_description: Number of Paths is <= 1
+    params:
+      command: /usr/lib64/nagios/plugins/check_traceroute.pl -u %maUrl -w :1 -c :2 -r 3600 -s %row -d %col -a %row -4
+      graphUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+        gigiot-06.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+        gigiot-07.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+        gigiot-08.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+      maUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-06.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-07.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-08.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+    retryAttempts: 1
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Number of Paths is >= 1
+  perfSONAR_-_Traceroute_-_Number_of_Paths_Alternate_MA:
+    checkInterval: 1800
+    critical_description: Number of Paths is >= 2
+    description: Number of Paths from %row to %col
+    id: perfSONAR_-_Traceroute_-_Number_of_Paths_Alternate_MA
+    name: Number of Paths Alternate MA
+    ok_description: Number of Paths is <= 1
+    params:
+      command: /usr/lib64/nagios/plugins/check_traceroute.pl -u %maUrl -w :1 -c :2 -r 3600 -s %row -d %col -a %col -4
+      graphUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+        gigiot-06.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+        gigiot-07.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+        gigiot-08.calit2.optiputer.net:
+          default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
+      maUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-06.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-07.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-08.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+    retryAttempts: 1
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Number of Paths is >= 1
+  perfSONAR_-_iperf3_Throughput_-_Throughput:
+    checkInterval: 14400
+    critical_description: Throughput <= 500Mbps
+    description: Throughput from %row to %col
+    id: perfSONAR_-_iperf3_Throughput_-_Throughput
+    name: Throughput
+    ok_description: Throughput >= 900Mbps
+    params:
+      command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.9: -c 0.5: -r 86400 -s %row -d %col -a %row -p tcp -4'
+      graphUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+        gigiot-06.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+        gigiot-07.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+        gigiot-08.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+      maUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-06.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-07.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-08.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+    retryAttempts: 1
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Throughput < 900Mbps
+  perfSONAR_-_iperf3_Throughput_-_Throughput_Alternate_MA:
+    checkInterval: 14400
+    critical_description: Throughput <= 500Mbps
+    description: Throughput from %row to %col
+    id: perfSONAR_-_iperf3_Throughput_-_Throughput_Alternate_MA
+    name: Throughput Alternate MA
+    ok_description: Throughput >= 900Mbps
+    params:
+      command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.9: -c 0.5: -r 86400 -s %row -d %col -a %col -p tcp -4'
+      graphUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+        gigiot-06.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+        gigiot-07.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+        gigiot-08.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+      maUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-06.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-07.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-08.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+    retryAttempts: 1
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Throughput < 900Mbps
+  perfSONAR_-_owamp_Packet_Loss_-_Loss:
+    checkInterval: 1800
+    critical_description: Loss rate is >= 0.01
+    description: Loss from %row to %col
+    id: perfSONAR_-_owamp_Packet_Loss_-_Loss
+    name: Loss
+    ok_description: Loss rate is <= 0
+    params:
+      command: /usr/lib64/nagios/plugins/check_owdelay.pl -u %maUrl -w 0 -c 0.01 -r 2700 -l -p -s %row -d %col -a %row -4
+      graphUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+        gigiot-06.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+        gigiot-07.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+        gigiot-08.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
+      maUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-06.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-07.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-08.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+    retryAttempts: 1
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Loss rate is >= 0
+  perfSONAR_-_owamp_Packet_Loss_-_Loss_Alternate_MA:
+    checkInterval: 1800
+    critical_description: Loss rate is >= 0.01
+    description: Loss from %row to %col
+    id: perfSONAR_-_owamp_Packet_Loss_-_Loss_Alternate_MA
+    name: Loss Alternate MA
+    ok_description: Loss rate is <= 0
+    params:
+      command: /usr/lib64/nagios/plugins/check_owdelay.pl -u %maUrl -w 0 -c 0.01 -r 2700 -l -p -s %row -d %col -a %col -4
+      graphUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+        gigiot-06.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+        gigiot-07.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+        gigiot-08.calit2.optiputer.net:
+          default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
+      maUrl:
+        gigiot-05.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-06.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-07.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+        gigiot-08.calit2.optiputer.net:
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
+    retryAttempts: 1
+    retryInterval: 300
+    timeout: 60
+    type: net.es.maddash.checks.PSNagiosCheck
+    warning_description: Loss rate is >= 0
 dashboards:
-
-defaultReport: "grid_up_down_report"
+  -
+    grids:
+      -
+        name: 'GridFTP - Throughput'
+      -
+        name: 'perfSONAR - iperf3 Throughput'
+      -
+        name: 'perfSONAR - owamp Packet Loss'
+      -
+        name: 'perfSONAR - Traceroute'
+    name: perfSONAR and GridFTP
+  -
+    grids:
+      -
+        name: 'GridFTP - Throughput'
+    name: GridFTP
+  -
+    added_by_mesh_agent: 1
+    grids:
+      -
+        name: 'perfSONAR - iperf3 Throughput'
+      -
+        name: 'perfSONAR - owamp Packet Loss'
+      -
+        name: 'perfSONAR - Traceroute'
+    name: perfSONAR
+database: /var/lib/maddash/
+grids:
+  -
+    checks:
+      - GridFTP_-_Throughput
+      - GridFTP_-_Throughput_Reverse
+    columnAlgorithm: all
+    columnOrder: group
+    columns: PRP_FIONA_Workshop_GridFTP
+    excludeSelf: 1
+    name: 'GridFTP - Throughput'
+    report: meshconfig_mesh_throughput
+    rowOrder: group
+    rows: PRP_FIONA_Workshop_GridFTP
+    statusLabels:
+      critical: Throughput <= 500Mbps
+      notrun: Check has not yet run
+      ok: Throughput >= 750Mbps
+      unknown: Unable to retrieve data
+      warning: Throughput < 750Mbps
+  -
+    added_by_mesh_agent: 1
+    checks:
+      - perfSONAR_-_iperf3_Throughput_-_Throughput
+      - perfSONAR_-_iperf3_Throughput_-_Throughput_Alternate_MA
+    colOrder: alphabetical
+    columnAlgorithm: all
+    columns: perfSONAR_-_iperf3_Throughput
+    excludeChecks:
+      gigiot-05.calit2.optiputer.net:
+        - gigiot-05.calit2.optiputer.net
+      gigiot-06.calit2.optiputer.net:
+        - gigiot-06.calit2.optiputer.net
+      gigiot-07.calit2.optiputer.net:
+        - gigiot-07.calit2.optiputer.net
+      gigiot-08.calit2.optiputer.net:
+        - gigiot-08.calit2.optiputer.net
+    excludeSelf: 1
+    name: 'perfSONAR - iperf3 Throughput'
+    report: meshconfig_mesh_throughput
+    rowOrder: alphabetical
+    rows: perfSONAR_-_iperf3_Throughput
+    statusLabels:
+      critical: Throughput <= 500Mbps
+      notrun: Check has not yet run
+      ok: Throughput >= 900Mbps
+      unknown: Unable to retrieve data
+      warning: Throughput < 900Mbps
+  -
+    added_by_mesh_agent: 1
+    checks:
+      - perfSONAR_-_owamp_Packet_Loss_-_Loss
+      - perfSONAR_-_owamp_Packet_Loss_-_Loss_Alternate_MA
+    colOrder: alphabetical
+    columnAlgorithm: all
+    columns: perfSONAR_-_owamp_Packet_Loss
+    excludeChecks:
+      gigiot-05.calit2.optiputer.net:
+        - gigiot-05.calit2.optiputer.net
+      gigiot-06.calit2.optiputer.net:
+        - gigiot-06.calit2.optiputer.net
+      gigiot-07.calit2.optiputer.net:
+        - gigiot-07.calit2.optiputer.net
+      gigiot-08.calit2.optiputer.net:
+        - gigiot-08.calit2.optiputer.net
+    excludeSelf: 1
+    name: 'perfSONAR - owamp Packet Loss'
+    report: meshconfig_mesh_loss
+    rowOrder: alphabetical
+    rows: perfSONAR_-_owamp_Packet_Loss
+    statusLabels:
+      critical: Loss rate is >= 0.01
+      notrun: Check has not yet run
+      ok: Loss rate is <= 0
+      unknown: Unable to retrieve data
+      warning: Loss rate is >= 0
+  -
+    added_by_mesh_agent: 1
+    checks:
+      - perfSONAR_-_Traceroute_-_Number_of_Paths
+      - perfSONAR_-_Traceroute_-_Number_of_Paths_Alternate_MA
+    colOrder: alphabetical
+    columnAlgorithm: all
+    columns: perfSONAR_-_Traceroute
+    excludeChecks:
+      gigiot-05.calit2.optiputer.net:
+        - gigiot-05.calit2.optiputer.net
+      gigiot-06.calit2.optiputer.net:
+        - gigiot-06.calit2.optiputer.net
+      gigiot-07.calit2.optiputer.net:
+        - gigiot-07.calit2.optiputer.net
+      gigiot-08.calit2.optiputer.net:
+        - gigiot-08.calit2.optiputer.net
+    excludeSelf: 1
+    name: 'perfSONAR - Traceroute'
+    rowOrder: alphabetical
+    rows: perfSONAR_-_Traceroute
+    statusLabels:
+      critical: Number of Paths is >= 2
+      notrun: Check has not yet run
+      ok: Number of Paths is <= 1
+      unknown: Unable to retrieve data
+      warning: Number of Paths is >= 1
+groupMembers:
+  -
+    added_by_mesh_agent: yes
+    id: gigiot-05.calit2.optiputer.net
+    label: gigiot-05.calit2.optiputer.net
+  -
+    added_by_mesh_agent: yes
+    id: 67.58.53.205
+    label: gigiot-05.calit2.optiputer.net
+  -
+    added_by_mesh_agent: yes
+    id: gigiot-06.calit2.optiputer.net
+    label: gigiot-06.calit2.optiputer.net
+  -
+    added_by_mesh_agent: yes
+    id: 67.58.53.206
+    label: gigiot-06.calit2.optiputer.net
+  -
+    added_by_mesh_agent: yes
+    id: gigiot-07.calit2.optiputer.net
+    label: gigiot-07.calit2.optiputer.net
+  -
+    added_by_mesh_agent: yes
+    id: 67.58.53.207
+    label: gigiot-07.calit2.optiputer.net
+  -
+    added_by_mesh_agent: yes
+    id: gigiot-08.calit2.optiputer.net
+    label: gigiot-08.calit2.optiputer.net
+  -
+    added_by_mesh_agent: yes
+    id: 67.58.53.208
+    label: gigiot-08.calit2.optiputer.net
+groups:
+  PRP_FIONA_Workshop_GridFTP:
+    - gigiot-05.calit2.optiputer.net
+    - gigiot-06.calit2.optiputer.net
+    - gigiot-07.calit2.optiputer.net
+    - gigiot-08.calit2.optiputer.net
+  perfSONAR_-_Traceroute:
+    - gigiot-05.calit2.optiputer.net
+    - gigiot-06.calit2.optiputer.net
+    - gigiot-08.calit2.optiputer.net
+    - gigiot-07.calit2.optiputer.net
+  perfSONAR_-_iperf3_Throughput:
+    - gigiot-05.calit2.optiputer.net
+    - gigiot-06.calit2.optiputer.net
+    - gigiot-08.calit2.optiputer.net
+    - gigiot-07.calit2.optiputer.net
+  perfSONAR_-_owamp_Packet_Loss:
+    - gigiot-05.calit2.optiputer.net
+    - gigiot-06.calit2.optiputer.net
+    - gigiot-08.calit2.optiputer.net
+    - gigiot-07.calit2.optiputer.net
+http:
+  port: 8881
 reports:
-    -
-        id: "grid_up_down_report"
-        rule:
-            type: matchFirst
+  -
+    added_by_mesh_agent: 1
+    id: meshconfig_mesh_throughput
+    rule:
+      rules:
+        -
+          match:
+            status: 3
+            type: status
+          problem:
+            category: CONFIGURATION
+            message: Grid is down
+            severity: 3
+            solutions:
+              - 'If you just configured this grid in the mesh, you may just need to wait as it takes several hours for throughput data to populate (depending on the interval between tests)'
+              - Verify maddash is configured properly. Look in the files under /var/log/maddash/ for any errors. Things to look for are incorrect paths to checks or connection errors.
+              - Verify that perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh
+              - Verify that your measurement archive(s) are running
+              - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+              - Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/meshconfig-agent-tasks.conf
+              - Verify that perfsonar-meshconfig-agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+              - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+          selector:
+            type: grid
+          type: rule
+        -
+          match:
+            status: 0
+            type: status
+          problem:
+            category: PERFORMANCE
+            message: Entire grid has OK status.
+            severity: 0
+          selector:
+            type: grid
+          type: rule
+        -
+          rule:
             rules:
-                - 
-                    type: rule
-                    selector:
-                        type: grid
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Site is down
+                  severity: 3
+                  solutions:
+                    - Verify the host is up
+                    - 'If recently added to the mesh, verify the mesh config file has been downloaded by the end-hosts since the update. It may also take several hours for the first throughput test to run on this host.'
+                    - 'If recently removed from the mesh, verify that the perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh'
+                    - Verify NTP is synced on this host
+                    - Verify the local and remote sites allow access to TCP port 443 and TCP/UDP port 5101
+                selector:
+                  type: site
+                type: rule
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Unable to run and/or query any outgoing throughput tests.
+                  severity: 3
+                  solutions:
+                    - Verify you are not blocking any of the required outgoing throughput ports in your firewall
+                    - Verify the remote sites allow your host to access TCP port 443 and TCP/UDP port 5101
+                    - Verify the limits defined in /etc/pscheduler/limits.conf on each side are properly defined and not being exceeded by the tests
+                selector:
+                  type: row
+                type: rule
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Unable to run and/or query any incoming throughput tests.
+                  severity: 3
+                  solutions:
+                    - Verify your host and router firewalls are allowing TCP port 443 and TCP/UDP port 5101
+                    - Verify the limits defined in /etc/pscheduler/limits.conf are properly defined and not being exceeded by the tests
+                selector:
+                  type: column
+                type: rule
+              -
+                rules:
+                  -
+                    rules:
+                      -
+                        match:
+                          status: 3
+                          type: status
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated at this site are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Verify that your measurement archive(s) are running
+                            - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+                            - Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/meshconfig-agent-tasks.conf
+                            - Verify that MeshConfig Agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+                            - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+                        selector:
+                          colIndex: 1
+                          rowIndex: 0
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: A majority (but not all) of tests initiated by this site are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Check if the sites that are failing are blocking TCP port 443 or TCP/UDP port 5101.
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          colIndex: 1
+                          rowIndex: 0
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated at this site are failing in the outgoing direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          rowIndex: 0
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated at this site are failing in the incoming direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          colIndex: 1
+                          type: check
+                        type: rule
+                    type: matchFirst
+                  -
+                    rules:
+                      -
+                        match:
+                          status: 3
+                          type: status
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated by remote sites are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Verify that the local site has TCP port 443 is open on the host and router firewalls
+                            - Verify that pscheduler is running on the host with '/etc/init.d/pscheduler status'
+                            - Verify the limits defined in /etc/pscheduler/limits.conf are properly defined and not being exceeded by the tests
+                        selector:
+                          colIndex: 0
+                          rowIndex: 1
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: A majority (but not all) of tests initiated by remote sites are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Verify that the local site has TCP port 443 open on the host and router firewalls to all hosts in the mesh
+                            - Verify the limits defined in /etc/pscheduler/limits.conf are properly defined and not being exceeded by the tests
+                        selector:
+                          colIndex: 0
+                          rowIndex: 1
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated by remote sites are failing in the outgoing direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          rowIndex: 1
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated by remote sites are failing in the incoming direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          colIndex: 0
+                          type: check
+                        type: rule
+                    type: matchFirst
+                  -
                     match:
-                        type: status
-                        status: 3
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
                     problem:
-                        severity: 3
-                        category: CONFIGURATION
-                        message: "Grid is down"
-                        solutions:
-                            - "Check your maddash configuration"
-                -
-                    type: rule
+                      category: PERFORMANCE
+                      message: Outgoing throughput is below warning or critical thresholds to a majority of sites
+                      severity: 2
                     selector:
-                        type: grid
+                      type: row
+                    type: rule
+                  -
                     match:
-                        type: status
-                        status: 0
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
                     problem:
-                        severity: 0
-                        category: CONFIGURATION
-                        message: "No issues found"
-    -
-        id: "throughput_mesh_report"
-        rule:
+                      category: PERFORMANCE
+                      message: Incoming throughput is below warning or critical thresholds to a majority of sites
+                      severity: 2
+                    selector:
+                      type: column
+                    type: rule
+                type: matchAll
             type: matchFirst
+          type: forEachSite
+      type: matchFirst
+  -
+    added_by_mesh_agent: 1
+    id: meshconfig_disjoint_throughput
+    rule:
+      rules:
+        -
+          match:
+            status: 3
+            type: status
+          problem:
+            category: CONFIGURATION
+            message: Grid is down
+            severity: 3
+            solutions:
+              - 'If you just configured this grid in the mesh, you may just need to wait as it takes several hours for throughput data to populate (depending on the interval between tests)'
+              - Verify maddash is configured properly. Look in the files under /var/log/maddash/ for any errors. Things to look for are incorrect paths to checks or connection errors.
+              - Verify that the perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh
+              - Verify that your measurement archive(s) are running
+              - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+              - Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/meshconfig-agent-tasks.conf
+              - Verify that MeshConfig Agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+              - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+          selector:
+            type: grid
+          type: rule
+        -
+          match:
+            status: 0
+            type: status
+          problem:
+            category: PERFORMANCE
+            message: Entire grid has OK status.
+            severity: 0
+          selector:
+            type: grid
+          type: rule
+        -
+          rule:
             rules:
-                -
-                    type: rule
-                    selector:
-                        type: grid
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Site is down
+                  severity: 3
+                  solutions:
+                    - Verify the host is up
+                    - Verify the local and remote sites allow access to TCP port 443 and TCP/UDP port 5101
+                    - 'If recently added to the mesh, verify the mesh config file has been downloaded by the end-hosts since the update. It may also take several hours for the first BWCTL test to run on this host.'
+                    - 'If recently removed from the mesh, verify that the perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh'
+                    - Verify NTP is synced on this host
+                    - Verify that your measurement archive(s) are running
+                    - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+                    - Verify that MeshConfig Agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+                    - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+                selector:
+                  type: site
+                type: rule
+              -
+                rules:
+                  -
                     match:
-                        type: status
-                        status: 3
+                      status: 3
+                      threshold: .6
+                      type: statusThreshold
                     problem:
-                        severity: 3
-                        category: CONFIGURATION
-                        message: "Grid is down"
-                        solutions:
-                            - "If you just configured this grid in the mesh, you may just need to wait as it takes several hours for throughput data to populate (depending on the interval between tests)"
-                            - "Verify maddash is configured properly. Look in the files under /var/log/maddash/ for any errors. Things to look for are incorrect paths to checks or connection errors."
-                            - "Verify that /usr/lib/perfsonar/bin/generate_gui_configuration has run recently and you are looking at an accurate test mesh"
-                            - "Verify that your measurement archive(s) are running"
-                            - "Verify no firewall is blocking maddash from reaching your measurement archive(s)"
-                            - "Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/regulartesting.conf"
-                            - "Verify that regular testing is running (/etc/init.d/perfsonar-regulartesting status)"
-                            - "Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/regulartesting.log"
-                -
-                    type: rule
+                      category: CONFIGURATION
+                      message: Tests are failing in the outgoing direction
+                      severity: 3
+                      solutions:
+                        - Verify the local and remote sites allow access to TCP port 443 and TCP/UDP ports 5101 in their host and router firewalls
                     selector:
-                        type: grid
+                      colIndex: 1
+                      rowIndex: 0
+                      type: check
+                    type: rule
+                  -
                     match:
-                        type: status
-                        status: 0
+                      status: 3
+                      threshold: .6
+                      type: statusThreshold
                     problem:
-                        severity: 0
-                        category: CONFIGURATION
-                        message: "No issues found"
-                -
-                    type: forEachSite
-                    rule:
-                        type: matchFirst
-                        rules:
-                            -
-                                type: rule
-                                selector:
-                                    type: site
-                                match:
-                                    type: status
-                                    status: 3
-                                problem:
-                                    severity: 3
-                                    category: CONFIGURATION
-                                    message: "Site is down"
-                                    solutions:
-                                        - "Verify the host is up"
-                                        - "If recently added to the mesh, verify the mesh config file has been downloaded by the end-hosts since the update. It may also take several hours for the first BWCTL test to run on this host."
-                                        - "If recently removed from the mesh, verify that /usr/lib/perfsonar/bin/generate_gui_configuration has run recently and you are looking at an accurate test mesh"
-                                        - "Verify NTP is synced on this host"
-                                        - "Verify the local and remote sites allow access to TCP port 4823, TCP/UDP ports 6001-6200, and TCP/UDP ports 5001-5900"
-                            -
-                                type: rule
-                                selector:
-                                    type: row
-                                match:
-                                    type: status
-                                    status: 3
-                                problem:
-                                    severity: 3
-                                    category: CONFIGURATION
-                                    message: "Unable to run and/or query any outgoing throughput tests."
-                                    solutions:
-                                        - "Verify you are not blocking any of the required outgoing BWCTL ports in your firewall"
-                                        - "Verify the remote sites allow your host to access TCP/UDP ports 5001-5900"
-                                        - "Verify the limits defined in /etc/bwctl-server/bwctl-server.limits are properly defined and not being exceeded by the tests"
-                            -
-                                type: rule
-                                selector:
-                                    type: column
-                                match:
-                                    type: status
-                                    status: 3
-                                problem:
-                                    severity: 3
-                                    category: CONFIGURATION
-                                    message: "Unable to run and/or query any incoming throughput tests."
-                                    solutions:
-                                        - "Verify your host and router firewalls are allowing TCP/UDP 5001-5900"
-                                        - "Verify the limits defined in /etc/bwctl-server/bwctl-server.limits are properly defined and not being exceeded by the tests"
-                            -
-                                type: matchAll
-                                rules:
-                                    -
-                                        type: matchFirst
-                                        rules:
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 0
-                                                    colIndex: 1
-                                                match:
-                                                    type: status
-                                                    status: 3
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated at this site are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Verify that your measurement archive(s) are running"
-                                                        - "Verify no firewall is blocking maddash from reaching your measurement archive(s)"
-                                                        - "Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/regulartesting.conf"
-                                                        - "Verify that regular testing is running (/etc/init.d/perfsonar-regulartesting status)"
-                                                        - "Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/regulartesting.log"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 0
-                                                    colIndex: 1
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "A majority (but not all) of tests initiated by this site are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Check if the sites that are failing are blocking TCP port 4823."
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 0
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated at this site are failing in the outgoing direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    colIndex: 1
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated at this site are failing in the incoming direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                    -
-                                        type: matchFirst
-                                        rules:
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 1
-                                                    colIndex: 0
-                                                match:
-                                                    type: status
-                                                    status: 3
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated by remote sites are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Verify that the local site has TCP port 4823 open on the host and router firewalls"
-                                                        - "Verify that bwctl-server is running on the host with '/etc/init.d/bwctl-server status'"
-                                                        - "Verify the limits defined in /etc/bwctl-server/bwctl-server.limits are properly defined and not being exceeded by the tests"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 1
-                                                    colIndex: 0
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "A majority (but not all) of tests initiated by remote sites are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Verify that the local site has TCP port 4823 open on the host and router firewalls to all hosts in the mesh"
-                                                        - "Verify the limits defined in /etc/bwctl-server/bwctl-server.limits are properly defined and not being exceeded by the tests"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 1
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated by remote sites are failing in the outgoing direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    colIndex: 0
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated by remote sites are failing in the incoming direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                    -
-                                        type: rule
-                                        selector:
-                                            type: row
-                                        match:
-                                            type: statusWeightedThreshold
-                                            statuses:
-                                                - 0.0
-                                                - .5
-                                                - 1.0
-                                                - -1.0
-                                            threshold: .6
-                                        problem:
-                                            severity: 2
-                                            category: PERFORMANCE
-                                            message: "Outgoing throughput is below warning or critical thresholds to a majority of sites"
-                                    -
-                                        type: rule
-                                        selector:
-                                            type: column
-                                        match:
-                                            type: statusWeightedThreshold
-                                            statuses:
-                                                - 0.0
-                                                - .5
-                                                - 1.0
-                                                - -1.0
-                                            threshold: .6
-                                        problem:
-                                            severity: 2
-                                            category: PERFORMANCE
-                                            message: "Incoming throughput is below warning or critical thresholds to a majority of sites"
-    -
-        id: "loss_mesh_report"
-        rule:
+                      category: CONFIGURATION
+                      message: Tests are failing in the incoming direction
+                      severity: 3
+                      solutions:
+                        - Verify the local and remote sites allow access to TCP port 443 and TCP/UDP ports 5101 in their host and router firewalls
+                    selector:
+                      colIndex: 0
+                      rowIndex: 1
+                      type: check
+                    type: rule
+                  -
+                    match:
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
+                    problem:
+                      category: PERFORMANCE
+                      message: Outgoing throughput is below warning or critical thresholds to a majority of sites
+                      severity: 2
+                    selector:
+                      colIndex: 1
+                      rowIndex: 0
+                      type: check
+                    type: rule
+                  -
+                    match:
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
+                    problem:
+                      category: PERFORMANCE
+                      message: Incoming throughput is below warning or critical thresholds to a majority of sites
+                      severity: 2
+                    selector:
+                      colIndex: 0
+                      rowIndex: 1
+                      type: check
+                    type: rule
+                type: matchAll
             type: matchFirst
+          type: forEachSite
+      type: matchFirst
+  -
+    added_by_mesh_agent: 1
+    id: meshconfig_mesh_loss
+    rule:
+      rules:
+        -
+          match:
+            status: 3
+            type: status
+          problem:
+            category: CONFIGURATION
+            message: Grid is down
+            severity: 3
+            solutions:
+              - 'If you just configured this grid in the mesh, you may just need to wait as it takes a few minutes for loss data to populate'
+              - Verify maddash is configured properly. Look in the files under /var/log/maddash/ for any errors. Things to look for are incorrect paths to checks or connection errors.
+              - Verify that the perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh
+              - Verify that your measurement archive(s) are running
+              - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+              - Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/meshconfig-agent-tasks.conf
+              - Verify that MeshConfig Agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+              - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+          selector:
+            type: grid
+          type: rule
+        -
+          match:
+            status: 0
+            type: status
+          problem:
+            category: PERFORMANCE
+            message: Entire grid has OK status
+            severity: 0
+          selector:
+            type: grid
+          type: rule
+        -
+          rule:
             rules:
-                -
-                    type: rule
-                    selector:
-                        type: grid
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Site is down
+                  severity: 3
+                  solutions:
+                    - Verify the host is up
+                    - 'If recently added to the mesh, verify the mesh config file has been downloaded by the end-hosts since the update.'
+                    - 'If recently removed from the mesh, verify that the perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh'
+                    - Verify the local and remote sites allow access to TCP port 861 and UDP ports 8760-9960
+                selector:
+                  type: site
+                type: rule
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Unable to run and/or query any outgoing one-way delay tests.
+                  severity: 3
+                  solutions:
+                    - Verify you are not blocking any of the required outgoing OWAMP ports in your firewall
+                    - Verify the remote sites allow your host to access UDP ports 8760-9960
+                selector:
+                  type: row
+                type: rule
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Unable to run and/or query any incoming one-way delay tests.
+                  severity: 3
+                  solutions:
+                    - Verify your host and router firewalls are allowing UDP ports 8760-9960
+                selector:
+                  type: column
+                type: rule
+              -
+                rules:
+                  -
+                    rules:
+                      -
+                        match:
+                          status: 3
+                          type: status
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated at this site are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Verify that your measurement archive(s) are running
+                            - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+                            - Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/meshconfig-agent-tasks.conf
+                            - Verify that MeshConfig Agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+                            - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+                        selector:
+                          colIndex: 1
+                          rowIndex: 0
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: A majority (but not all) of tests initiated by this site are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Check if the sites that are failing are blocking TCP port 861.
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          colIndex: 1
+                          rowIndex: 0
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated at this site are failing in the outgoing direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          rowIndex: 0
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated at this site are failing in the incoming direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          colIndex: 1
+                          type: check
+                        type: rule
+                    type: matchFirst
+                  -
+                    rules:
+                      -
+                        match:
+                          status: 3
+                          type: status
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated by remote sites are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Verify that the local site has TCP port 861 open on the host and router firewalls
+                            - Verify that owamp-server is running on the host with '/etc/init.d/owamp-server status' or 'systemctl status owamp-server'
+                        selector:
+                          colIndex: 0
+                          rowIndex: 1
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: A majority (but not all) of tests initiated by remote sites are failing in both incoming and outgoing directions
+                          severity: 3
+                          solutions:
+                            - Verify that the local site has TCP port 861 open on the host and router firewalls to all hosts in the mesh
+                        selector:
+                          colIndex: 0
+                          rowIndex: 1
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated by remote sites are failing in the outgoing direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          rowIndex: 1
+                          type: check
+                        type: rule
+                      -
+                        match:
+                          status: 3
+                          threshold: .6
+                          type: statusThreshold
+                        problem:
+                          category: CONFIGURATION
+                          message: Tests initiated by remote sites are failing in the incoming direction
+                          severity: 3
+                          solutions:
+                            - Verify that /var/log/perfsonar/meshconfig-agent.log does not contain any errors.
+                            - Verify that /etc/perfsonar/meshconfig-agent-tasks.conf contains the proper tests
+                            - "Restart perfsonar-meshconfig-agent, it may not have picked-up configuration changes ('/etc/init.d/perfsonar-meshconfig-agent restart' or 'systemctl restart perfsonar-meshconfig-agent')"
+                        selector:
+                          colIndex: 0
+                          type: check
+                        type: rule
+                    type: matchFirst
+                  -
                     match:
-                        type: status
-                        status: 3
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
                     problem:
-                        severity: 3
-                        category: CONFIGURATION
-                        message: "Grid is down"
-                        solutions:
-                            - "If you just configured this grid in the mesh, you may just need to wait as it takes a few minutes for loss data to populate"
-                            - "Verify maddash is configured properly. Look in the files under /var/log/maddash/ for any errors. Things to look for are incorrect paths to checks or connection errors."
-                            - "Verify that /usr/lib/perfsonar/bin/generate_gui_configuration has run recently and you are looking at an accurate test mesh"
-                            - "Verify that your measurement archive(s) are running"
-                            - "Verify no firewall is blocking maddash from reaching your measurement archive(s)"
-                            - "Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/regulartesting.conf"
-                            - "Verify that regular testing is running (/etc/init.d/perfsonar-regulartesting status)"
-                            - "Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/regulartesting.log"
-                -
-                    type: rule
+                      category: PERFORMANCE
+                      message: Outgoing loss is above warning or critical thresholds to a majority of sites
+                      severity: 2
                     selector:
-                        type: grid
+                      type: row
+                    type: rule
+                  -
                     match:
-                        type: status
-                        status: 0
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
                     problem:
-                        severity: 0
-                        category: CONFIGURATION
-                        message: "No issues found"
-                -
-                    type: forEachSite
-                    rule:
-                        type: matchFirst
-                        rules:
-                            -
-                                type: rule
-                                selector:
-                                    type: site
-                                match:
-                                    type: status
-                                    status: 3
-                                problem:
-                                    severity: 3
-                                    category: CONFIGURATION
-                                    message: "Site is down"
-                                    solutions:
-                                        - "Verify the host is up"
-                                        - "If recently added to the mesh, verify the mesh config file has been downloaded by the end-hosts since the update."
-                                        - "If recently removed from the mesh, verify that /usr/lib/perfsonar/bin/generate_gui_configuration has run recently and you are looking at an accurate test mesh"
-                                        - "Verify the local and remote sites allow access to TCP port 861 and UDP ports 8760-9960"
-                            -
-                                type: rule
-                                selector:
-                                    type: row
-                                match:
-                                    type: status
-                                    status: 3
-                                problem:
-                                    severity: 3
-                                    category: CONFIGURATION
-                                    message: "Unable to run and/or query any outgoing one-way delay tests."
-                                    solutions:
-                                        - "Verify you are not blocking any of the required outgoing OWAMP ports in your firewall"
-                                        - "Verify the remote sites allow your host to access UDP ports 8760-9960"
-                            -
-                                type: rule
-                                selector:
-                                    type: column
-                                match:
-                                    type: status
-                                    status: 3
-                                problem:
-                                    severity: 3
-                                    category: CONFIGURATION
-                                    message: "Unable to run and/or query any incoming one-way delay tests."
-                                    solutions:
-                                        - "Verify your host and router firewalls are allowing UDP ports 8760-9960"
-                            -
-                                type: matchAll
-                                rules:
-                                    -
-                                        type: matchFirst
-                                        rules:
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 0
-                                                    colIndex: 1
-                                                match:
-                                                    type: status
-                                                    status: 3
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated at this site are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Verify that your measurement archive(s) are running"
-                                                        - "Verify no firewall is blocking maddash from reaching your measurement archive(s)"
-                                                        - "Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/regulartesting.conf"
-                                                        - "Verify that regular testing is running (/etc/init.d/perfsonar-regulartesting status)"
-                                                        - "Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/regulartesting.log"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 0
-                                                    colIndex: 1
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "A majority (but not all) of tests initiated by this site are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Check if the sites that are failing are blocking TCP port 861."
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 0
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated at this site are failing in the outgoing direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    colIndex: 1
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated at this site are failing in the incoming direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                    -
-                                        type: matchFirst
-                                        rules:
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 1
-                                                    colIndex: 0
-                                                match:
-                                                    type: status
-                                                    status: 3
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated by remote sites are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Verify that the local site has TCP port 861 open on the host and router firewalls"
-                                                        - "Verify that owamp-server is running on the host with '/etc/init.d/owamp-server status'"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 1
-                                                    colIndex: 0
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "A majority (but not all) of tests initiated by remote sites are failing in both incoming and outgoing directions"
-                                                    solutions:
-                                                        - "Verify that the local site has TCP port 861 open on the host and router firewalls to all hosts in the mesh"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    rowIndex: 1
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated by remote sites are failing in the outgoing direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                            -
-                                                type: rule
-                                                selector:
-                                                    type: check
-                                                    colIndex: 0
-                                                match:
-                                                    type: statusThreshold
-                                                    status: 3
-                                                    threshold: .6
-                                                problem:
-                                                    severity: 3
-                                                    category: CONFIGURATION
-                                                    message: "Tests initiated by remote sites are failing in the incoming direction"
-                                                    solutions:
-                                                        - "Verify that /usr/lib/perfsonar/bin/generate_configuration doesn't throw any errors."
-                                                        - "Verify that /etc/perfsonar/regulartesting.conf contains the proper tests"
-                                                        - "Restart perfsonar-regulartesting, it may not have picked-up configuration changes (/etc/init.d/perfsonar-regulartesting restart)"
-                                    -
-                                        type: rule
-                                        selector:
-                                            type: row
-                                        match:
-                                            type: statusWeightedThreshold
-                                            statuses:
-                                                - 0.0
-                                                - .5
-                                                - 1.0
-                                                - -1.0
-                                            threshold: .6
-                                        problem:
-                                            severity: 2
-                                            category: PERFORMANCE
-                                            message: "Outgoing loss is below warning or critical thresholds to a majority of sites"
-                                    -
-                                        type: rule
-                                        selector:
-                                            type: column
-                                        match:
-                                            type: statusWeightedThreshold
-                                            statuses:
-                                                - 0.0
-                                                - .5
-                                                - 1.0
-                                                - -1.0
-                                            threshold: .6
-                                        problem:
-                                            severity: 2
-                                            category: PERFORMANCE
-                                            message: "Incoming loss is below warning or critical thresholds to a majority of sites"
+                      category: PERFORMANCE
+                      message: Incoming loss is above warning or critical thresholds to a majority of sites
+                      severity: 2
+                    selector:
+                      type: column
+                    type: rule
+                type: matchAll
+            type: matchFirst
+          type: forEachSite
+      type: matchFirst
+  -
+    added_by_mesh_agent: 1
+    id: meshconfig_disjoint_loss
+    rule:
+      rules:
+        -
+          match:
+            status: 3
+            type: status
+          problem:
+            category: CONFIGURATION
+            message: Grid is down
+            severity: 3
+            solutions:
+              - 'If you just configured this grid in the mesh, you may just need to wait as it takes a few minutes for one-way delay data to populate'
+              - Verify maddash is configured properly. Look in the files under /var/log/maddash/ for any errors. Things to look for are incorrect paths to checks or connection errors.
+              - Verify that the perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh
+              - Verify that your measurement archive(s) are running
+              - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+              - Verify your hosts are downloading the mesh configuration file and that there are tests defined in /etc/perfsonar/meshconfig-agent-tasks.conf
+              - Verify that MeshConfig Agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+              - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+          selector:
+            type: grid
+          type: rule
+        -
+          match:
+            status: 0
+            type: status
+          problem:
+            category: PERFORMANCE
+            message: Entire grid has OK status
+            severity: 0
+          selector:
+            type: grid
+          type: rule
+        -
+          rule:
+            rules:
+              -
+                match:
+                  status: 3
+                  type: status
+                problem:
+                  category: CONFIGURATION
+                  message: Site is down
+                  severity: 3
+                  solutions:
+                    - Verify the host is up
+                    - Verify the local and remote sites allow access to TCP port 861 and UDP ports 8760-9960 through their host and router firewalls
+                    - 'If recently added to the mesh, verify the mesh config file has been downloaded by the end-hosts since the update.'
+                    - 'If recently removed from the mesh, verify that the perfSONAR MeshConfig GUIAgent has run recently and you are looking at an accurate test mesh'
+                    - Verify NTP is synced on this host
+                    - Verify that your measurement archive(s) are running
+                    - Verify no firewall is blocking maddash from reaching your measurement archive(s)
+                    - Verify that MeshConfig Agent is running ('/etc/init.d/perfsonar-meshconfig-agent status' or 'systemctl status perfsonar-meshconfig-agent')
+                    - Verify your hosts are able to reach their configured measurement archive and that there are no errors in /var/log/perfsonar/meshconfig-agent.log
+                selector:
+                  type: site
+                type: rule
+              -
+                rules:
+                  -
+                    match:
+                      status: 3
+                      threshold: .6
+                      type: statusThreshold
+                    problem:
+                      category: CONFIGURATION
+                      message: Tests are failing in the outgoing direction
+                      severity: 3
+                      solutions:
+                        - Verify the local and remote sites allow access to TCP port 861 and UDP ports 8760-9960 in their host and router firewalls
+                    selector:
+                      colIndex: 1
+                      rowIndex: 0
+                      type: check
+                    type: rule
+                  -
+                    match:
+                      status: 3
+                      threshold: .6
+                      type: statusThreshold
+                    problem:
+                      category: CONFIGURATION
+                      message: Tests are failing in the incoming direction
+                      severity: 3
+                      solutions:
+                        - Verify the local and remote sites allow access to TCP port 861 and UDP ports 8760-9960 in their host and router firewalls
+                    selector:
+                      colIndex: 0
+                      rowIndex: 1
+                      type: check
+                    type: rule
+                  -
+                    match:
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
+                    problem:
+                      category: PERFORMANCE
+                      message: Outgoing loss is above warning or critical thresholds to a majority of sites
+                      severity: 2
+                    selector:
+                      colIndex: 1
+                      rowIndex: 0
+                      type: check
+                    type: rule
+                  -
+                    match:
+                      statuses:
+                        - 0.0
+                        - .5
+                        - 1.0
+                        - -1.0
+                      threshold: .6
+                      type: statusWeightedThreshold
+                    problem:
+                      category: PERFORMANCE
+                      message: Incoming loss is above warning or critical thresholds to a majority of sites
+                      severity: 2
+                    selector:
+                      colIndex: 0
+                      rowIndex: 1
+                      type: check
+                    type: rule
+                type: matchAll
+            type: matchFirst
+          type: forEachSite
+      type: matchFirst
+serverHost: localhost

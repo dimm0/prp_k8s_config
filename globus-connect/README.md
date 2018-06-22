@@ -10,7 +10,7 @@
 test GridFTP from another host with 'globus-data-management-client' installed
 >globus-url-copy -list ftp://67.58.50.66:2811/export/data/
 
->globus-url-copy -vb -fast -p 4 ftp://hostname:2811/data/test-file1 file:///dev/null
+>globus-url-copy -vb -fast -p 4 ftp://67.58.50.66:2811/export/data/10G.dat file:///dev/null
 
 ## Security:
 make sure the following ports are allowed by the base host:

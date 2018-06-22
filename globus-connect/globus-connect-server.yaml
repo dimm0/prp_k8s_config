@@ -1,14 +1,16 @@
 apiVersion: apps/v1beta1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: globus-connect-server
+  name: globus-connect
   namespace: globus
 spec:
-  replicas: 1
+  podManagementPolicy: Parallel
+  serviceName: globus-connect
+  replicas: 2
   template:
     metadata:
       labels:
-        k8s-app: globus-connect-server
+        k8s-app: globus-connect
     spec:
       containers:
       - name: globus-connect-server
@@ -16,29 +18,44 @@ spec:
         imagePullPolicy: Always
         args: ["/usr/sbin/globus-gridftp-server", "-c", "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
         volumeMounts:
-            - mountPath: /home/data
-              name: data
-      volumes:
-          - name: data
-            persistentVolumeClaim:
-              claimName: data
-      nodeSelector:
-        kubernetes.io/hostname: ps-100g.sdsu.edu
+            - mountPath: /data
+              name: globus-data
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - netw-fiona.stanford.edu
+                - fiona.sdsu.edu
+  volumeClaimTemplates:
+  - metadata:
+      name: globus-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: rook-block
+    spec:
+      storageClassName: rook-block
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 50Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: globus-connect-server
+  name: globus-connect
   namespace: globus
   labels:
-    k8s-app: globus-connect-server
+    k8s-app: globus-connect
 spec:
+  clusterIP: None
   ports:
   - port: 2811
-  type: NodePort
+    # name: port1
+  # - port: 50000-51000
+  #   name: port2
+  # type: NodePort
   selector:
-    k8s-app: globus-connect-server
-  - port: 50000-51000
-  type: NodePort
-  selector:
-    k8s-app: globus-connect-server
+    k8s-app: globus-connect

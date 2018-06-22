@@ -1,23 +1,22 @@
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: globus-connect-server
+  name: globus-connect
   namespace: globus
 spec:
   podManagementPolicy: Parallel
-  serviceName: globus-connect-server
+  serviceName: globus-connect
   replicas: 2
   template:
     metadata:
       labels:
-        k8s-app: globus-connect-server
+        k8s-app: globus-connect
     spec:
       containers:
       - name: globus-connect-server
         image: gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
         imagePullPolicy: Always
         args: ["/usr/sbin/globus-gridftp-server", "-c", "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
-        # args: ["sleep", "infinity"]
         volumeMounts:
             - mountPath: /data
               name: globus-data
@@ -46,10 +45,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: globus-connect-server
+  name: globus-connect
   namespace: globus
   labels:
-    k8s-app: globus-connect-server
+    k8s-app: globus-connect
 spec:
   clusterIP: None
   ports:
@@ -59,4 +58,4 @@ spec:
   #   name: port2
   # type: NodePort
   selector:
-    k8s-app: globus-connect-server
+    k8s-app: globus-connect

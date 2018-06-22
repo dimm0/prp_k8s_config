@@ -5,6 +5,7 @@ metadata:
   namespace: globus
 spec:
   podManagementPolicy: Parallel
+  serviceName: globus-connect-server
   replicas: 2
   template:
     metadata:
@@ -12,32 +13,35 @@ spec:
         k8s-app: globus-connect-server
     spec:
       containers:
-      - name: sdsu-globus-connect-server
+      - name: globus-connect-server
         image: gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
         imagePullPolicy: Always
         args: ["/usr/sbin/globus-gridftp-server", "-c", "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
+        # args: ["sleep", "infinity"]
         volumeMounts:
-            - mountPath: /home/data
-              name: data
-      volumes:
-          - name: data
-            persistentVolumeClaim:
-              claimName: data
-      nodeSelector:
-        kubernetes.io/hostname: ps-100g.sdsu.edu
-      - name: stanford-globus-connect-server
-        image: gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
-        imagePullPolicy: Always
-        args: ["/usr/sbin/globus-gridftp-server", "-c", "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
-        volumeMounts:
-            - mountPath: /home/data
-              name: data
-      volumes:
-          - name: data
-            persistentVolumeClaim:
-              claimName: data
-      nodeSelector:
-        kubernetes.io/hostname: netw-fiona.stanford.edu        
+            - mountPath: /data
+              name: globus-data
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - netw-fiona.stanford.edu
+                - fiona.sdsu.edu
+  volumeClaimTemplates:
+  - metadata:
+      name: globus-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: rook-block
+    spec:
+      storageClassName: rook-block
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 50Gi
 ---
 apiVersion: v1
 kind: Service
@@ -47,12 +51,12 @@ metadata:
   labels:
     k8s-app: globus-connect-server
 spec:
+  clusterIP: None
   ports:
   - port: 2811
-  type: NodePort
-  selector:
-    k8s-app: globus-connect-server
-  - port: 50000-51000
-  type: NodePort
+    # name: port1
+  # - port: 50000-51000
+  #   name: port2
+  # type: NodePort
   selector:
     k8s-app: globus-connect-server

@@ -9,7 +9,7 @@ checks:
       command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.75: -c 0.5: -r 86400 -s %row -d %col --tool=gridftp'
       graphUrl: /perfsonar-graphs/?url=%maUrl&dest=%col&source=%row
       maUrl:
-        default: http://67.58.53.228/esmond/perfsonar/archive
+        default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive
     retryAttempts: 3
     retryInterval: 300
     timeout: 60
@@ -25,7 +25,7 @@ checks:
       command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.75: -c 0.5: -r 86400 -s %col -d %row --tool=gridftp'
       graphUrl: /perfsonar-graphs/?url=%maUrl&dest=%row&source=%col
       maUrl:
-        default: http://67.58.53.228/esmond/perfsonar/archive
+        default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive
     retryAttempts: 3
     retryInterval: 300
     timeout: 60
@@ -51,13 +51,13 @@ checks:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
       maUrl:
         gigiot-05.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-07.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-08.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
     timeout: 60
@@ -83,13 +83,13 @@ checks:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
       maUrl:
         gigiot-05.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-07.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-08.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
     timeout: 60
@@ -115,13 +115,13 @@ checks:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
       maUrl:
         gigiot-05.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-07.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-08.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
     timeout: 60
@@ -147,13 +147,13 @@ checks:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
       maUrl:
         gigiot-05.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-07.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-08.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
     timeout: 60
@@ -179,13 +179,13 @@ checks:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
       maUrl:
         gigiot-05.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-07.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-08.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
     timeout: 60
@@ -211,13 +211,13 @@ checks:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
       maUrl:
         gigiot-05.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-07.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-08.calit2.optiputer.net:
-          default: http://67.58.53.228/esmond/perfsonar/archive/
+          default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
     timeout: 60

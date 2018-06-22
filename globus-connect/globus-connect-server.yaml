@@ -1,17 +1,18 @@
 apiVersion: apps/v1beta1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: globus-connect-server
   namespace: globus
 spec:
-  replicas: 1
+  podManagementPolicy: Parallel
+  replicas: 2
   template:
     metadata:
       labels:
         k8s-app: globus-connect-server
     spec:
       containers:
-      - name: globus-connect-server
+      - name: sdsu-globus-connect-server
         image: gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
         imagePullPolicy: Always
         args: ["/usr/sbin/globus-gridftp-server", "-c", "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
@@ -24,6 +25,19 @@ spec:
               claimName: data
       nodeSelector:
         kubernetes.io/hostname: ps-100g.sdsu.edu
+      - name: stanford-globus-connect-server
+        image: gateway.calit2.optiputer.net:5000/prp-k8s/globus-connect:latest
+        imagePullPolicy: Always
+        args: ["/usr/sbin/globus-gridftp-server", "-c", "/etc/gridftp.conf", "-pidfile", "/var/run/globus-gridftp-server.pid", "-no-detach", "-config-base-path", "/data"]
+        volumeMounts:
+            - mountPath: /home/data
+              name: data
+      volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: data
+      nodeSelector:
+        kubernetes.io/hostname: netw-fiona.stanford.edu        
 ---
 apiVersion: v1
 kind: Service

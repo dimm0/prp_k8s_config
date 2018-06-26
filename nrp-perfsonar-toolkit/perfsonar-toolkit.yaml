@@ -35,7 +35,7 @@ spec:
           mountPath: /var/lib/pgsql/9.5/data
       containers:
       - name: perfsonar-toolkit
-        image: us.gcr.io/prp-k8s/nrp-perfsonar-toolkit:latest
+        image: gateway.calit2.optiputer.net:5000/nrp-prp-k8s/perfsonar-toolkit:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 443

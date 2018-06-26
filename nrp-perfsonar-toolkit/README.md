@@ -1,6 +1,8 @@
->kubectl create -f perfsonar-toolkit.yaml --namespace=kube-public
 
->kubectl delete -f perfsonar-toolkit.yaml --namespace=kube-public
+
+>kubectl create -f perfsonar-toolkit.yaml -n nrp-perfsonar
+
+>kubectl delete -f perfsonar-toolkit.yaml -n nrp-perfsonar
 
 >Cassandra replication:
 

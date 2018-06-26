@@ -40,8 +40,8 @@ COPY rsyslog/owamp_bwctl-syslog.conf /etc/rsyslog.d/owamp_bwctl-syslog.conf
 
 # -----------------------------------------------------------------------------
 
-ADD maddash.yaml /etc/maddash/maddash-server/
-ADD maddash_config.json /etc/maddash/maddash-webui/config.json
+#ADD maddash.yaml /etc/maddash/maddash-server/
+#ADD maddash_config.json /etc/maddash/maddash-webui/config.json
 
 RUN sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/mycert\/ssl.crt/' /etc/httpd/conf.d/ssl.conf && \
   sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/mycert\/ssl.key/' /etc/httpd/conf.d/ssl.conf && \

@@ -50,7 +50,7 @@ spec:
           mountPath: /etc/maddash/maddash-webui
         - name: maddash-volume
           mountPath: /etc/maddash/maddash-server
-        - name:
+        - name: scidas-volume
           mountPath: /usr/local/bin/scidas.sh
       volumes:
         - name: ssl-key
@@ -71,6 +71,9 @@ spec:
         - name: maddash-volume
           configMap:
             name: nrp-maddash
+        - name: scidas-volume
+          configMap:
+            name: nrp-scidas            
 ---
 apiVersion: v1
 kind: Service

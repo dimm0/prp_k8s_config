@@ -63,12 +63,12 @@ spec:
         - name: pgsql-persistent-storage
           persistentVolumeClaim:
             claimName: pgsql-pv-claim
-      - name: config-volume
-        configMap:
-          name: nrp-config
-      - name: maddash-volume
-        configMap:
-          name: nrp-maddash
+        - name: config-volume
+            configMap:
+            name: nrp-config
+        - name: maddash-volume
+            configMap:
+            name: nrp-maddash
 ---
 apiVersion: v1
 kind: Service

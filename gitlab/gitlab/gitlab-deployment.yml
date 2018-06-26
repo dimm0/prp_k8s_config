@@ -101,7 +101,7 @@ spec:
         - name: GITLAB_REGISTRY_API_URL
           value: http://localhost:5000
         - name: GITLAB_REGISTRY_KEY_PATH
-          value: /ssl/key.pem
+          value: /home/git/data/certs/registry.key
         - name: GITLAB_REGISTRY_ISSUER
           value: gitlab-issuer
 
@@ -170,10 +170,8 @@ spec:
           name: data
         - name: image-store
           mountPath: /home/git/data/shared/registry
-        - mountPath: "/ssl"
-          name: "ssl"
         - mountPath: "/home/git/data/certs"
-          name: "registry-certs"
+          name: "ssl"
         # livenessProbe:
         #   httpGet:
         #     path: /users/sign_in
@@ -203,18 +201,16 @@ spec:
         - name: REGISTRY_AUTH_TOKEN_ISSUER
           value: gitlab-issuer
         - name: REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE
-          value: /ssl/certificate.pem
-        - name: REGISTRY_HTTP_TLS_CERTIFICATE
-          value: /certs/registry.crt
-        - name: REGISTRY_HTTP_TLS_KEY
-          value: /certs/registry.key
+          value: /ssl/registry.crt
+        # - name: REGISTRY_HTTP_TLS_CERTIFICATE
+        #   value: /ssl/registry.crt
+        # - name: REGISTRY_HTTP_TLS_KEY
+        #   value: /ssl/registry.key
         volumeMounts:
         - name: image-store
           mountPath: /var/lib/registry
         - mountPath: "/ssl"
           name: "ssl"
-        - mountPath: "/certs"
-          name: "registry-certs"
         ports:
         - containerPort: 5000
           name: registry
@@ -223,9 +219,6 @@ spec:
       - name: ssl
         secret:
           secretName: ssl-key
-      - name: registry-certs
-        secret:
-          secretName: registry-key
       - name: data
         persistentVolumeClaim:
           claimName: gitlab

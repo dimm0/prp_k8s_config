@@ -7,7 +7,7 @@ install:
 
 pushcerts:
 	-kubectl delete secret ssl-key -n gitlab
-	kubectl create secret generic ssl-key -n gitlab --from-file=certificate.pem=../traefik/prod/k8s_cert.cer --from-file=key.pem=../traefik/prod/k8s.key
+	kubectl create secret generic ssl-key -n gitlab --from-file=registry.crt=../traefik/prod/k8s_cert.cer --from-file=registry.key=../traefik/prod/k8s.key
 
 builddocker:
 	docker build -t us.gcr.io/prp-k8s/gitlab:latest .
@@ -27,9 +27,3 @@ pushgooglecert:
           --docker-password="`cat ../prp-k8s-4a9119125faa.json`" \
           --docker-email=dmishin@sdsc.edu
 	kubectl --namespace=gitlab patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
-
-makeregistrycerts:
-	openssl req  -nodes -new -x509  -keyout registry.key -out registry.crt
-	-kubectl delete secret registry-key -n gitlab
-	kubectl create secret generic registry-key -n gitlab --from-file=registry.key --from-file=registry.crt
-	rm -f registry.csr registry.key registry.crt

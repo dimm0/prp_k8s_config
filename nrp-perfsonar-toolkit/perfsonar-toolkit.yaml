@@ -73,7 +73,8 @@ spec:
             name: nrp-maddash
         - name: scidas-volume
           configMap:
-            name: nrp-scidas            
+            name: nrp-scidas
+            mode: 755
 ---
 apiVersion: v1
 kind: Service

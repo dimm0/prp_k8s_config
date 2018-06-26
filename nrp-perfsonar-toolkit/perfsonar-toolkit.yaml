@@ -74,7 +74,6 @@ spec:
         - name: scidas-volume
           configMap:
             name: nrp-scidas
-            mode: 755
 ---
 apiVersion: v1
 kind: Service

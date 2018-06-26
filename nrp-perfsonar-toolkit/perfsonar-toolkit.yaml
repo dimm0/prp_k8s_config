@@ -24,8 +24,6 @@ spec:
         k8s-app: perfsonar-toolkit
     spec:
       # hostNetwork: true
-      imagePullSecrets:
-        - name: gcr-json-key
       initContainers:
       - name: volume-mount-chown
         image: busybox

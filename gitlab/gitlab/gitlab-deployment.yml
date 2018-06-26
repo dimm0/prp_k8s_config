@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: gitlab
-        image: us.gcr.io/prp-k8s/gitlab
+        image: sameersbn/gitlab:11.0.1
         imagePullPolicy: Always
         env:
         - name: TZ
@@ -96,8 +96,8 @@ spec:
           value: "true"
         - name: GITLAB_REGISTRY_HOST
           value: gitlab-registry.nautilus.optiputer.net
-        - name: GITLAB_REGISTRY_PORT
-          value: "443"
+        # - name: GITLAB_REGISTRY_PORT
+        #   value: "443"
         - name: GITLAB_REGISTRY_API_URL
           value: http://localhost:5000
         - name: GITLAB_REGISTRY_KEY_PATH

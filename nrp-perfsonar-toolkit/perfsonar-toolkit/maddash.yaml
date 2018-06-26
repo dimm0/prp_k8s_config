@@ -41,7 +41,7 @@ checks:
     params:
       command: /usr/lib64/nagios/plugins/check_traceroute.pl -u %maUrl -w :1 -c :2 -r 3600 -s %row -d %col -a %row -4
       graphUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
         gigiot-06.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
@@ -50,7 +50,7 @@ checks:
         gigiot-08.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
       maUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
@@ -73,7 +73,7 @@ checks:
     params:
       command: /usr/lib64/nagios/plugins/check_traceroute.pl -u %maUrl -w :1 -c :2 -r 3600 -s %row -d %col -a %col -4
       graphUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
         gigiot-06.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
@@ -82,7 +82,7 @@ checks:
         gigiot-08.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
       maUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
@@ -105,7 +105,7 @@ checks:
     params:
       command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.9: -c 0.5: -r 86400 -s %row -d %col -a %row -p tcp -4'
       graphUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
         gigiot-06.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
@@ -114,7 +114,7 @@ checks:
         gigiot-08.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
       maUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
@@ -137,7 +137,7 @@ checks:
     params:
       command: '/usr/lib64/nagios/plugins/check_throughput.pl -u %maUrl -w 0.9: -c 0.5: -r 86400 -s %row -d %col -a %col -p tcp -4'
       graphUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
         gigiot-06.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
@@ -146,7 +146,7 @@ checks:
         gigiot-08.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
       maUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
@@ -169,7 +169,7 @@ checks:
     params:
       command: /usr/lib64/nagios/plugins/check_owdelay.pl -u %maUrl -w 0 -c 0.01 -r 2700 -l -p -s %row -d %col -a %row -4
       graphUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
         gigiot-06.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
@@ -178,7 +178,7 @@ checks:
         gigiot-08.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
       maUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
@@ -201,7 +201,7 @@ checks:
     params:
       command: /usr/lib64/nagios/plugins/check_owdelay.pl -u %maUrl -w 0 -c 0.01 -r 2700 -l -p -s %row -d %col -a %col -4
       graphUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
         gigiot-06.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
@@ -210,7 +210,7 @@ checks:
         gigiot-08.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
       maUrl:
-        gigiot-05.calit2.optiputer.net:
+        ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
         gigiot-06.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
@@ -279,8 +279,8 @@ grids:
     columnAlgorithm: all
     columns: perfSONAR_-_iperf3_Throughput
     excludeChecks:
-      gigiot-05.calit2.optiputer.net:
-        - gigiot-05.calit2.optiputer.net
+      ps-40g-gridftp.calit2.optiputer.net:
+        - ps-40g-gridftp.calit2.optiputer.net
       gigiot-06.calit2.optiputer.net:
         - gigiot-06.calit2.optiputer.net
       gigiot-07.calit2.optiputer.net:
@@ -307,8 +307,8 @@ grids:
     columnAlgorithm: all
     columns: perfSONAR_-_owamp_Packet_Loss
     excludeChecks:
-      gigiot-05.calit2.optiputer.net:
-        - gigiot-05.calit2.optiputer.net
+      ps-40g-gridftp.calit2.optiputer.net:
+        - ps-40g-gridftp.calit2.optiputer.net
       gigiot-06.calit2.optiputer.net:
         - gigiot-06.calit2.optiputer.net
       gigiot-07.calit2.optiputer.net:
@@ -335,8 +335,8 @@ grids:
     columnAlgorithm: all
     columns: perfSONAR_-_Traceroute
     excludeChecks:
-      gigiot-05.calit2.optiputer.net:
-        - gigiot-05.calit2.optiputer.net
+      ps-40g-gridftp.calit2.optiputer.net:
+        - ps-40g-gridftp.calit2.optiputer.net
       gigiot-06.calit2.optiputer.net:
         - gigiot-06.calit2.optiputer.net
       gigiot-07.calit2.optiputer.net:

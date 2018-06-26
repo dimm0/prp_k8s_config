@@ -51,7 +51,7 @@ spec:
         - name: maddash-volume
           mountPath: /etc/maddash/maddash-server
         - name: scidas-volume
-          mountPath: /usr/local/bin/scidas.sh
+          mountPath: /usr/local/bin
       volumes:
         - name: ssl-key
           secret:

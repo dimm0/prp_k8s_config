@@ -47,9 +47,9 @@ spec:
         - name: pgsql-persistent-storage
           mountPath: /var/lib/pgsql/9.5/data
         - name: config-volume
-          mountPath: /etc/maddash/maddash-webui/
+          mountPath: /etc/maddash/maddash-webui
         - name: maddash-volume
-          mountPath: /etc/maddash/maddash-server/
+          mountPath: /etc/maddash/maddash-server
       volumes:
         - name: ssl-key
           secret:

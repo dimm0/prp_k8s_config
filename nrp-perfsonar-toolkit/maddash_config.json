@@ -1,6 +1,6 @@
 {
-    "title":"My perfSONAR Dashboard",
-    "defaultDashboard": "Nautilus Mesh",
+    "title":"NRP perfSONAR Dashboard",
+    "defaultDashboard": "SciDAS Mesh",
     "enableAdminUI": true,
     "grids":{
         "OWAMP":{

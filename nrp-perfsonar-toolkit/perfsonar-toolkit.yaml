@@ -64,10 +64,10 @@ spec:
           persistentVolumeClaim:
             claimName: pgsql-pv-claim
         - name: config-volume
-            configMap:
+          configMap:
             name: nrp-config
         - name: maddash-volume
-            configMap:
+          configMap:
             name: nrp-maddash
 ---
 apiVersion: v1

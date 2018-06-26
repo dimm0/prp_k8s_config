@@ -48,6 +48,10 @@ spec:
           mountPath: /etc/pki/tls/mycert
         - name: pgsql-persistent-storage
           mountPath: /var/lib/pgsql/9.5/data
+        - name: config-volume
+          mountPath: /etc/maddash/maddash-webui/
+        - name: maddash-volume
+          mountPath: /etc/maddash/maddash-server/          
       volumes:
         - name: ssl-key
           secret:
@@ -61,6 +65,12 @@ spec:
         - name: pgsql-persistent-storage
           persistentVolumeClaim:
             claimName: pgsql-pv-claim
+      - name: config-volume
+        configMap:
+          name: nrp-config
+      - name: maddash-volume
+        configMap:
+          name: nrp-maddash
 ---
 apiVersion: v1
 kind: Service

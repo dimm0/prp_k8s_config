@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 100Gi
+      storage: 50Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,7 +22,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 100Gi
+      storage: 50Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -102,6 +102,8 @@ spec:
           value: http://localhost:5000
         - name: GITLAB_REGISTRY_KEY_PATH
           value: /ssl/key.pem
+        - name: GITLAB_REGISTRY_ISSUER
+          value: gitlab-issuer
 
         - name: DB_TYPE
           value: postgres
@@ -170,6 +172,8 @@ spec:
           mountPath: /home/git/data/shared/registry
         - mountPath: "/ssl"
           name: "ssl"
+        - mountPath: "/home/git/data/certs"
+          name: "registry-certs"
         # livenessProbe:
         #   httpGet:
         #     path: /users/sign_in
@@ -200,11 +204,17 @@ spec:
           value: gitlab-issuer
         - name: REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE
           value: /ssl/certificate.pem
+        - name: REGISTRY_HTTP_TLS_CERTIFICATE
+          value: /certs/registry.crt
+        - name: REGISTRY_HTTP_TLS_KEY
+          value: /certs/registry.key
         volumeMounts:
         - name: image-store
           mountPath: /var/lib/registry
         - mountPath: "/ssl"
           name: "ssl"
+        - mountPath: "/certs"
+          name: "registry-certs"
         ports:
         - containerPort: 5000
           name: registry
@@ -213,6 +223,9 @@ spec:
       - name: ssl
         secret:
           secretName: ssl-key
+      - name: registry-certs
+        secret:
+          secretName: registry-key
       - name: data
         persistentVolumeClaim:
           claimName: gitlab

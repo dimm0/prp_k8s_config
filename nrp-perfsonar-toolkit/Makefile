@@ -8,6 +8,9 @@ pushconfig:
 	kubectl create configmap nrp-config --from-file=config.json=config.json -n nrp-perfsonar
 	-kubectl delete configmap nrp-scidas -n nrp-perfsonar
 	kubectl create configmap nrp-scidas --from-file=scidas.sh=scidas.sh -n nrp-perfsonar
+	-kubectl delete configmap nrp-cron-load-gridftp -n nrp-perfsonar
+	kubectl create configmap nrp-cron-load-gridftp --from-file=cron-load-gridftp.sh=cron-load-gridftp.sh -n nrp-perfsonar
+	
 grantpriv:
 	kubectl create clusterrolebinding default:psp:privileged \
     --clusterrole=psp:privileged-user \

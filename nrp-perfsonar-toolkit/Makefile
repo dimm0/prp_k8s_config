@@ -6,7 +6,8 @@ pushconfig:
 	kubectl create configmap nrp-maddash --from-file=maddash.yaml=maddash.yaml -n nrp-perfsonar
 	-kubectl delete configmap nrp-config -n nrp-perfsonar
 	kubectl create configmap nrp-config --from-file=config.json=config.json -n nrp-perfsonar
-	
+	-kubectl delete configmap nrp-scidas -n nrp-perfsonar
+	kubectl create configmap nrp-scidas --from-file=scidas.sh=scidas.sh -n nrp-perfsonar
 grantpriv:
 	kubectl create clusterrolebinding default:psp:privileged \
     --clusterrole=psp:privileged-user \

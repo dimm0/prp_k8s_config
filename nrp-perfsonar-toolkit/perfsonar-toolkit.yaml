@@ -52,6 +52,8 @@ spec:
           mountPath: /etc/maddash/maddash-server
         - name: scidas-volume
           mountPath: /var/www/html
+        - name: cron-load-gridftp-volume
+          mountPath: /var/www/html
       volumes:
         - name: ssl-key
           secret:
@@ -74,6 +76,9 @@ spec:
         - name: scidas-volume
           configMap:
             name: nrp-scidas
+        - name: cron-load-gridftp-volume
+          configMap:
+            name: nrp-cron-load-gridftp
 ---
 apiVersion: v1
 kind: Service

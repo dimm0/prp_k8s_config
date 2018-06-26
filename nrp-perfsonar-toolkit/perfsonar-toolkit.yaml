@@ -50,6 +50,8 @@ spec:
           mountPath: /etc/maddash/maddash-webui
         - name: maddash-volume
           mountPath: /etc/maddash/maddash-server
+        - name:
+          mountPath: /usr/local/bin/scidas.sh
       volumes:
         - name: ssl-key
           secret:

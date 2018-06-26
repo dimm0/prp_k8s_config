@@ -1,6 +1,6 @@
 {
     "title":"NRP perfSONAR Dashboard",
-    "defaultDashboard": "SciDAS Mesh",
+    "defaultDashboard": "GridFTP",
     "enableAdminUI": true,
     "grids":{
         "OWAMP":{

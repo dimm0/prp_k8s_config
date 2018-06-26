@@ -43,20 +43,20 @@ checks:
       graphUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
       maUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
@@ -75,20 +75,20 @@ checks:
       graphUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: /perfsonar-traceroute-viewer/index.cgi?mahost=%maUrl&stime=yesterday&etime=now&tzselect=UTC
       maUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
@@ -107,20 +107,20 @@ checks:
       graphUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
       maUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
@@ -139,20 +139,20 @@ checks:
       graphUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
       maUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
@@ -171,20 +171,20 @@ checks:
       graphUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%row
       maUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
@@ -203,20 +203,20 @@ checks:
       graphUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: /perfsonar-graphs/?url=%maUrl&source=%row&dest=%col&agent=%col
       maUrl:
         ps-40g-gridftp.calit2.optiputer.net:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-06.calit2.optiputer.net:
+        dtn.cahnrs.wsu.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-07.calit2.optiputer.net:
+        hpcdtn01-ext.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
-        gigiot-08.calit2.optiputer.net:
+        xfer01-ext.palmetto.clemson.edu:
           default: http://nrp-perfsonar.nautilus.optiputer.net/esmond/perfsonar/archive/
     retryAttempts: 1
     retryInterval: 300
@@ -281,12 +281,12 @@ grids:
     excludeChecks:
       ps-40g-gridftp.calit2.optiputer.net:
         - ps-40g-gridftp.calit2.optiputer.net
-      gigiot-06.calit2.optiputer.net:
-        - gigiot-06.calit2.optiputer.net
-      gigiot-07.calit2.optiputer.net:
-        - gigiot-07.calit2.optiputer.net
-      gigiot-08.calit2.optiputer.net:
-        - gigiot-08.calit2.optiputer.net
+      dtn.cahnrs.wsu.edu:
+        - dtn.cahnrs.wsu.edu
+      hpcdtn01-ext.clemson.edu:
+        - hpcdtn01-ext.clemson.edu
+      xfer01-ext.palmetto.clemson.edu:
+        - xfer01-ext.palmetto.clemson.edu
     excludeSelf: 1
     name: 'perfSONAR - iperf3 Throughput'
     report: meshconfig_mesh_throughput
@@ -309,12 +309,12 @@ grids:
     excludeChecks:
       ps-40g-gridftp.calit2.optiputer.net:
         - ps-40g-gridftp.calit2.optiputer.net
-      gigiot-06.calit2.optiputer.net:
-        - gigiot-06.calit2.optiputer.net
-      gigiot-07.calit2.optiputer.net:
-        - gigiot-07.calit2.optiputer.net
-      gigiot-08.calit2.optiputer.net:
-        - gigiot-08.calit2.optiputer.net
+      dtn.cahnrs.wsu.edu:
+        - dtn.cahnrs.wsu.edu
+      hpcdtn01-ext.clemson.edu:
+        - hpcdtn01-ext.clemson.edu
+      xfer01-ext.palmetto.clemson.edu:
+        - xfer01-ext.palmetto.clemson.edu
     excludeSelf: 1
     name: 'perfSONAR - owamp Packet Loss'
     report: meshconfig_mesh_loss
@@ -337,12 +337,12 @@ grids:
     excludeChecks:
       ps-40g-gridftp.calit2.optiputer.net:
         - ps-40g-gridftp.calit2.optiputer.net
-      gigiot-06.calit2.optiputer.net:
-        - gigiot-06.calit2.optiputer.net
-      gigiot-07.calit2.optiputer.net:
-        - gigiot-07.calit2.optiputer.net
-      gigiot-08.calit2.optiputer.net:
-        - gigiot-08.calit2.optiputer.net
+      dtn.cahnrs.wsu.edu:
+        - dtn.cahnrs.wsu.edu
+      hpcdtn01-ext.clemson.edu:
+        - hpcdtn01-ext.clemson.edu
+      xfer01-ext.palmetto.clemson.edu:
+        - xfer01-ext.palmetto.clemson.edu
     excludeSelf: 1
     name: 'perfSONAR - Traceroute'
     rowOrder: alphabetical
@@ -356,57 +356,57 @@ grids:
 groupMembers:
   -
     added_by_mesh_agent: yes
-    id: gigiot-05.calit2.optiputer.net
-    label: gigiot-05.calit2.optiputer.net
+    id: ps-40g-gridftp.calit2.optiputer.net
+    label: ps-40g-gridftp.calit2.optiputer.net
   -
     added_by_mesh_agent: yes
-    id: 67.58.53.205
-    label: gigiot-05.calit2.optiputer.net
+    id: 67.58.50.66
+    label: ps-40g-gridftp.calit2.optiputer.net
   -
     added_by_mesh_agent: yes
-    id: gigiot-06.calit2.optiputer.net
-    label: gigiot-06.calit2.optiputer.net
+    id: dtn.cahnrs.wsu.edu
+    label: dtn.cahnrs.wsu.edu
   -
     added_by_mesh_agent: yes
-    id: 67.58.53.206
-    label: gigiot-06.calit2.optiputer.net
+    id: 198.17.13.117
+    label: dtn.cahnrs.wsu.edu
   -
     added_by_mesh_agent: yes
-    id: gigiot-07.calit2.optiputer.net
-    label: gigiot-07.calit2.optiputer.net
+    id: hpcdtn01-ext.clemson.edu
+    label: hpcdtn01-ext.clemson.edu
   -
     added_by_mesh_agent: yes
-    id: 67.58.53.207
-    label: gigiot-07.calit2.optiputer.net
+    id: hpcdtn01-ext.clemson.edu
+    label: hpcdtn01-ext.clemson.edu
   -
     added_by_mesh_agent: yes
-    id: gigiot-08.calit2.optiputer.net
-    label: gigiot-08.calit2.optiputer.net
+    id: xfer01-ext.palmetto.clemson.edu
+    label: xfer01-ext.palmetto.clemson.edu
   -
     added_by_mesh_agent: yes
-    id: 67.58.53.208
-    label: gigiot-08.calit2.optiputer.net
+    id: 130.127.160.114
+    label: xfer01-ext.palmetto.clemson.edu
 groups:
   PRP_FIONA_Workshop_GridFTP:
-    - gigiot-05.calit2.optiputer.net
-    - gigiot-06.calit2.optiputer.net
-    - gigiot-07.calit2.optiputer.net
-    - gigiot-08.calit2.optiputer.net
+    - ps-40g-gridftp.calit2.optiputer.net
+    - dtn.cahnrs.wsu.edu
+    - hpcdtn01-ext.clemson.edu
+    - xfer01-ext.palmetto.clemson.edu
   perfSONAR_-_Traceroute:
-    - gigiot-05.calit2.optiputer.net
-    - gigiot-06.calit2.optiputer.net
-    - gigiot-08.calit2.optiputer.net
-    - gigiot-07.calit2.optiputer.net
+    - ps-40g-gridftp.calit2.optiputer.net
+    - dtn.cahnrs.wsu.edu
+    - xfer01-ext.palmetto.clemson.edu
+    - hpcdtn01-ext.clemson.edu
   perfSONAR_-_iperf3_Throughput:
-    - gigiot-05.calit2.optiputer.net
-    - gigiot-06.calit2.optiputer.net
-    - gigiot-08.calit2.optiputer.net
-    - gigiot-07.calit2.optiputer.net
+    - ps-40g-gridftp.calit2.optiputer.net
+    - dtn.cahnrs.wsu.edu
+    - xfer01-ext.palmetto.clemson.edu
+    - hpcdtn01-ext.clemson.edu
   perfSONAR_-_owamp_Packet_Loss:
-    - gigiot-05.calit2.optiputer.net
-    - gigiot-06.calit2.optiputer.net
-    - gigiot-08.calit2.optiputer.net
-    - gigiot-07.calit2.optiputer.net
+    - ps-40g-gridftp.calit2.optiputer.net
+    - dtn.cahnrs.wsu.edu
+    - xfer01-ext.palmetto.clemson.edu
+    - hpcdtn01-ext.clemson.edu
 http:
   port: 8881
 reports:

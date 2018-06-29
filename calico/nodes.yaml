@@ -350,4 +350,15 @@ spec:
   node: dhcp-156-93.banatao.berkeley.edu
   expectedIPs:
   - 128.32.156.93
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: xcache-11.t2.ucsd.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: xcache-11.t2.ucsd.edu
+  expectedIPs:
+  - 169.228.131.206
 

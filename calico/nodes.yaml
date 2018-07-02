@@ -324,6 +324,7 @@ metadata:
   name: perfsonar.csusb.edu
   labels:
     host-endpoint: production
+    globus: "true"
 spec:
   node: perfsonar.csusb.edu
   expectedIPs:

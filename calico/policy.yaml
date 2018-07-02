@@ -115,3 +115,21 @@ spec:
   ingress:
     - action: Deny
   selector: has(host-endpoint)
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: globus
+spec:
+  order: 16
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+    - action: Allow
+      protocol: TCP
+      destination:
+        ports:
+        - 2811
+        - 50000:51000
+        - 7512
+  selector: "globus==\"true\""

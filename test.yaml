@@ -1,0 +1,83 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    k8s-app: example
+  name: example
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: example
+    spec:
+      containers:
+      - name: alpine
+        image: busybox
+        args: ["sleep", "1000000000"]
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: example
+  name: example
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: example
+    spec:
+      containers:
+      - name: alpine
+        image: busybox
+        args: ["sleep", "1000000000"]
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  labels:
+    k8s-app: example
+  name: example
+spec:
+  serviceName: example
+  template:
+    metadata:
+      labels:
+        k8s-app: example
+    spec:
+      containers:
+      - name: alpine
+        image: busybox
+        args: ["sleep", "1000000000"]
+---
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  labels:
+    k8s-app: example
+  name: example
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: example
+    spec:
+      containers:
+      - name: alpine
+        image: busybox
+        args: ["sleep", "1000000000"]
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+  namespace: 
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4

@@ -46,6 +46,7 @@ spec:
     rule: RunAsAny
   allowedHostPaths:
   - pathPrefix: "/data1"
+  hostNetwork: true
   volumes:
   - configMap
   - emptyDir

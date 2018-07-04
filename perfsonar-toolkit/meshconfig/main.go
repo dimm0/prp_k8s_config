@@ -38,12 +38,14 @@ type Host struct {
 }
 
 type MeshConfig struct {
-	Organizations map[string]Organization
-	BW10GIPs      []string
-	BW40GIPs      []string
-	BW100GIPs     []string
-	ExtIPs        []string
-	IntIPs        []string
+	Organizations  map[string]Organization
+	BW1GIPs        []string
+	BW10GIPs       []string
+	BW40GIPs       []string
+	BW100GIPs      []string
+	ExtIPs         []string
+	IntIPs         []string
+	IntFionetteIPs []string
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +56,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		perfsonarURL := fmt.Sprintf("https://perfsonar.%s/esmond/perfsonar/archive/", viper.GetString("cluster_url"))
 
 		conf := MeshConfig{Organizations: map[string]Organization{}}
-		for orgID, _ := range viper.Get("org").(map[string]interface{}) {
+		for orgID := range viper.Get("org").(map[string]interface{}) {
 			org := Organization{
 				PerfsonarURL: perfsonarURL,
 				Description:  viper.GetString(fmt.Sprintf("org.%s.description", orgID)),
@@ -85,7 +87,20 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 							if strings.HasSuffix(pod.Spec.NodeName, orgDomain) {
 								org.Site.Host = append(org.Site.Host, Host{IP: []string{pod.Status.PodIP}, Description: pod.Spec.NodeName})
 								conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
-								conf.IntIPs = append(conf.IntIPs, pod.Status.PodIP)
+
+								for _, node := range nodes.Items {
+									for _, addr := range node.Status.Addresses {
+										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
+
+											switch node.Labels["nw"] {
+											case "1G":
+												conf.IntFionetteIPs = append(conf.IntFionetteIPs, pod.Status.PodIP)
+											default:
+												conf.IntIPs = append(conf.IntIPs, pod.Status.PodIP)
+											}
+										}
+									}
+								}
 							}
 						}
 					}
@@ -124,6 +139,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 									for _, addr := range node.Status.Addresses {
 										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
 											switch node.Labels["nw"] {
+											case "1G":
+												conf.BW1GIPs = append(conf.BW1GIPs, pod.Status.PodIP)
 											case "10G":
 												conf.BW10GIPs = append(conf.BW10GIPs, pod.Status.PodIP)
 											case "40G":

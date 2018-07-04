@@ -344,13 +344,13 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint
 metadata:
-  name: dhcp-156-93.banatao.berkeley.edu
+  name: gigiot-22.banatao.berkeley.edu
   labels:
     host-endpoint: production
 spec:
-  node: dhcp-156-93.banatao.berkeley.edu
+  node: gigiot-22.banatao.berkeley.edu
   expectedIPs:
-  - 128.32.156.93
+  - 128.32.156.200
 ---
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint

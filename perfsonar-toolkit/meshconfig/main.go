@@ -92,6 +92,11 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 									for _, addr := range node.Status.Addresses {
 										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
 
+											// Temporary, to test against fionette
+											if pod.Spec.NodeName == "k8s-epyc-01.sdsc.optiputer.net" {
+												conf.IntFionetteIPs = append(conf.IntFionetteIPs, pod.Status.PodIP)
+											}
+
 											switch node.Labels["nw"] {
 											case "1G":
 												conf.IntFionetteIPs = append(conf.IntFionetteIPs, pod.Status.PodIP)
@@ -138,6 +143,12 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 								for _, node := range nodes.Items {
 									for _, addr := range node.Status.Addresses {
 										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
+
+											// Temporary, to test against fionette
+											if pod.Spec.NodeName == "k8s-epyc-01.sdsc.optiputer.net" {
+												conf.BW1GIPs = append(conf.BW1GIPs, pod.Status.PodIP)
+											}
+
 											switch node.Labels["nw"] {
 											case "1G":
 												conf.BW1GIPs = append(conf.BW1GIPs, pod.Status.PodIP)

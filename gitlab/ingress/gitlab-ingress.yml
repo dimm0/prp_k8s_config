@@ -30,5 +30,5 @@ spec:
       - path: /
         backend:
           # serviceName: registry
-          serviceName: gitlab
-          servicePort: 80
+          serviceName: registry
+          servicePort: 5000

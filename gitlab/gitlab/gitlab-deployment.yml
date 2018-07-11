@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 1Ti
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,7 +22,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 1Ti
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -101,7 +101,6 @@ spec:
         - name: GITLAB_REGISTRY_PORT
           value: "443"
         - name: GITLAB_REGISTRY_API_URL
-          # value: http://localhost:5000
           value: https://gitlab-registry.nautilus.optiputer.net
         - name: GITLAB_REGISTRY_KEY_PATH
           value: /home/git/data/certs/registry.key
@@ -166,8 +165,6 @@ spec:
         ports:
         - name: http
           containerPort: 80
-        - name: registry
-          containerPort: 5000
         - name: ssh
           containerPort: 22
         volumeMounts:
@@ -177,18 +174,18 @@ spec:
           mountPath: /home/git/data/shared/registry
         - mountPath: "/home/git/data/certs"
           name: "ssl"
-        # livenessProbe:
-        #   httpGet:
-        #     path: /users/sign_in
-        #     port: 80
-        #   initialDelaySeconds: 360
-        #   timeoutSeconds: 15
-        # readinessProbe:
-        #   httpGet:
-        #     path: /users/sign_in
-        #     port: 80
-        #   initialDelaySeconds: 45
-        #   timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /users/sign_in
+            port: 80
+          initialDelaySeconds: 360
+          timeoutSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /users/sign_in
+            port: 80
+          initialDelaySeconds: 45
+          timeoutSeconds: 1
       - name: registry
         image: registry
         resources:
@@ -209,12 +206,6 @@ spec:
           value: debug
         - name: REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE
           value: /ssl/registry.crt
-        # - name: REGISTRY_HEALTH_STORAGEDRIVER_ENABLED
-        #   value: "false"
-        # - name: REGISTRY_HTTP_TLS_CERTIFICATE
-        #   value: /ssl/registry.crt
-        # - name: REGISTRY_HTTP_TLS_KEY
-        #   value: /ssl/registry.key
         volumeMounts:
         - name: image-store
           mountPath: /var/lib/registry
@@ -245,5 +236,10 @@ spec:
   - port: 80
     targetPort: 80
     protocol: TCP
+    name: http
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+    name: registry
   selector:
     name: gitlab

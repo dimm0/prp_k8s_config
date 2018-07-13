@@ -9,6 +9,9 @@ subjects:
 - kind: User
   name: http://cilogon.org/serverA/users/23651
   apiGroup: "rbac.authorization.k8s.io"
+- kind: User
+  name: http://cilogon.org/serverA/users/277931
+  apiGroup: "rbac.authorization.k8s.io"
 roleRef:
   kind: ClusterRole
   name: cluster-admin

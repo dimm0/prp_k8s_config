@@ -30,6 +30,17 @@ spec:
           items:
           - key: meshconfig-agent-tasks.conf
             path: meshconfig-agent-tasks.conf
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - chaseci
+                - production
+                - testing
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -67,3 +78,14 @@ spec:
           items:
           - key: meshconfig-agent-tasks.conf
             path: meshconfig-agent-tasks.conf
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - chaseci
+                - production
+                - testing

@@ -358,6 +358,7 @@ metadata:
   name: xcache-11.t2.ucsd.edu
   labels:
     host-endpoint: production
+    stashcache: "true"
 spec:
   node: xcache-11.t2.ucsd.edu
   expectedIPs:
@@ -369,6 +370,7 @@ metadata:
   name: gpn-fiona-r740xd-node809.greatplains.net
   labels:
     host-endpoint: production
+    stashcache: "true"
 spec:
   node: gpn-fiona-r740xd-node809.greatplains.net
   expectedIPs:

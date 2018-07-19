@@ -133,3 +133,19 @@ spec:
         - 50000:51000
         - 7512
   selector: "globus==\"true\""
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: stashcache
+spec:
+  order: 16
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+    - action: Allow
+      protocol: TCP
+      destination:
+        ports:
+        - 8000
+  selector: "stashcache==\"true\""

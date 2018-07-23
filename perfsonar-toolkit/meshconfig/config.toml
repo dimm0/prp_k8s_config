@@ -139,8 +139,8 @@ description="California State University, San Bernardino"
 domain=["csusb.edu"]
 
 [org.kc]
-lat=39.0336
-lon=-94.5760
+lat=39.1008
+lon=-94.5832
 city="Kansas City"
 state="Missoury"
 description="University of Missoury, Kansas City"

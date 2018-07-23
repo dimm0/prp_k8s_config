@@ -266,7 +266,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
           "endpoints": [
              {
                 "port": "exporter",
-                "interval": "10s",
+                "interval": "30s",
                 "path": "/metrics"
              }
           ]

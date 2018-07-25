@@ -272,7 +272,7 @@ metadata:
 spec:
   node: k8s-nvme-01.ultralight.org
   expectedIPs:
-  - 192.84.86.107
+    - 198.32.44.89
 ---
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint

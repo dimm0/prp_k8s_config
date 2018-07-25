@@ -21,6 +21,19 @@ spec:
     requests:
       storage: 512Gi
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homevol
+  namespace: digital-humanities
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Ti
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -62,6 +75,8 @@ spec:
         volumeMounts:
         - name: datavol
           mountPath: /datavol
+        - name: homevol
+          mountPath: /homevol
         - name: config-volume
           mountPath: /config
         - name: nfs
@@ -70,6 +85,9 @@ spec:
       - name: datavol
         persistentVolumeClaim:
           claimName: datavol
+      - name: homevol
+        persistentVolumeClaim:
+          claimName: homevol
       - name: config-volume
         configMap:
           name: jupyterhub-config

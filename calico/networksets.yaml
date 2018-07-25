@@ -27,6 +27,7 @@ spec:
   - 198.17.101.0/25
   - 198.48.92.50/32
   - 67.58.53.128/26
+  - 67.58.51.0/24 #suncave
 ---
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkSet

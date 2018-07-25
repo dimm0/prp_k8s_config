@@ -13,6 +13,7 @@ makeselfcerts:
 pushcerts:
 	-kubectl delete secret ssl-key -n kube-system
 	kubectl create secret generic ssl-key -n kube-system --from-file=prod/k8s_cert.cer --from-file=prod/k8s.key
+	#kubectl create secret generic ssl-key -n kube-system --from-file=k8s_cert.cer=/etc/letsencrypt/live/nrp-nautilus.io/cert.pem --from-file=k8s.key=/etc/letsencrypt/live/nrp-nautilus.io/fullchain.pem
 
 pushgooglecert:
 	kubectl --namespace=kube-system create secret docker-registry gcr-json-key \

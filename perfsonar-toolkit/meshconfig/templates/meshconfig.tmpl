@@ -98,6 +98,13 @@ description Nautilus Mesh
     {{end}}
 </group>
 
+<group k8s_1g_int_group>
+    type       mesh
+    {{ range .IntFionetteIPs }}
+      member {{.}}
+    {{end}}
+</group>
+
 <group k8s_1g_group>
     type       mesh
     {{ range .BW1GIPs }}

@@ -9,6 +9,15 @@ spec:
       labels:
         k8s-app: rocketchat
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - production
       containers:
       - name: rocketchat-app
         image: rocketchat/rocket.chat:latest

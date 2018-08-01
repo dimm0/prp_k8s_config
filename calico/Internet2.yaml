@@ -4,6 +4,7 @@ metadata:
   name: osg.chic.nrp.internet2.edu
   labels:
     host-endpoint: production
+    globus: "true"
 spec:
   node: osg.chic.nrp.internet2.edu
   expectedIPs:

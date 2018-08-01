@@ -15,7 +15,7 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkSet
 metadata:
-  name: production-nodes
+  name: csusb-network
   labels:
     role: csusb-trusted
 spec:

@@ -351,15 +351,3 @@ spec:
   node: xcache-11.t2.ucsd.edu
   expectedIPs:
   - 169.228.131.206
----
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  name: gpn-fiona-r740xd-node809.greatplains.net
-  labels:
-    host-endpoint: production
-    stashcache: "true"
-spec:
-  node: gpn-fiona-r740xd-node809.greatplains.net
-  expectedIPs:
-  - 164.113.255.57

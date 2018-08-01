@@ -1,0 +1,10 @@
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: osg.chic.nrp.internet2.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: osg.chic.nrp.internet2.edu
+  expectedIPs:
+  - 163.253.70.2

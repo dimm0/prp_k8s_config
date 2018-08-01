@@ -144,4 +144,12 @@ lon=-94.5832
 city="Kansas City"
 state="Missoury"
 description="University of Missoury, Kansas City"
-domain=["greatplains.net"]
+domain=["kans.nrp.internet2.edu"]
+
+[org.kc]
+lat=41.7886
+lon=-87.5987
+city="Chicago"
+state="Illinois"
+description="University of Chicago"
+domain=["chic.nrp.internet2.edu"]

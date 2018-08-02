@@ -146,10 +146,18 @@ state="Missoury"
 description="University of Missoury, Kansas City"
 domain=["kans.nrp.internet2.edu"]
 
-[org.kc]
+[org.chic]
 lat=41.7886
 lon=-87.5987
 city="Chicago"
 state="Illinois"
 description="University of Chicago"
 domain=["chic.nrp.internet2.edu"]
+
+[org.ny]
+lat=40.7295
+lon=-73.9965
+city="New York City"
+state="New York"
+description="New York University"
+domain=["newy32aoa.nrp.internet2.edu"]

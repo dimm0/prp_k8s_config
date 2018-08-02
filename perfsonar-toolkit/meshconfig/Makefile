@@ -13,3 +13,6 @@ cleanup:
 	rm meshconfig
 
 buildrelease: buildgo builddocker pushdocker cleanup
+
+restartpod:
+	kubectl delete pod -n perfsonar -l k8s-app=meshconfig

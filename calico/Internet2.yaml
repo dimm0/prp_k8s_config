@@ -23,3 +23,16 @@ spec:
   node: osg.chic.nrp.internet2.edu
   expectedIPs:
   - 163.253.71.2
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: osg.newy32aoa.nrp.internet2.edu
+  labels:
+    host-endpoint: production
+    globus: "true"
+    stashcache: "true"
+spec:
+  node: osg.newy32aoa.nrp.internet2.edu
+  expectedIPs:
+  - 163.253.72.2

@@ -20,7 +20,7 @@ metadata:
     globus: "true"
     stashcache: "true"
 spec:
-  node: osg.chic.nrp.internet2.edu
+  node: osg.kans.nrp.internet2.edu
   expectedIPs:
   - 163.253.71.2
 ---

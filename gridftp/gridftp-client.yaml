@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gridftp-pod-example
+spec:
+  containers:
+  - name: gridftp-container
+    image: dimm0/gridftp:latest
+    args: ["sleep", "infinity"]

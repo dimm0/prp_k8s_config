@@ -138,8 +138,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 									conf.Organizations[orgID] = org // because map[..] is not addressable - can't assign..
 								}
 
-								conf.ExtIPs = append(conf.ExtIPs, pod.Status.PodIP)
-
 								for _, node := range nodes.Items {
 									for _, addr := range node.Status.Addresses {
 										if addr.Type == v1.NodeInternalIP && addr.Address == pod.Status.HostIP {
@@ -152,12 +150,16 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 											switch node.Labels["nw"] {
 											case "1G":
 												conf.BW1GIPs = append(conf.BW1GIPs, pod.Status.PodIP)
+												conf.ExtIPs = append(conf.ExtIPs, pod.Status.PodIP)
 											case "10G":
 												conf.BW10GIPs = append(conf.BW10GIPs, pod.Status.PodIP)
+												conf.ExtIPs = append(conf.ExtIPs, pod.Status.PodIP)
 											case "40G":
 												conf.BW40GIPs = append(conf.BW40GIPs, pod.Status.PodIP)
+												conf.ExtIPs = append(conf.ExtIPs, pod.Status.PodIP)
 											case "100G":
 												conf.BW100GIPs = append(conf.BW100GIPs, pod.Status.PodIP)
+												conf.ExtIPs = append(conf.ExtIPs, pod.Status.PodIP)
 											}
 										}
 									}

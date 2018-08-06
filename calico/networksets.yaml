@@ -29,6 +29,7 @@ spec:
   - 67.58.51.0/24 #suncave
   - 198.17.101.0/24 # comet k8s
   - 163.253.0.0/16 # internet2
+  - 10.128.0.0/16 #google
 ---
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkSet

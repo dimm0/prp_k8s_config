@@ -1,0 +1,14 @@
+apiVersion: projectcalico.org/v3
+  kind: Node
+  metadata:
+    name: dmitry-mishin
+  spec:
+    bgp:
+      ipv4Address: 104.154.244.243/32
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.dmitry-mishin
+spec:
+  ipipMTU: 1440

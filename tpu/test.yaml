@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: tpu
+  name: tpu
+  namespace: tpu
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: tpu
+    spec:
+      # dnsPolicy: ClusterFirst
+      #hostNetwork: true
+      containers:
+      - name: tpu-container
+        image: dimm0/tensorflow:tpu
+        env:
+          - name: TPU_NAME
+            value: dmitry-mishin
+        command: ["/bin/sh"]
+        args: ["-c", "printf \"%s\n\" '1,$s/nameserver 10.96.0.10/nameserver 169.254.169.254/g' wq | ed -s /etc/resolv.conf && sleep infinity"]
+        # args: ["-c", "sed -i \"s/nameserver 10.96.0.10/nameserver 169.254.169.254/g\" /etc/resolv.conf && sleep infinity"]
+        #https://unix.stackexchange.com/questions/276651/sed-with-inplace-editing-changes-group-ownership-of-file
+

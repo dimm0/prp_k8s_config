@@ -39,8 +39,8 @@ spec:
     spec:
       containers:
       - name: gitlab
-        image: sameersbn/gitlab:11.0.1
-        imagePullPolicy: Always
+        image: sameersbn/gitlab:11.1.4
+        # imagePullPolicy: Always
         env:
         - name: TZ
           value: America/Los_Angeles
@@ -128,12 +128,17 @@ spec:
         - name: REDIS_PORT
           value: "6379"
 
+        # - name: OAUTH_ENABLED
+        #   value: "true"
+        # - name: OAUTH_EXTERNAL_PROVIDERS
+        #   value: "gitlab"
+
         - name: OAUTH_GITLAB_API_KEY
           valueFrom:
             secretKeyRef:
               name: gitlab-oauth
               key: key
-        - name: OAUTH_GITLAB_API_SECRET
+        - name: OAUTH_GITLAB_APP_SECRET
           valueFrom:
             secretKeyRef:
               name: gitlab-oauth

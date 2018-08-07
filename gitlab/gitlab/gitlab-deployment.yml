@@ -128,6 +128,17 @@ spec:
         - name: REDIS_PORT
           value: "6379"
 
+        - name: OAUTH_GITLAB_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: gitlab-oauth
+              key: key
+        - name: OAUTH_GITLAB_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: gitlab-oauth
+              key: secret
+
         - name: SMTP_ENABLED
           value: "true"
         - name: SMTP_DOMAIN

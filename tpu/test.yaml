@@ -18,7 +18,7 @@ spec:
         image: dimm0/tensorflow:tpu
         env:
           - name: TPU_NAME
-            value: dmitry-mishin
+            value: osg01
         command: ["/bin/sh"]
         args: ["-c", "printf \"%s\n\" '1,$s/nameserver 10.96.0.10/nameserver 169.254.169.254/g' wq | ed -s /etc/resolv.conf && sleep infinity"]
         # args: ["-c", "sed -i \"s/nameserver 10.96.0.10/nameserver 169.254.169.254/g\" /etc/resolv.conf && sleep infinity"]

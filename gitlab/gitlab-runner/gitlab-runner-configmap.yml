@@ -10,7 +10,7 @@ data:
 
     [[runners]]
       name = "gitlab-docker-runner"
-      url = "https://gitlab.nautilus.optiputer.net/"
+      url = "https://gitlab.nautilus.optiputer.net"
       token = ""
       executor = "kubernetes"
       [runners.kubernetes]

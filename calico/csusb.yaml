@@ -1,4 +1,11 @@
 apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.perfsonar.csusb.edu
+spec:
+  ipipMTU: 1460
+---
+apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
   name: csusb-trusted-nodes

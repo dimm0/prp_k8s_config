@@ -190,18 +190,18 @@ spec:
           mountPath: /home/git/data/shared/registry
         - mountPath: "/home/git/data/certs"
           name: "ssl"
-        livenessProbe:
-          httpGet:
-            path: /users/sign_in
-            port: 80
-          initialDelaySeconds: 360
-          timeoutSeconds: 15
-        readinessProbe:
-          httpGet:
-            path: /users/sign_in
-            port: 80
-          initialDelaySeconds: 45
-          timeoutSeconds: 1
+        # livenessProbe:
+        #   httpGet:
+        #     path: /users/sign_in
+        #     port: 80
+        #   initialDelaySeconds: 360
+        #   timeoutSeconds: 15
+        # readinessProbe:
+        #   httpGet:
+        #     path: /users/sign_in
+        #     port: 80
+        #   initialDelaySeconds: 45
+        #   timeoutSeconds: 1
       - name: registry
         image: registry
         resources:

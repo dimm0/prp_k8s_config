@@ -70,8 +70,8 @@ spec:
                 key: callback
         resources:
           limits:
-            memory: "12Gi"
-            nvidia.com/gpu: 2
+            memory: "64Gi"
+            nvidia.com/gpu: 6
         volumeMounts:
         - name: datavol
           mountPath: /datavol

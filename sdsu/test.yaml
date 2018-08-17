@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+  namespace: sdsu
+spec:
+  containers:
+  - name: container
+    image: busybox
+    args: ["sleep", "10000000000"]
+    volumeMounts:
+    - name: storage
+      mountPath: /beegfs
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In # Use NotIn for other types
+            values:
+            #- ps-100g.sdsu.edu
+            - fiona.sdsu.edu
+  volumes:
+    - name: storage
+      hostPath:
+        path: /mnt/beegfs/home/k8s
+        type: Directory

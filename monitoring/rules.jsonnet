@@ -315,8 +315,8 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
        "spec": {
           "selector": {
              "matchLabels": {
-                "app": "rook-api",
-                "rook-cluster": "rook",
+                "app": "rook-ceph-mgr",
+                "rook-cluster": "rook-ceph",
              }
           },
           "namespaceSelector": {
@@ -326,8 +326,8 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
           },
           "endpoints": [
              {
-                "port": "rook-api",
-                "interval": "10s",
+                "port": "http-metrics",
+                "interval": "5s",
                 "path": "/metrics"
              }
           ]
@@ -346,11 +346,18 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
                          'pods',
                        ]) +
                        policyRule.withVerbs(['get', 'list', 'watch']);
+      local coreRule2 = policyRule.new() +
+                       policyRule.withApiGroups(['']) +
+                       policyRule.withResources([
+                         'configmaps',
+                       ]) +
+                       policyRule.withVerbs(['get']);
 
       role.new() +
       role.mixin.metadata.withName('prometheus-' + $._config.prometheus.name) +
       role.mixin.metadata.withNamespace('rook') +
       role.withRules(coreRule),
+      role.withRules(coreRule2),
     roleBinding:
       local roleBinding = kp.rbac.v1.roleBinding;
 

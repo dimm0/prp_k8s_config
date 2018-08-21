@@ -1,6 +1,7 @@
 local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-prometheus/kube-prometheus-kubeadm.libsonnet') + (import 'ksonnet/ksonnet.beta.3/k.libsonnet') + {
   _config+:: {
     namespace: 'monitoring',
+    hostNetworkInterfaceSelector: 'device=~"(sd|xvd|nvme).+"',
     prometheus+:: {
       replicas: 1,
     },
@@ -8,7 +9,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
       config: {
         sections: {
           "auth.anonymous": {enabled: true},
-          "security": {admin_password: my_password}
+          "security": {admin_password: "my_password"},
         },
       },
     },
@@ -34,83 +35,6 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
             url: https://rocket.nautilus.optiputer.net/hooks/
      |||,
     },
-  },
-  prometheusRules+:: {
-    groups+: [
-      {
-        name: 'nautilus.rules',
-        rules: [
-          {
-            record: ':node_disk_utilisation:avg_irate',
-            expr: |||
-              avg(irate(node_disk_io_time_ms{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3)
-            ||| % $._config,
-          },
-          {
-            record: 'node:node_disk_utilisation:avg_irate',
-            expr: |||
-              avg by (node) (
-                irate(node_disk_io_time_ms{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3
-              * on (namespace, %(podLabel)s) group_left(node)
-                node_namespace_pod:kube_pod_info:
-              )
-            ||| % $._config,
-          },
-          {
-            record: ':node_disk_saturation:avg_irate',
-            expr: |||
-              avg(irate(node_disk_io_time_weighted{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3)
-            ||| % $._config,
-          },
-          {
-            record: 'node:node_disk_saturation:avg_irate',
-            expr: |||
-              avg by (node) (
-                irate(node_disk_io_time_weighted{%(nodeExporterSelector)s,device=~"(sd|xvd|nvme).+"}[1m]) / 1e3
-              * on (namespace, %(podLabel)s) group_left(node)
-                node_namespace_pod:kube_pod_info:
-              )
-            ||| % $._config,
-          },
-          {
-            record: ':node_net_utilisation:sum_irate',
-            expr: |||
-              sum(irate(node_network_receive_bytes{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m])) +
-              sum(irate(node_network_transmit_bytes{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m]))
-            ||| % $._config,
-          },
-          {
-            record: 'node:node_net_utilisation:sum_irate',
-            expr: |||
-              sum by (node) (
-                (irate(node_network_receive_bytes{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m]) +
-                irate(node_network_transmit_bytes{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m]))
-              * on (namespace, %(podLabel)s) group_left(node)
-                node_namespace_pod:kube_pod_info:
-              )
-            ||| % $._config,
-          },
-          {
-            record: ':node_net_saturation:sum_irate',
-            expr: |||
-              sum(irate(node_network_receive_drop{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m])) +
-              sum(irate(node_network_transmit_drop{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m]))
-            ||| % $._config,
-          },
-          {
-            record: 'node:node_net_saturation:sum_irate',
-            expr: |||
-              sum by (node) (
-                (irate(node_network_receive_drop{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m]) +
-                irate(node_network_transmit_drop{%(nodeExporterSelector)s,device!="cali.*|lo|tunl0"}[1m]))
-              * on (namespace, %(podLabel)s) group_left(node)
-                node_namespace_pod:kube_pod_info:
-              )
-            ||| % $._config,
-          },
-        ],
-      },
-    ],
   },
   prometheusAlerts+:: {
     groups+: [
@@ -154,7 +78,9 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
     'k8snvidiagpu-cluster.json': (import 'local/K8SNvidiaGPU-Cluster.json'),
     'k8snvidiagpu-node.json': (import 'local/K8SNvidiaGPU-Node.json'),
     'cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
-    'rook-dashboard.json': (import 'local/Rook-dashboard.json'),
+    'ceph-cluster.json': (import 'local/Ceph-Cluster.json'),
+    'ceph-osd.json': (import 'local/Ceph-OSD.json'),
+    'ceph-pools.json': (import 'local/Ceph-Pools.json'),
     'nodepods.json': (import 'local/NodePods.json'),
     'testpoints-mem-dashboard.json': (import 'local/Testpoints-mem-dashboard.json'),
   },
@@ -266,7 +192,6 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
           "endpoints": [
              {
                 "port": "exporter",
-                "interval": "30s",
                 "path": "/metrics"
              }
           ]
@@ -316,7 +241,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
           "selector": {
              "matchLabels": {
                 "app": "rook-ceph-mgr",
-                "rook-cluster": "rook-ceph",
+                "rook-cluster": "rook",
              }
           },
           "namespaceSelector": {
@@ -327,8 +252,8 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
           "endpoints": [
              {
                 "port": "http-metrics",
-                "interval": "5s",
-                "path": "/metrics"
+                "path": "/metrics",
+                "interval": "5s"
              }
           ]
        }
@@ -356,8 +281,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
       role.new() +
       role.mixin.metadata.withName('prometheus-' + $._config.prometheus.name) +
       role.mixin.metadata.withNamespace('rook') +
-      role.withRules(coreRule),
-      role.withRules(coreRule2),
+      role.withRules([coreRule, coreRule2]),
     roleBinding:
       local roleBinding = kp.rbac.v1.roleBinding;
 

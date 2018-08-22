@@ -22,6 +22,7 @@ roleRef:
   name: gitlab-admin
   apiGroup: rbac.authorization.k8s.io
 ---
+#https://gitlab.com/gitlab-org/gitlab-runner/issues/2002
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -50,6 +51,8 @@ spec:
               value: 5XWaAf2wvzUDixJyNqV2
             - name: RUNNER_EXECUTOR
               value: kubernetes
+            - name: RUNNER_TAG_LIST
+              value: "build-as-docker"
             - name: RUNNER_REQUEST_CONCURRENCY
               value: "4"
             # Must use privileged mode for docker-in-docker

@@ -1,7 +1,7 @@
 local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-prometheus/kube-prometheus-kubeadm.libsonnet') + (import 'ksonnet/ksonnet.beta.3/k.libsonnet') + {
   _config+:: {
     namespace: 'monitoring',
-    hostNetworkInterfaceSelector: 'device=~"(sd|xvd|nvme).+"',
+    hostNetworkInterfaceSelector: 'device!~"docker0|virbr0.*|cali.*|lo|tunl0"',
     prometheus+:: {
       replicas: 1,
     },

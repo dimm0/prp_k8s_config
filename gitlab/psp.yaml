@@ -1,0 +1,59 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: psp:gitlab-user
+  namespace: gitlab
+rules:
+- apiGroups:
+  - extensions
+  resources:
+  - podsecuritypolicies
+  resourceNames:
+  - gitlabpolicy
+  verbs:
+  - use
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: psp:gitlab-user
+  namespace: gitlab
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: psp:gitlab-user
+subjects:
+- kind: ServiceAccount
+  name: default
+---
+apiVersion: extensions/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: gitlabpolicy
+  namespace: gitlab
+spec:
+  allowPrivilegeEscalation: false
+  allowedCapabilities:
+  - NET_ADMIN
+  fsGroup:
+    rule: RunAsAny
+  hostPorts:
+  - max: 65536
+    min: 1024
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  hostNetwork: true
+  allowedHostPaths:
+    - pathPrefix: /var/run/docker.sock
+  volumes:
+  - configMap
+  - emptyDir
+  - secret
+  - nfs
+  - downwardAPI
+  - persistentVolumeClaim
+  - hostPath

@@ -44,8 +44,6 @@ spec:
     rule: RunAsAny
   supplementalGroups:
     rule: RunAsAny
-  allowedHostPaths:
-  - pathPrefix: "/data1"
   hostNetwork: true
   volumes:
   - configMap

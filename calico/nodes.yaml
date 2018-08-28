@@ -145,6 +145,17 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint
 metadata:
+  name: k8s-tyan-gpu-01.sdsu.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: k8s-tyan-gpu-01.sdsu.edu
+  expectedIPs:
+  - 130.191.49.234
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
   name: k8s-chase-ci-01.calit2.optiputer.net
   labels:
     host-endpoint: production

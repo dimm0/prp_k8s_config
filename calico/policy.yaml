@@ -148,6 +148,7 @@ spec:
       destination:
         ports:
         - 8000
+        - 8444
   selector: "stashcache==\"true\""
 ---
 apiVersion: projectcalico.org/v3

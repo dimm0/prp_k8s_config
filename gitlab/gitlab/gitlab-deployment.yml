@@ -204,9 +204,6 @@ spec:
         #   timeoutSeconds: 1
       - name: registry
         image: registry
-        resources:
-          limits:
-            memory: 100Mi
         env:
         - name: REGISTRY_HTTP_ADDR
           value: 0.0.0.0:5000
@@ -222,6 +219,8 @@ spec:
           value: debug
         - name: REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE
           value: /ssl/registry.crt
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
         volumeMounts:
         - name: image-store
           mountPath: /var/lib/registry

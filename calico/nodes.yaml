@@ -359,6 +359,7 @@ metadata:
     host-endpoint: production
     stashcache: "true"
     port8080: "true"
+    port1094: "true"
 spec:
   node: xcache-11.t2.ucsd.edu
   expectedIPs:

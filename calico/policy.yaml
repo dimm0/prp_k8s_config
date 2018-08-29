@@ -166,3 +166,19 @@ spec:
         ports:
         - 8080
   selector: "port8080==\"true\""
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: port1094
+spec:
+  order: 16
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+    - action: Allow
+      protocol: TCP
+      destination:
+        ports:
+        - 1094
+  selector: "port1094==\"true\""

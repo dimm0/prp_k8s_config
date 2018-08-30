@@ -364,3 +364,14 @@ spec:
   node: xcache-11.t2.ucsd.edu
   expectedIPs:
   - 169.228.131.206
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: fiona.oit.uci.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: fiona.oit.uci.edu
+  expectedIPs:
+  - 192.5.19.25

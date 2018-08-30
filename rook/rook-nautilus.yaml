@@ -286,6 +286,27 @@ spec:
       - name: "nvme1n1"
       - name: "nvme2n1"
       - name: "nvme3n1"
+    - name: "fiona.oit.uci.edu"
+      devices:
+      # sda,sdb boot
+      # nvme0n1 docker
+      - name: "sde" #12TB 
+      - name: "sdae" #12TB
+      - name: "sdah" #12TB
+      - name: "sdad" #12TB
+      - name: "sdag" #12TB
+      - name: "sdv" #12TB
+      - name: "sdw" #12TB
+      - name: "sdaf" #12TB
+      - name: "sdaj" #12TB
+      - name: "sdx" #12TB
+      - name: "sdac" #12TB
+      - name: "sdai" #12TB
+      - name: "sdy" #12TB
+      - name: "sdab" #12TB
+      - name: "sdaa" #12TB
+      - name: "sdz" #12TB
+      
    #  - name: "k8s-gpu-02.calit2.optiputer.net"
    #    devices:
    #    # sda,sdb boot

@@ -21,5 +21,5 @@ parameters:
   fstype: xfs
   pool: rbd
   # Specify the Rook cluster from which to create volumes. If not specified, it will use `rook` as the namespace and name of the cluster.
-  # clusterName: rook
-  # clusterNamespace: rook
+  #clusterName: rook
+  clusterNamespace: rook

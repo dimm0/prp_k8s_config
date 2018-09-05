@@ -375,3 +375,18 @@ spec:
   node: fiona.oit.uci.edu
   expectedIPs:
   - 192.5.19.25
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: fiona-r-uva.vlan7.uvalight.net
+  labels:
+    host-endpoint: production
+    stashcache: "true"
+spec:
+  node: fiona-r-uva.vlan7.uvalight.net
+  expectedIPs:
+  - 145.146.100.30
+
+
+  

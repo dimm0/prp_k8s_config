@@ -383,6 +383,7 @@ metadata:
   labels:
     host-endpoint: production
     stashcache: "true"
+    port8080: "true"
 spec:
   node: fiona-r-uva.vlan7.uvalight.net
   expectedIPs:

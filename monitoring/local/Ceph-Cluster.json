@@ -233,7 +233,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "ceph_mon_quorum_count",
+          "expr": "count(ceph_mon_quorum_status==1)",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,

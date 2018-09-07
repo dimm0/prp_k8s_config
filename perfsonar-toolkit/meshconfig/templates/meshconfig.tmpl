@@ -31,7 +31,9 @@ description Nautilus Mesh
         latitude   {{$org.Site.Lat}}
         longitude  {{$org.Site.Lon}}
         city   {{$org.Site.City}}
+        {{if $org.Site.State}}
         state  {{$org.Site.State}}
+        {{end}}
       </location>
 
       {{ range $hind, $host :=  $org.Site.Host }}

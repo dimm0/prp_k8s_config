@@ -89,10 +89,20 @@ spec:
         - name: GITLAB_NOTIFY_PUSHER
           value: "false"
 
-        - name: GITLAB_BACKUP_SCHEDULE
-          value: daily
-        - name: GITLAB_BACKUP_TIME
-          value: 01:00
+        - name: GCS_BACKUPS
+          value: "true"
+        - name: GCS_BACKUP_BUCKET
+          value: "nautilus-gitlab"
+        - name: GCS_BACKUP_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: gitlab
+              key: gcpkey
+        - name: GCS_BACKUP_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: gitlab
+              key: gcpsecret
 
         - name: GITLAB_REGISTRY_ENABLED
           value: "true"

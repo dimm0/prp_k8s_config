@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: gitlab
-        image: sameersbn/gitlab:11.1.4
+        image: sameersbn/gitlab:11.2.3
         # imagePullPolicy: Always
         env:
         - name: TZ

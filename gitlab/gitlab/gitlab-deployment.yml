@@ -89,6 +89,9 @@ spec:
         - name: GITLAB_NOTIFY_PUSHER
           value: "false"
 
+        - name: GITLAB_BACKUP_SCHEDULE
+          value: "weekly"
+
         - name: GCS_BACKUPS
           value: "true"
         - name: GCS_BACKUP_BUCKET

@@ -51,8 +51,6 @@ spec:
       labels:
         k8s-app: nextcloud
     spec:
-      imagePullSecrets:
-        - name: gcr-json-key
       initContainers:
         - name: config-data
           image: busybox
@@ -83,7 +81,7 @@ spec:
             - mountPath: /var/lib/mysql
               name: dbdata
         - name: nextcloud
-          image: us.gcr.io/prp-k8s/nextcloud
+          image: gitlab-registry.nautilus.optiputer.net/prp/nextcloud:latest
           command: ["/usr/bin/supervisord"]
           env:
             - name: TZ
@@ -92,7 +90,7 @@ spec:
               value: "false"
 
             - name: NEXTCLOUD_URL
-              value: http://nextcloud.k8s.optiputer.net
+              value: http://nextcloud.nautilus.optiputer.net
 
             - name: NEXTCLOUD_ADMIN_USER
               valueFrom:

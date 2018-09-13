@@ -292,20 +292,20 @@ spec:
       # nvme0n1 docker
       - name: "sde" #12TB 
       - name: "sdae" #12TB
-      - name: "sdah" #12TB
+      - name: "sdr" #12TB
       - name: "sdad" #12TB
-      - name: "sdag" #12TB
+      - name: "sdq" #12TB
       - name: "sdv" #12TB
-      - name: "sdw" #12TB
-      - name: "sdaf" #12TB
-      - name: "sdaj" #12TB
-      - name: "sdx" #12TB
+      - name: "sdg" #12TB
+      - name: "sdp" #12TB
+      - name: "sdt" #12TB
+      - name: "sdh" #12TB
       - name: "sdac" #12TB
-      - name: "sdai" #12TB
-      - name: "sdy" #12TB
-      - name: "sdab" #12TB
+      - name: "sds" #12TB
+      - name: "sdi" #12TB
+      - name: "sdl" #12TB
       - name: "sdaa" #12TB
-      - name: "sdz" #12TB
+      - name: "sdj" #12TB
       
    #  - name: "k8s-gpu-02.calit2.optiputer.net"
    #    devices:

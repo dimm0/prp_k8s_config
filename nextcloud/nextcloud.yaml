@@ -80,6 +80,8 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: dbdata
+        - name: redis
+          image: redis
         - name: nextcloud
           image: gitlab-registry.nautilus.optiputer.net/prp/nextcloud:latest
           command: ["/usr/bin/supervisord"]

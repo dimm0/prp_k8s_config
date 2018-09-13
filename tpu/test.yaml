@@ -16,6 +16,7 @@ spec:
       containers:
       - name: tpu-container
         image: dimm0/tensorflow:tpu
+        imagePullPolicy: Always
         env:
           - name: TPU_NAME
             value: osg01
@@ -40,6 +41,7 @@ spec:
     spec:
       containers:
       - name: tpu-container
+        imagePullPolicy: Always
         image: dimm0/tensorflow:tpu
         env:
           - name: TPU_NAME

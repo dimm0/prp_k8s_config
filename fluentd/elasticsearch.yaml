@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch-db
+  namespace: fluentd
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: fluentd
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: elasticsearch
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: elasticsearch
+        image: elastic/elasticsearch:6.4.0
+        env:
+        - name: discovery.type
+          value: single-node
+        - name: cluster.name
+          value: fluentd
+        ports:
+        - name: web
+          containerPort: 9200
+        - name: control
+          containerPort: 9300
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/data
+          name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: elasticsearch-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-logging
+  namespace: fluentd
+  labels:
+    name: elasticsearch
+spec:
+  ports:
+    - name: elasticsearch
+      port: 9200
+      targetPort: web
+  selector:
+    name: elasticsearch

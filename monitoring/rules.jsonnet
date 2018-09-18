@@ -36,6 +36,37 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
      |||,
     },
   },
+  prometheusRules+:: {
+    groups+: [
+      {
+        name: 'req.rules',
+        rules: [
+          {
+            record: 'namespace_name:kube_pod_container_resource_requests:sum',
+            expr: |||
+              sum by (namespace, label_name) (
+                sum(kube_pod_container_resource_requests_cpu_cores{%(kubeStateMetricsSelector)s} and on(pod) kube_pod_status_scheduled{condition="true"}) by (namespace, pod)
+              * on (namespace, pod) group_left(label_name)
+                label_replace(kube_pod_labels{%(kubeStateMetricsSelector)s}, "pod_name", "$1", "pod", "(.*)")
+              )
+            ||| % $._config,
+          },
+          {
+            record: 'kube_node_status_capacity',
+            expr: |||
+              kube_node_status_capacity
+            ||| % $._config,
+          },
+          {
+            record: 'kube_node_status_allocatable',
+            expr: |||
+              kube_node_status_allocatable
+            ||| % $._config,
+          },
+        ],
+      },
+    ],
+  },
   prometheusAlerts+:: {
     groups+: [
       {
@@ -77,6 +108,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
   grafanaDashboards+:: {
     'k8snvidiagpu-cluster.json': (import 'local/K8SNvidiaGPU-Cluster.json'),
     'k8snvidiagpu-node.json': (import 'local/K8SNvidiaGPU-Node.json'),
+    'k8snvidiagpu-usage.json': (import 'local/GPUs-usage.json'),
     'cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
     'ceph-cluster.json': (import 'local/Ceph-Cluster.json'),
     'ceph-osd.json': (import 'local/Ceph-OSD.json'),

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test
+  namespace: jupyterlab
+spec:
+  podManagementPolicy: Parallel
+  serviceName: "test"
+  replicas: 14
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      tolerations:
+      - effect: NoSchedule
+        key: bigdipa
+        operator: Equal
+        value: "true"
+      nodeSelector:
+        suncave: "true"
+      containers:
+      - name: busybox
+        image: busybox
+        args: ["sleep", "10000000"]
+        resources:
+          limits:
+            memory: "50Gi"
+          requests:
+            memory: "50Gi"
+        volumeMounts:
+        - name: test
+          mountPath: /test
+        - name: volume-bigdipadata
+          mountPath: /nfs
+      volumes:
+      - name: volume-bigdipadata
+        nfs:
+          path: /bigdipa2018/data/
+          server: 10.108.15.47
+  volumeClaimTemplates:
+  - metadata:
+      name: test
+    spec:
+      storageClassName: rook-block
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

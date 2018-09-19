@@ -1,0 +1,105 @@
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-20
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-21
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-22
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-23
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-24
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-25
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-26
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-27
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-28
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-29
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-30
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-31
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-32
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-33
+spec:
+  ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.suncave-34
+spec:
+  ipipMTU: 1440
+---

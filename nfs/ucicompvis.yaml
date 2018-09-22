@@ -56,3 +56,38 @@ spec:
     name: nfs
   selector:
     k8s-app: ucicompvis-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ucicompvis-pv
+  namespace: ucicompvis
+  labels:
+    project: ucicompvis
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ucicompvis-pv
+  namespace: ucicompvis
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: ucicompvis

@@ -1,8 +1,42 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: <some_name>
+  labels:
+    <label_name>: <label_value>
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: <size, f.e. 1Ti>
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: <some_name>
+  namespace: <namespace>
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: <size, f.e. 1Ti>
+  selector:
+    matchLabels:
+      <label_name>: <label_value_matching_above>
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: nfscli2
-  namespace: default
+  namespace: <namespace>
 spec:
   containers:
   - name: test
@@ -13,6 +47,5 @@ spec:
       mountPath: /nfs
   volumes:
   - name: nfs
-    nfs:
-      server: <ip>
-      path: "/"
+    persistentVolumeClaim:
+      claimName: <some_name_matching_above>

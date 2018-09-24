@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
     apt-get update && \
     apt-get install -y google-cloud-sdk && \
-    pip install --pre tensorflow==1.11.0rc0 && \
+    pip install --pre tensorflow==1.11.0rc2 && \
     pip install google-cloud-storage && \
     pip install --upgrade google-api-python-client oauth2client
 

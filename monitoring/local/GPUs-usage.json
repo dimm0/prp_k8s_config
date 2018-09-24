@@ -88,7 +88,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kube_node_status_capacity{resource=\"nvidia_com_gpu\"}",
+          "expr": "avg without(instance, pod)(kube_node_status_capacity{resource=\"nvidia_com_gpu\"})",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -176,7 +176,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kube_node_status_allocatable{resource=\"nvidia_com_gpu\"} - on(node) \n  (sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\"}) by(node) or on(node) kube_node_status_allocatable{resource=\"nvidia_com_gpu\"}*0)",
+          "expr": "avg without(instance, pod)(kube_node_status_allocatable{resource=\"nvidia_com_gpu\"}) - on(node) \n  (sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\"}) by(node) or on(node) avg without(instance, pod)(kube_node_status_allocatable{resource=\"nvidia_com_gpu\"})*0)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{node}}",
@@ -313,15 +313,12 @@
   ],
   "schemaVersion": 16,
   "style": "dark",
-  "tags": [
-    "nvidia",
-    "GPU"
-  ],
+  "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -352,5 +349,5 @@
   "timezone": "",
   "title": "GPUs usage",
   "uid": "MXVv2UTmz",
-  "version": 1
+  "version": 2
 }

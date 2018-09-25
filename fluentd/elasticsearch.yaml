@@ -34,6 +34,8 @@ spec:
           value: single-node
         - name: cluster.name
           value: fluentd
+        - name: ES_JAVA_OPTS
+          value: "-Xms12g -Xmx12g"
         ports:
         - name: web
           containerPort: 9200

@@ -21,7 +21,8 @@ spec:
       containers:
       - name: fluentd
         # image: fluent/fluentd-kubernetes-daemonset:stable-elasticsearch
-        image: fluent/fluentd-kubernetes-daemonset@sha256:fe67be752f17dd4a66b0c88a46b1d937bff1fa9bd653c5be18880a6b744744cb
+        image: fluent/fluentd-kubernetes-daemonset:v1.2.2-debian-elasticsearch
+        imagePullPolicy: Always
         env:
           - name:  FLUENT_ELASTICSEARCH_HOST
             value: "elasticsearch-logging"

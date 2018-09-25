@@ -20,12 +20,11 @@ spec:
         effect: NoSchedule
       containers:
       - name: fluentd
-        # image: fluent/fluentd-kubernetes-daemonset:stable-elasticsearch
-        image: fluent/fluentd-kubernetes-daemonset:v1.2.2-debian-elasticsearch
         imagePullPolicy: Always
+        image: fluent/fluentd-kubernetes-daemonset:v1.2.2-debian-elasticsearch
         env:
           - name:  FLUENT_ELASTICSEARCH_HOST
-            value: "elasticsearch-logging"
+            value: "elasticsearch"
           - name:  FLUENT_ELASTICSEARCH_PORT
             value: "9200"
           - name: FLUENT_ELASTICSEARCH_SCHEME

@@ -16,24 +16,62 @@ spec:
     metadata:
       labels:
         k8s-app: kibana-logging
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       containers:
       - name: kibana-logging
-        image: docker.elastic.co/kibana/kibana-oss:6.3.2
-        resources:
-          limits:
-            cpu: 1000m
-          requests:
-            cpu: 100m
+        image: docker.elastic.co/kibana/kibana:6.4.1
         env:
           - name: ELASTICSEARCH_URL
             value: http://elasticsearch-logging:9200
-          - name: SERVER_BASEPATH
-            value: /api/v1/namespaces/kube-system/services/kibana-logging/proxy
+          - name: SERVER_NAME
+            value: https://fluentd.nautilus.optiputer.net
+          - name: XPACK_MONITORING_ENABLED
+            value: "true"
+          - name: XPACK_MONITORING_COLLECTION_ENABLED
+            value: "true"
         ports:
         - containerPort: 5601
           name: ui
           protocol: TCP
-  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-logging
+  namespace: fluentd
+  labels:
+    k8s-app: kibana-logging
+spec:
+  ports:
+    - name: kibana
+      port: 5601
+      targetPort: 5601
+  selector:
+    k8s-app: kibana-logging
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana
+  namespace: fluentd
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-secret: kibana-secret
+spec:
+  rules:
+  - host: fluentd.nautilus.optiputer.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kibana
+          servicePort: 80
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kibana-secret
+  namespace: fluentd
+data:
+  htpasswd: 

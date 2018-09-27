@@ -30,7 +30,7 @@ spec:
       component: elasticsearch
       role: data
   serviceName: elasticsearch-data
-  replicas: 12
+  replicas: 4
   template:
     metadata:
       labels:
@@ -68,7 +68,7 @@ spec:
         - name: HTTP_ENABLE
           value: "true"
         - name: ES_JAVA_OPTS
-          value: -Xms4g -Xmx4g
+          value: -Xms3g -Xmx3g
         - name: PROCESSORS
           value: "5"
           # valueFrom:
@@ -84,11 +84,11 @@ spec:
           name: http
         - containerPort: 9300
           name: transport
-        livenessProbe:
-          tcpSocket:
-            port: transport
-          initialDelaySeconds: 20
-          periodSeconds: 10
+        # livenessProbe:
+        #   tcpSocket:
+        #     port: transport
+        #   initialDelaySeconds: 20
+        #   periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /_cluster/health

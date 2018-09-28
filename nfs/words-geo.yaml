@@ -60,10 +60,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: ucicompvis-pv
-  namespace: ucicompvis
+  name: words-geo-pv
+  namespace: words-geo
   labels:
-    project: ucicompvis
+    project: words-geo
 spec:
   storageClassName: nfs
   mountOptions: 
@@ -73,5 +73,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.108.109.251
+    server: <ip>
     path: /

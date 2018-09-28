@@ -94,3 +94,22 @@ spec:
   nfs:
     server: <ip>
     path: /
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nacre-pv
+  namespace: nacre
+  labels:
+    project: nacre
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.107.66.160
+    path: /

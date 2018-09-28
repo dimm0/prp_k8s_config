@@ -56,3 +56,22 @@ spec:
     name: nfs
   selector:
     k8s-app: words-geo-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ucicompvis-pv
+  namespace: ucicompvis
+  labels:
+    project: ucicompvis
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.108.109.251
+    path: /

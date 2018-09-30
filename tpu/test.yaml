@@ -15,6 +15,7 @@ spec:
       #hostNetwork: true
       containers:
       - name: tpu-container
+        imagePullPolicy: Always
         image: dimm0/tensorflow:tpu
         imagePullPolicy: Always
         env:

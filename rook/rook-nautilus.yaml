@@ -48,14 +48,6 @@ spec:
     storeConfig:
       storeType: bluestore
     nodes:
-    - name: "k8s-gpu-03.sdsc.optiputer.net"
-      devices:
-      # sda,sdb boot
-      # sdc,sdd docker
-      - name: "nvme0n1"
-      - name: "nvme1n1"
-      - name: "sde"
-      - name: "sdf"
     - name: "fiona.nwsc.ucar.edu"
       devices:
       # sda,sdb boot
@@ -270,51 +262,64 @@ spec:
       - name: "sdo"
       - name: "sdp"
       - name: "sdq"
-    - name: "knuron.calit2.optiputer.net"
-      devices:
-      # sdj,sdk boot
-      # sda docker
-      - name: "sdb"
-      - name: "sdc"
-      - name: "sdd"
-      - name: "sde"
-      - name: "sdf"
-      - name: "sdg"
-      - name: "sdh"
-      - name: "sdi"
-      - name: "nvme0n1"
-      - name: "nvme1n1"
-      - name: "nvme2n1"
-      - name: "nvme3n1"
-    - name: "fiona.oit.uci.edu"
+
+
+    # - name: "knuron.calit2.optiputer.net"
+    #   devices:
+    #   # sdj,sdk boot
+    #   # sda docker
+    #   - name: "sdb"
+    #   - name: "sdc"
+    #   - name: "sdd"
+    #   - name: "sde"
+    #   - name: "sdf"
+    #   - name: "sdg"
+    #   - name: "sdh"
+    #   - name: "sdi"
+    #   - name: "nvme0n1"
+    #   - name: "nvme1n1"
+    #   - name: "nvme2n1"
+    #   - name: "nvme3n1"
+    # - name: "fiona.oit.uci.edu"
+    #   devices:
+    #   # sda,sdb boot
+    #   # nvme0n1 docker
+    #   - name: "sde" #12TB 
+    #   - name: "sdae" #12TB
+    #   - name: "sdr" #12TB
+    #   - name: "sdad" #12TB
+    #   - name: "sdq" #12TB
+    #   - name: "sdv" #12TB
+    #   - name: "sdg" #12TB
+    #   - name: "sdp" #12TB
+    #   - name: "sdt" #12TB
+    #   - name: "sdh" #12TB
+    #   - name: "sdac" #12TB
+    #   - name: "sds" #12TB
+    #   - name: "sdi" #12TB
+    #   - name: "sdl" #12TB
+    #   - name: "sdaa" #12TB
+    #   - name: "sdj" #12TB
+
+
+    # - name: "k8s-gpu-03.sdsc.optiputer.net"
+    #   devices:
+    #   # sda,sdb boot
+    #   # sdc,sdd docker
+    #   - name: "nvme0n1"
+    #   - name: "nvme1n1"
+    #   - name: "sde"
+    #   - name: "sdf"
+
+      
+    - name: "k8s-gpu-02.calit2.optiputer.net"
       devices:
       # sda,sdb boot
-      # nvme0n1 docker
-      - name: "sde" #12TB 
-      - name: "sdae" #12TB
-      - name: "sdr" #12TB
-      - name: "sdad" #12TB
-      - name: "sdq" #12TB
-      - name: "sdv" #12TB
-      - name: "sdg" #12TB
-      - name: "sdp" #12TB
-      - name: "sdt" #12TB
-      - name: "sdh" #12TB
-      - name: "sdac" #12TB
-      - name: "sds" #12TB
-      - name: "sdi" #12TB
-      - name: "sdl" #12TB
-      - name: "sdaa" #12TB
-      - name: "sdj" #12TB
-      
-   #  - name: "k8s-gpu-02.calit2.optiputer.net"
-   #    devices:
-   #    # sda,sdb boot
-   #    # sdc,sdd docker
-   #    - name: "nvme0n1"
-   #    - name: "nvme1n1"
-   #    - name: "sde"
-   #    - name: "sdf"
+      # sdc,sdd docker
+      - name: "nvme0n1"
+      - name: "nvme1n1"
+      - name: "sde"
+      - name: "sdf"
    #  - name: "dtn2-daejeon.kreonet.net"
    #    devices:
    #    # sda boot  #500GB SSD

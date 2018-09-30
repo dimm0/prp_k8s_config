@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Ti
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -56,3 +56,60 @@ spec:
     name: nfs
   selector:
     k8s-app: oliver-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wiki-pv
+  namespace: wiki
+  labels:
+    project: wiki
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wiki-backups-pv
+  namespace: wiki-backups
+  labels:
+    project: wiki-backups
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nacre-pv
+  namespace: nacre
+  labels:
+    project: nacre
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.107.66.160
+    path: /

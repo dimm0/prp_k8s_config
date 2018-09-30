@@ -56,3 +56,57 @@ spec:
     name: nfs
   selector:
     k8s-app: adalab-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: adalab-mop-pv
+  labels:
+    project: adalab-mop
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: adalab-panorama-pv
+  labels:
+    project: adalab-panorama
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: adalab-pv
+  labels:
+    project: adalab
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /

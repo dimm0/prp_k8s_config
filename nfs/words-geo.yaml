@@ -56,3 +56,22 @@ spec:
     name: nfs
   selector:
     k8s-app: words-geo-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: words-geo-pv
+  namespace: words-geo
+  labels:
+    project: words-geo
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /

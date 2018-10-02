@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: gpu-container
-    image: tensorflow/tensorflow:latest-gpu
+    image: gitlab-registry.nautilus.optiputer.net/prp/jupyterlab:latest
     args: ["sleep", "infinity"]
     resources:
       limits:

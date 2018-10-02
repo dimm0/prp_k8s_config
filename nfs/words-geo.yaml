@@ -74,4 +74,55 @@ spec:
     - ReadWriteMany
   nfs:
     server: <ip>
+    path: /web
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: words-geo-pv
+  namespace: words-geo
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: words-geo
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: words-geocolor-pv
+  namespace: words-geo
+  labels:
+    project: words-geocolor
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
     path: /
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: words-geocolor-pv
+  namespace: words-geo
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: words-geocolor

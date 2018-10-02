@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"log"
@@ -27,6 +28,11 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
+
+	viper.WatchConfig()
+	viper.OnConfigChange(func(e fsnotify.Event) {
+		fmt.Println("Config file changed:", e.Name)
+	})
 
 	ticker := time.NewTicker(10 * time.Minute)
 	go func() {

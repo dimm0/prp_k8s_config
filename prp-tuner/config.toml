@@ -13,3 +13,4 @@
 "net.ipv4.tcp_timestamps"="1"
 "net.ipv4.tcp_sack"="1"
 "net.ipv4.tcp_low_latency"="0"
+"vm.max_map_count"="1048575"

@@ -56,3 +56,37 @@ spec:
     name: nfs
   selector:
     k8s-app: newspaper-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: newspaper-nfs
+  labels:
+    project: mewspaper
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: newspaper-nfs
+  namespace: jupyterlab
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: newspaper

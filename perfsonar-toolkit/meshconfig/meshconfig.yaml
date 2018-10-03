@@ -39,6 +39,13 @@ spec:
       - name: meshconfig
         image: us.gcr.io/prp-k8s/meshconfig:latest
         imagePullPolicy: Always
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: mesh-config
 ---
 kind: Service
 apiVersion: v1

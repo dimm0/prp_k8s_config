@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -186,6 +187,11 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
+
+	viper.WatchConfig()
+	viper.OnConfigChange(func(e fsnotify.Event) {
+		fmt.Println("Config file changed:", e.Name)
+	})
 
 	k8sconfig, err := rest.InClusterConfig()
 	if err != nil {

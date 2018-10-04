@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: fuelmap
+  name: words-traffic
   namespace: nfs-servers
 spec:
   storageClassName: rook-block
@@ -14,14 +14,14 @@ spec:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: fuelmap
+  name: words-traffic
   namespace: nfs-servers
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        k8s-app: fuelmap-nfs
+        k8s-app: words-traffic-nfs
     spec:
       containers:
       - name: nfs
@@ -39,15 +39,15 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: fuelmap
+          claimName: words-traffic
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: fuelmap
+  name: words-traffic
   namespace: nfs-servers
   labels:
-    k8s-app: fuelmap-nfs
+    k8s-app: words-traffic-nfs
 spec:
   ports:
   - port: 111
@@ -55,4 +55,39 @@ spec:
   - port: 2049
     name: nfs
   selector:
-    k8s-app: fuelmap-nfs
+    k8s-app: words-traffic-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: words-traffic-pv
+  namespace: words-traffic
+  labels:
+    project: words-traffic
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /web
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: words-traffic-pv
+  namespace: words-traffic
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: words-traffic

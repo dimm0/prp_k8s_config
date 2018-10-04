@@ -56,3 +56,37 @@ spec:
     name: nfs
   selector:
     k8s-app: suave-nfs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: suave-pv
+  labels:
+    project: suave
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /web
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: suave-pv
+  namespace: suave
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: suave

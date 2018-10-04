@@ -16,3 +16,7 @@ buildrelease: buildgo builddocker pushdocker cleanup
 
 restartpod:
 	kubectl delete pod -n perfsonar -l k8s-app=meshconfig
+
+pushconfig:
+	-kubectl delete configmap mesh-config -n perfsonar
+	kubectl create configmap mesh-config --from-file=config.toml=config.toml -n perfsonar

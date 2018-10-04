@@ -162,10 +162,10 @@ state="New York"
 description="New York University"
 domain=["newy32aoa.nrp.internet2.edu"]
 
-[org.uvalight]
-lat=52.3558
-lon=4.9557
-city="Amsterdam"
-state=""
-description="University of Amsterdam"
-domain=["uvalight.net"]
+# [org.uvalight]
+# lat=52.3558
+# lon=4.9557
+# city="Amsterdam"
+# state=""
+# description="University of Amsterdam"
+# domain=["uvalight.net"]

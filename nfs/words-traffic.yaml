@@ -74,7 +74,7 @@ spec:
     - ReadWriteMany
   nfs:
     server: <ip>
-    path: /web
+    path: /
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

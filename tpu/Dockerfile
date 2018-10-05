@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
         python \
         python-pip \
+        python3-pip \
         python-setuptools \
         iproute2 net-tools dnsutils ed vim && \
     export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
@@ -21,7 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get install -y google-cloud-sdk && \
     pip install tensorflow==1.11.0 && \
     pip install google-cloud-storage && \
-    pip install --upgrade google-api-python-client oauth2client
+    pip install --upgrade google-api-python-client oauth2client && \
+    pip3 install tensorflow-gpu
 
 # Checkout tensorflow/models at the appropriate branch
 RUN git clone -b r1.11 --depth 1 https://github.com/tensorflow/models.git /tensorflow_models

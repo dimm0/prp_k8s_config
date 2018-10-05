@@ -303,7 +303,7 @@ spec:
         # Rook Agent toleration. Will tolerate all taints with all keys.
         # Choose between NoSchedule, PreferNoSchedule and NoExecute:
         - name: AGENT_TOLERATION
-          value: "NoSchedule"
+          value: "PreferNoSchedule"
         # (Optional) Rook Agent toleration key. Set this to the key of the taint you want to tolerate
         # - name: AGENT_TOLERATION_KEY
         #  value: "<KeyOfTheTaintToTolerate>"
@@ -313,7 +313,7 @@ spec:
         # Rook Discover toleration. Will tolerate all taints with all keys.
         # Choose between NoSchedule, PreferNoSchedule and NoExecute:
         - name: DISCOVER_TOLERATION
-          value: "NoSchedule"
+          value: "PreferNoSchedule"
         # (Optional) Rook Discover toleration key. Set this to the key of the taint you want to tolerate
         # - name: DISCOVER_TOLERATION_KEY
         #  value: "<KeyOfTheTaintToTolerate>"

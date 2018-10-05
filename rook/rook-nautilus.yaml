@@ -39,6 +39,14 @@ spec:
               operator: In
               values:
               - production
+    osd:
+      tolerations:
+      - key: "nvidia.com/gpu"
+        operator: "Exists"
+        effect: "PreferNoSchedule"        
+      - key: "hawaiiRegion"
+        operator: "Exists"
+        effect: "PreferNoSchedule"        
   storage:                # cluster level storage configuration and selection
     useAllNodes: false
     useAllDevices: false

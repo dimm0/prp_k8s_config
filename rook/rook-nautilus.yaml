@@ -288,26 +288,26 @@ spec:
       - name: "nvme1n1"
       - name: "nvme2n1"
       - name: "nvme3n1"
-    - name: "fiona.oit.uci.edu"
-      devices:
-      # sda,sdb boot
-      # nvme0n1 docker
-      - name: "sde" #12TB 
-      - name: "sdae" #12TB
-      - name: "sdr" #12TB
-      - name: "sdad" #12TB
-      - name: "sdq" #12TB
-      - name: "sdv" #12TB
-      - name: "sdg" #12TB
-      - name: "sdp" #12TB
-      - name: "sdt" #12TB
-      - name: "sdh" #12TB
-      - name: "sdac" #12TB
-      - name: "sds" #12TB
-      - name: "sdi" #12TB
-      - name: "sdl" #12TB
-      - name: "sdaa" #12TB
-      - name: "sdj" #12TB
+    # - name: "fiona.oit.uci.edu"
+    #   devices:
+    #   # sda,sdb boot
+    #   # nvme0n1 docker
+    #   - name: "sde" #12TB 
+    #   - name: "sdae" #12TB
+    #   - name: "sdr" #12TB
+    #   - name: "sdad" #12TB
+    #   - name: "sdq" #12TB
+    #   - name: "sdv" #12TB
+    #   - name: "sdg" #12TB
+    #   - name: "sdp" #12TB
+    #   - name: "sdt" #12TB
+    #   - name: "sdh" #12TB
+    #   - name: "sdac" #12TB
+    #   - name: "sds" #12TB
+    #   - name: "sdi" #12TB
+    #   - name: "sdl" #12TB
+    #   - name: "sdaa" #12TB
+    #   - name: "sdj" #12TB
 
 
     # - name: "k8s-gpu-03.sdsc.optiputer.net"

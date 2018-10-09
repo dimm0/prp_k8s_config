@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mas-fuelmap-fh
+  labels:
+    project: mas-fuelmap-fh
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /Data/jupyter-nfs/data/fuelmap
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mas-fuelmap-fh
+  namespace: mas-fuelmap
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: mas-fuelmap-fh
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: satellite-pwc-fh
+  labels:
+    project: satellite-pwc-fh
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /Data/jupyter-nfs
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: satellite-pwc-fh
+  namespace: satellite-pwc
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: satellite-pwc-fh
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: satellite-unicef-fh
+  labels:
+    project: satellite-unicef-fh
+spec:
+  storageClassName: nfs
+  mountOptions: 
+    - soft
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <ip>
+    path: /Data/jupyter-nfs
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: satellite-unicef-fh
+  namespace: satellite-unicef
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      project: satellite-unicef-fh

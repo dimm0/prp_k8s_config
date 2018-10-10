@@ -116,7 +116,7 @@ subjects:
   name: system:serviceaccounts:perfsonar
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: system:serviceaccounts:nrp-perfsonar
+  name: system:serviceaccounts:perfsonarn
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
   name: system:serviceaccounts:conduit

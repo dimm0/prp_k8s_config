@@ -399,6 +399,17 @@ spec:
   node: fiona-r-uva.vlan7.uvalight.net
   expectedIPs:
   - 145.146.100.30
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: venadi.ucsc.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: venadi.ucsc.edu
+  expectedIPs:
+  - 128.114.109.74
 
 
   

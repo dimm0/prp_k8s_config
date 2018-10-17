@@ -110,6 +110,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
     'k8snvidiagpu-node.json': (import 'local/K8SNvidiaGPU-Node.json'),
     'k8snvidiagpu-usage.json': (import 'local/GPUs-usage.json'),
     'cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
+    'namespace-improved-dashboard.json': (import 'local/Namespace_w_variable_averaging.json'),
     'ceph-cluster.json': (import 'local/Ceph-Cluster.json'),
     'ceph-osd.json': (import 'local/Ceph-OSD.json'),
     'ceph-pools.json': (import 'local/Ceph-Pools.json'),

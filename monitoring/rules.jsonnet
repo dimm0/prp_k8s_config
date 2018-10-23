@@ -259,6 +259,65 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
       roleBinding.mixin.roleRef.mixinInstance({ kind: 'Role' }) +
       roleBinding.withSubjects([{ kind: 'ServiceAccount', name: 'prometheus-' + $._config.prometheus.name, namespace: 'monitoring' }]),
   },
+  rgw: {
+    serviceMonitor: {
+       "apiVersion": "monitoring.coreos.com/v1",
+       "kind": "ServiceMonitor",
+       "metadata": {
+          "name": "rgw-mon",
+          "namespace": "monitoring",
+          "labels": {
+             "k8s-app": "rgw-mon"
+          }
+       },
+       "spec": {
+          "selector": {
+             "matchLabels": {
+                "k8s-app": "rgw-mon"
+             }
+          },
+          "namespaceSelector": {
+             "matchNames": [
+                "rgw-mon"
+             ]
+          },
+          "endpoints": [
+             {
+                "port": "exporter",
+                "path": "/metrics"
+             }
+          ]
+       }
+    },
+    role:
+      local role = kp.rbac.v1.role;
+      local policyRule = role.rulesType;
+
+      local coreRule = policyRule.new() +
+                       policyRule.withApiGroups(['']) +
+                       policyRule.withResources([
+                         'nodes',
+                         'services',
+                         'endpoints',
+                         'pods',
+                       ]) +
+                       policyRule.withVerbs(['get', 'list', 'watch']);
+
+      role.new() +
+      role.mixin.metadata.withName('prometheus-' + $._config.prometheus.name) +
+      role.mixin.metadata.withNamespace('rook') +
+      role.withRules(coreRule),
+    roleBinding:
+      local roleBinding = kp.rbac.v1.roleBinding;
+
+      roleBinding.new() +
+      roleBinding.mixin.metadata.withName('rgw-mon') +
+      roleBinding.mixin.metadata.withNamespace('rook') +
+      roleBinding.mixin.roleRef.withApiGroup('rbac.authorization.k8s.io') +
+      roleBinding.mixin.roleRef.withName('prometheus-' + $._config.prometheus.name) +
+      roleBinding.mixin.roleRef.mixinInstance({ kind: 'Role' }) +
+      roleBinding.withSubjects([{ kind: 'ServiceAccount', name: 'prometheus-' + $._config.prometheus.name, namespace: 'monitoring' }]),
+  },
   rook: {
     serviceMonitor: {
        "apiVersion": "monitoring.coreos.com/v1",
@@ -337,4 +396,5 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
 { ['rook-' + name]: kp.rook[name] for name in std.objectFields(kp.rook) } +
 { ['cassandra-' + name]: kp.cassandra[name] for name in std.objectFields(kp.cassandra) } +
 { ['gpu-' + name]: kp.gpu[name] for name in std.objectFields(kp.gpu) } +
+{ ['rgw-' + name]: kp.rgw[name] for name in std.objectFields(kp.rgw) } +
 { ['grafana-' + name]: kp.grafana[name] for name in std.objectFields(kp.grafana) }

@@ -278,7 +278,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
           },
           "namespaceSelector": {
              "matchNames": [
-                "rgw-mon"
+                "rook"
              ]
           },
           "endpoints": [

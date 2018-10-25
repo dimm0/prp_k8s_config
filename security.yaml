@@ -3,15 +3,18 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nautilus-admins
 subjects:
-- kind: User
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
   name: http://cilogon.org/serverA/users/15761
-  apiGroup: "rbac.authorization.k8s.io"
-- kind: User
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
   name: http://cilogon.org/serverA/users/23651
-  apiGroup: "rbac.authorization.k8s.io"
-- kind: User
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
   name: http://cilogon.org/serverA/users/277931
-  apiGroup: "rbac.authorization.k8s.io"
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: http://cilogon.org/serverT/users/226398
 roleRef:
   kind: ClusterRole
   name: cluster-admin

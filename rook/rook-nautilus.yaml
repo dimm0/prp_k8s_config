@@ -123,6 +123,7 @@ spec:
       devices:
       # sda,sdb boot
    #  - name: "nvme0n1" Docker ZFS
+   # one drive removed
       - name: "sdc"
       - name: "sdd"
       - name: "sde"

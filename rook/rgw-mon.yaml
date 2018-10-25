@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rgw-mon
+  namespace: rook
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: rgw-mon
+    spec:
+      containers:
+      - name: rgw-mon
+        image: blemmenes/radosgw_usage_exporter
+        env:
+          - name: RADOSGW_SERVER
+            value: rook-ceph-rgw-rooks3.rook
+          - name: ACCESS_KEY
+            value: 
+          - name: SECRET_KEY
+            value: 
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: rgw-mon
+  name: rgw-mon
+  namespace: rook
+spec:
+  ports:
+  - port: 9114
+    targetPort: 9242
+    name: exporter
+  selector:
+    k8s-app: rgw-mon

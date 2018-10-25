@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mem-quota
+  namespace: chei-ml
+spec:
+  hard:
+    requests.memory: 200Gi

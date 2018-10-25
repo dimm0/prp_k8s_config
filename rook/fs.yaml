@@ -1,7 +1,7 @@
-apiVersion: rook.io/v1alpha1
+apiVersion: ceph.rook.io/v1beta1
 kind: Filesystem
 metadata:
-  name: satellite-pwc
+  name: nautilusfs
   namespace: rook
 spec:
   metadataPool:
@@ -9,25 +9,17 @@ spec:
       size: 3
   dataPools:
     - erasureCoded:
-       dataChunks: 2
-       codingChunks: 1
+        dataChunks: 3
+        codingChunks: 2
   metadataServer:
     activeCount: 1
     activeStandby: true
----
-apiVersion: rook.io/v1alpha1
-kind: Filesystem
-metadata:
-  name: ucicompvis
-  namespace: rook
-spec:
-  metadataPool:
-    replicated:
-      size: 3
-  dataPools:
-    - erasureCoded:
-       dataChunks: 2
-       codingChunks: 1
-  metadataServer:
-    activeCount: 1
-    activeStandby: true
+    placement:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: env
+              operator: In
+              values:
+              - production

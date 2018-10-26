@@ -5,6 +5,8 @@ metadata:
   namespace: rook
 spec:
   dnsPolicy: ClusterFirstWithHostNet
+  nodeSelector:
+    kubernetes.io/hostname: k8s-nvme-01.sdsc.optiputer.net
   containers:
   - name: rook-ceph-tools
     image: rook/ceph-toolbox:master

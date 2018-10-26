@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: copy-dineshb
+  namespace: dimm
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-nvme-01.sdsc.optiputer.net
+  containers:
+  - name: test
+    image: centos
+    args: ["sleep", "infinity"]
+    volumeMounts:
+    - name: nfs
+      mountPath: /nfs
+    - name: ceph
+      mountPath: /ceph
+  volumes:
+  - name: nfs
+    nfs:
+          server: 10.111.23.202
+          path: "/"
+  - name: ceph
+    flexVolume:
+      driver: ceph.rook.io/rook
+      fsType: ceph
+      options:
+        fsName: nautilusfs
+        clusterNamespace: rook
+        path: /

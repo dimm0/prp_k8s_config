@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: globus-pc-service
+  namespace: @NAMESPACE@
+  labels:
+    k8s-app: globus-pc
+spec:
+  type: NodePort
+  ports: 
+  - port: 2811
+    targetPort: 2811
+    protocol: TCP
+  selector:
+    k8s-app: globus-pc

@@ -46,6 +46,17 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint
 metadata:
+  name: dtn-gpu2.kreonet.net
+  labels:
+    host-endpoint: production
+spec:
+  node: dtn-gpu2.kreonet.net
+  expectedIPs:
+  - 134.75.115.138
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
   name: fiona-dtn-1.ucsc.edu
   labels:
     host-endpoint: production

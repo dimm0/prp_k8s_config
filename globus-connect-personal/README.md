@@ -27,11 +27,11 @@ configure globus personal endpoint (Globus login account is needed).
 This will allow a user to use the globus web application https://www.globus.org/app/transfer
 to transfer files to/from a container globus endpoint to another globus endpoint.
 
-#. Become a gridftp user
+#### 1 Become a gridftp user
 ```bash
 su - gridftp
 ```
-#. Login to your globus account
+#### 2 Login to your globus account
 ``` bash
 $ cd globusconnectpersonal-2.3.6/
 $ globus login --no-local-server
@@ -58,7 +58,7 @@ You have successfully logged in to the Globus CLI as YouCredential@your.org
 
 The authentication string given by Globus  in a web browser is valid for ~10 min.
 
-#. Create a globus endpoint
+#### 3 Create a globus endpoint
 
 Use a unique name for the endpoint, in the command below it is "bwep"
 ``` bash
@@ -74,7 +74,7 @@ ep=087ecee8-d7cd-11e8-8c7b-0a1d4c5c
 epkey=93229f51-7c87-4041-829e-7a644ac8
 ```
 
-#. Generate a setup key for the endpoint and create endpoint
+#### 4 Generate a setup key for the endpoint and create endpoint
 
 ``` bash
 $ ./globusconnectpersonal -setup $epkey
@@ -83,7 +83,7 @@ Contacting relay.globusonline.org:2223
 Done!
 ```
 
-#. Verify Endpoint is configured
+#### 5 Verify Endpoint is configured
 
 ``` bash
 $ globus endpoint search --filter-scope my-endpoints
@@ -93,7 +93,7 @@ ID                | Owner                  | Display Name
 ```
 A user can have multiple endpoints and they all will be listed.
 
-#. Start personal globus connect
+#### 6 Start personal globus connect
 
 ``` bash
 $ ./globusconnect -start &
@@ -107,7 +107,7 @@ between two personal endpoints. For a base Globus account one can  have
 multiple  personal endpoints and use them for transfers to/from other (public
 or per login) endpoints.
 
-#. Saving endpoint info
+#### 7 Saving endpoint info
 
 When container restarts your globus setup is gone but the endpoint info in the
 globus web app remains. One can save endpoint setup in a persistent volume

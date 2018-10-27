@@ -67,7 +67,7 @@ spec:
       protocol: TCP
       destination:
         ports:
-        - 8443
+        - 9443
         - 443
         - 80
   selector: has(host-endpoint)

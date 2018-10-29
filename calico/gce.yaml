@@ -27,3 +27,20 @@ metadata:
   name: node.osg01
 spec:
   ipipMTU: 1440
+---
+apiVersion: projectcalico.org/v3
+kind: Node
+metadata:
+  name: conn
+spec:
+  bgp:
+    ipv4Address: 35.209.176.235/32
+---
+apiVersion: projectcalico.org/v3
+kind: FelixConfiguration
+metadata:
+  name: node.conn
+spec:
+  ipipMTU: 1440
+
+

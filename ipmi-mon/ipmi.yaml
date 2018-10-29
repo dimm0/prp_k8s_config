@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: ipmi-mon
+  namespace: ipmi
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: ipmi-mon
+    spec:
+      containers:
+      - name: ipmi-mon
+        securityContext:
+          privileged: true
+        #image: gitlab-registry.nautilus.optiputer.net/prp/ipmi-exporter
+        image: lovoo/ipmi_exporter
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: ipmi-mon
+  name: ipmi-mon
+  namespace: ipmi
+spec:
+  ports:
+  - port: 9114
+    targetPort: 9289
+    name: exporter
+  selector:
+    k8s-app: ipmi-mon

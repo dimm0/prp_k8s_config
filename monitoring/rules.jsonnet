@@ -109,7 +109,9 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
     'k8snvidiagpu-cluster.json': (import 'local/K8SNvidiaGPU-Cluster.json'),
     'k8snvidiagpu-node.json': (import 'local/K8SNvidiaGPU-Node.json'),
     'k8snvidiagpu-usage.json': (import 'local/GPUs-usage.json'),
+    'k8snvidiagpu-cool.json': (import 'local/GPU-cooling.json'),
     'cassandra-dashboard.json': (import 'local/Cassandra-dashboard.json'),
+    'ipmi.json': (import 'local/ipmi.json'),
     'health.json': (import 'local/Health.json'),
     'namespace-improved-dashboard.json': (import 'local/Namespace_w_variable_averaging.json'),
     'ceph-cluster.json': (import 'local/Ceph-Cluster.json'),
@@ -319,6 +321,65 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
       roleBinding.mixin.roleRef.mixinInstance({ kind: 'Role' }) +
       roleBinding.withSubjects([{ kind: 'ServiceAccount', name: 'prometheus-' + $._config.prometheus.name, namespace: 'monitoring' }]),
   },
+  ipmi: {
+    serviceMonitor: {
+       "apiVersion": "monitoring.coreos.com/v1",
+       "kind": "ServiceMonitor",
+       "metadata": {
+          "name": "ipmi-mon",
+          "namespace": "monitoring",
+          "labels": {
+             "k8s-app": "ipmi-mon"
+          }
+       },
+       "spec": {
+          "selector": {
+             "matchLabels": {
+                "k8s-app": "ipmi-mon"
+             }
+          },
+          "namespaceSelector": {
+             "matchNames": [
+                "ipmi"
+             ]
+          },
+          "endpoints": [
+             {
+                "port": "exporter",
+                "path": "/metrics"
+             }
+          ]
+       }
+    },
+    role:
+      local role = kp.rbac.v1.role;
+      local policyRule = role.rulesType;
+
+      local coreRule = policyRule.new() +
+                       policyRule.withApiGroups(['']) +
+                       policyRule.withResources([
+                         'nodes',
+                         'services',
+                         'endpoints',
+                         'pods',
+                       ]) +
+                       policyRule.withVerbs(['get', 'list', 'watch']);
+
+      role.new() +
+      role.mixin.metadata.withName('prometheus-' + $._config.prometheus.name) +
+      role.mixin.metadata.withNamespace('ipmi') +
+      role.withRules(coreRule),
+    roleBinding:
+      local roleBinding = kp.rbac.v1.roleBinding;
+
+      roleBinding.new() +
+      roleBinding.mixin.metadata.withName('ipmi-mon') +
+      roleBinding.mixin.metadata.withNamespace('ipmi') +
+      roleBinding.mixin.roleRef.withApiGroup('rbac.authorization.k8s.io') +
+      roleBinding.mixin.roleRef.withName('prometheus-' + $._config.prometheus.name) +
+      roleBinding.mixin.roleRef.mixinInstance({ kind: 'Role' }) +
+      roleBinding.withSubjects([{ kind: 'ServiceAccount', name: 'prometheus-' + $._config.prometheus.name, namespace: 'monitoring' }]),
+  },
   rook: {
     serviceMonitor: {
        "apiVersion": "monitoring.coreos.com/v1",
@@ -398,4 +459,5 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + (import 'kube-
 { ['cassandra-' + name]: kp.cassandra[name] for name in std.objectFields(kp.cassandra) } +
 { ['gpu-' + name]: kp.gpu[name] for name in std.objectFields(kp.gpu) } +
 { ['rgw-' + name]: kp.rgw[name] for name in std.objectFields(kp.rgw) } +
+{ ['ipmi-' + name]: kp.ipmi[name] for name in std.objectFields(kp.ipmi) } +
 { ['grafana-' + name]: kp.grafana[name] for name in std.objectFields(kp.grafana) }

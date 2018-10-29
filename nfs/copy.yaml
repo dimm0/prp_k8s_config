@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: copy-dineshb
+  name: copy
   namespace: dimm
 spec:
   nodeSelector:
@@ -18,7 +18,7 @@ spec:
   volumes:
   - name: nfs
     nfs:
-          server: 10.111.23.202
+          server: 10.97.127.148
           path: "/"
   - name: ceph
     flexVolume:

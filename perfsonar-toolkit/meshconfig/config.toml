@@ -142,8 +142,8 @@ domain=["csusb.edu"]
 lat=39.1008
 lon=-94.5832
 city="Kansas City"
-state="Missoury"
-description="University of Missoury, Kansas City"
+state="Missouri"
+description="University of Missouri, Kansas City"
 domain=["kans.nrp.internet2.edu"]
 
 [org.chic]

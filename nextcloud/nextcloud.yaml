@@ -84,7 +84,8 @@ spec:
           image: redis
         - name: nextcloud
           image: gitlab-registry.nautilus.optiputer.net/prp/nextcloud:latest
-          command: ["/usr/bin/supervisord"]
+          command: ["/entrypoint.sh"]
+          args: ["/usr/bin/supervisord"]
           env:
             - name: TZ
               value: America/Los_Angeles

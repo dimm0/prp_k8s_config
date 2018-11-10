@@ -74,6 +74,11 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
+      resources:
+        requests:
+          memory: "3Gi"
+        limits:
+          memory: "15Gi"
     - name: "k8s-epyc-01.sdsc.optiputer.net"
       devices:
       # sda,sdb boot
@@ -96,6 +101,11 @@ spec:
       - name: "sdl" #10TB SAS3
       - name: "sdm" #10TB SAS3
       - name: "sdn" #10TB SAS3
+      resources:
+        requests:
+          memory: "4Gi"
+        limits:
+          memory: "15Gi"
     - name: "k8s-nvme-01.sdsc.optiputer.net"
       devices:
       # sda,sdb boot
@@ -119,6 +129,11 @@ spec:
       - name: "sdl"
       - name: "sdm"
       - name: "sdn"
+      resources:
+        requests:
+          memory: "3Gi"
+        limits:
+          memory: "15Gi"
     - name: "fiona.tools.ucla.net"
       devices:
       # sda,sdb boot
@@ -140,6 +155,11 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
+      resources:
+        requests:
+          memory: "3Gi"
+        limits:
+          memory: "15Gi"
     - name: "fiona-dtn-1.ucsc.edu"
       devices:
       # sdq,sdah boot
@@ -158,6 +178,11 @@ spec:
       - name: "sdae"
       - name: "sdaf"
       - name: "sdag"
+      resources:
+        requests:
+          memory: "5Gi"
+        limits:
+          memory: "15Gi"
     - name: "ps-100g.sdsu.edu"
       devices:
       # sdc,sdd boot
@@ -170,6 +195,11 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
+      resources:
+        requests:
+          memory: "5Gi"
+        limits:
+          memory: "15Gi"
     - name: "siderea.ucsc.edu"
       devices:
       # sdc,sdd boot
@@ -182,6 +212,11 @@ spec:
       - name: "nvme5n1"
       - name: "nvme6n1"
       - name: "nvme7n1"
+      resources:
+        requests:
+          memory: "5Gi"
+        limits:
+          memory: "15Gi"
     - name: "fiona-dtn.usc.edu"
       devices:
       # sda,sdb boot
@@ -200,6 +235,11 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
+      resources:
+        requests:
+          memory: "2Gi"
+        limits:
+          memory: "15Gi"
     - name: "k8s-nvme-01.ultralight.org"
       devices:
       # sda,sdb boot
@@ -213,6 +253,11 @@ spec:
       - name: "nvme6n1"
       - name: "nvme7n1"
       - name: "sde"
+      resources:
+        requests:
+          memory: "4Gi"
+        limits:
+          memory: "15Gi"
     - name: "netw-fiona.stanford.edu"
       devices:
       # sdc,sdd boot
@@ -233,6 +278,11 @@ spec:
       - name: "sdr"
       - name: "sds"
       - name: "sdt"
+      resources:
+        requests:
+          memory: "4Gi"
+        limits:
+          memory: "15Gi"
     - name: "fiona.its.hawaii.edu"
       devices:
       # sda,sdb boot
@@ -251,6 +301,11 @@ spec:
       - name: "sdp"
       - name: "sdq"
       - name: "sdr"
+      resources:
+        requests:
+          memory: "3Gi"
+        limits:
+          memory: "15Gi"
     - name: "dtn-main.ucr.edu"
       devices:
       # sdr,sds boot
@@ -271,8 +326,11 @@ spec:
       - name: "sdo"
       - name: "sdp"
       - name: "sdq"
-
-
+      resources:
+        requests:
+          memory: "3Gi"
+        limits:
+          memory: "15Gi"
     - name: "knuron.calit2.optiputer.net"
       devices:
       # sdj,sdk boot
@@ -289,6 +347,11 @@ spec:
       - name: "nvme1n1"
       - name: "nvme2n1"
       - name: "nvme3n1"
+      resources:
+        requests:
+          memory: "4Gi"
+        limits:
+          memory: "15Gi"
     # - name: "fiona.oit.uci.edu"
     #   devices:
     #   # sda,sdb boot

@@ -27,6 +27,11 @@ spec:
              operator: In
              values:
              - production
+    resources:
+     limits:
+       memory: "30Gi"
+     requests:
+       memory: "13Gi"
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

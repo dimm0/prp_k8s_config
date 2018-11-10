@@ -23,3 +23,8 @@ spec:
               operator: In
               values:
               - production
+    resources:
+     limits:
+       memory: "16Gi"
+     requests:
+       memory: "4Gi"

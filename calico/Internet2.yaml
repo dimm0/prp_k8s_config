@@ -6,6 +6,7 @@ metadata:
     host-endpoint: production
     globus: "true"
     stashcache: "true"
+    port1094: "true"
 spec:
   node: osg.chic.nrp.internet2.edu
   expectedIPs:
@@ -19,6 +20,7 @@ metadata:
     host-endpoint: production
     globus: "true"
     stashcache: "true"
+    port1094: "true"
 spec:
   node: osg.kans.nrp.internet2.edu
   expectedIPs:
@@ -32,6 +34,7 @@ metadata:
     host-endpoint: production
     globus: "true"
     stashcache: "true"
+    port1094: "true"
 spec:
   node: osg.newy32aoa.nrp.internet2.edu
   expectedIPs:

@@ -5,6 +5,10 @@ metadata:
   namespace: gitlab
   labels:
     name: gitlab
+    ingress.kubernetes.io/custom-response-headers: Referrer-Policy:no-referrer
+    ingress.kubernetes.io/hsts-include-subdomains: "true"
+    ingress.kubernetes.io/hsts-max-age: "315360000"
+    ingress.kubernetes.io/hsts-preload: "true"
 spec:
   rules:
   - host: gitlab.nautilus.optiputer.net
@@ -22,6 +26,10 @@ metadata:
   namespace: gitlab
   labels:
     name: gitlabreg
+    ingress.kubernetes.io/custom-response-headers: Referrer-Policy:no-referrer
+    ingress.kubernetes.io/hsts-include-subdomains: "true"
+    ingress.kubernetes.io/hsts-max-age: "315360000"
+    ingress.kubernetes.io/hsts-preload: "true"
 spec:
   rules:
   - host: gitlab-registry.nautilus.optiputer.net

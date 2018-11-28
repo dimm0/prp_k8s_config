@@ -217,6 +217,23 @@ spec:
           memory: "5Gi"
         limits:
           memory: "15Gi"
+    - name: "hydra.gi.ucsc.edu"
+      devices:
+      # sdi,sdj boot
+      # nvme0n1 docker 3.2TB
+      #- name: "sda" #480GB SSD Ceph Journal ?
+      - name: "sdb" #480GB SSD
+      - name: "sdc" #480GB SSD
+      - name: "sdd" #480GB SSD
+      - name: "sde" #480GB SSD
+      - name: "sdf" #480GB SSD
+      - name: "sdg" #480GB SSD
+      - name: "sdh" #480GB SSD
+      resources:
+        requests:
+          memory: "5Gi"
+        limits:
+          memory: "15Gi"          
     - name: "fiona-dtn.usc.edu"
       devices:
       # sda,sdb boot

@@ -262,7 +262,7 @@ requirejs([
 
           var forces = {
               //"collide": d3.forceCollide(4),
-              "manybody": d3.forceManyBody(-2).distanceMax(40),
+              "manybody": d3.forceManyBody(-50).distanceMax(200),
               "cluster": null,
               "link": d3.forceLink(edges).id(function(d, i) {
                           return i;
@@ -274,7 +274,7 @@ requirejs([
                          document.scaleLatency = scaleLatency;
                          return scaleLatency(d.latency);
                      })
-                     .strength(0.05)
+                     .strength(0.4).distanceMax(140)
           };
           document.forces = forces;
           document.clustering = clustering;

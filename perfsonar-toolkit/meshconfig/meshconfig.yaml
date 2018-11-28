@@ -22,15 +22,15 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    k8s-app: meshconfig
-  name: meshconfig
+    k8s-app: meshconfig-old
+  name: meshconfig-old
   namespace: perfsonar
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        k8s-app: meshconfig
+        k8s-app: meshconfig-old
     spec:
       serviceAccountName: meshconfig-admin
       imagePullSecrets:
@@ -51,8 +51,8 @@ kind: Service
 apiVersion: v1
 metadata:
   labels:
-    k8s-app: meshconfig
-  name: meshconfig
+    k8s-app: meshconfig-old
+  name: meshconfig-old
   namespace: perfsonar
 spec:
   type: NodePort
@@ -60,4 +60,4 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    k8s-app: meshconfig
+    k8s-app: meshconfig-old

@@ -221,7 +221,7 @@ spec:
       devices:
       # sdi,sdj boot
       # nvme0n1 docker 3.2TB
-      #- name: "sda" #480GB SSD Ceph Journal ?
+      - name: "sda" #480GB SSD
       - name: "sdb" #480GB SSD
       - name: "sdc" #480GB SSD
       - name: "sdd" #480GB SSD

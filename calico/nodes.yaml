@@ -422,6 +422,14 @@ spec:
   node: venadi.ucsc.edu
   expectedIPs:
   - 128.114.109.74
-
-
-  
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: hydra.gi.ucsc.edu
+  labels:
+    host-endpoint: production
+spec:
+  node: hydra.gi.ucsc.edu
+  expectedIPs:
+  - 128.114.198.38

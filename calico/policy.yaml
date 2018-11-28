@@ -182,3 +182,21 @@ spec:
         ports:
         - 1094
   selector: "port1094==\"true\""
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: port9k
+spec:
+  order: 16
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+    - action: Allow
+      protocol: TCP
+      destination:
+        ports:
+        - 9000
+        - 9001
+        - 9004
+  selector: "port9k==\"true\""

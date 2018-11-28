@@ -41,6 +41,11 @@ spec:
       - name: gitlab
         image: sameersbn/gitlab:11.3.4
         # imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "6Gi"
+          limits:
+            memory: "10Gi"
         env:
         - name: TZ
           value: America/Los_Angeles

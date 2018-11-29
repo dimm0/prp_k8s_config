@@ -1,3 +1,40 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-proxy-config
+  namespace: rocketchat
+data:
+  nginx.conf: |-
+    server {
+        listen 80;
+        return 301 https://$host$request_uri;
+    }
+
+    server {
+
+      listen 443;
+
+      ssl_certificate           /cert/tls.crt;
+      ssl_certificate_key       /cert/tls.key;
+
+      ssl on;
+      ssl_session_cache  builtin:1000  shared:SSL:10m;
+      ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
+      ssl_ciphers HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+      ssl_prefer_server_ciphers on;
+
+      location / {
+
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto $scheme;
+
+        proxy_pass          http://localhost:3000;
+        proxy_read_timeout  90;
+      }
+    }
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -44,9 +81,23 @@ spec:
             secretKeyRef:
               name: mongodb
               key: database
+      - image: nginx
+        name: nginx
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d
+          name: conf
+        - mountPath: /cert
+          name: ssl-key
         ports:
-          - name: http
-            containerPort: 3000
+          - name: https
+            containerPort: 443
+      volumes:
+      - name: ssl-key
+        secret:
+          secretName: rocketchat-tls
+      - name: conf
+        configMap:
+          name: nginx-proxy-config
 ---
 apiVersion: v1
 kind: Service
@@ -57,7 +108,7 @@ metadata:
     k8s-app: rocketchat
 spec:
   ports:
-  - port: 3000
+  - port: 443
   selector:
     k8s-app: rocketchat
 ---
@@ -76,4 +127,4 @@ spec:
       - path: /
         backend:
           serviceName: rocketchat
-          servicePort: 3000
+          servicePort: 443

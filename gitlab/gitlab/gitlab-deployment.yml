@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: gitlab
-        image: sameersbn/gitlab:11.3.4
+        image: sameersbn/gitlab:11.4.5
         # imagePullPolicy: Always
         resources:
           requests:
@@ -222,6 +222,11 @@ spec:
         #   timeoutSeconds: 1
       - name: registry
         image: registry
+        resources:
+          requests:
+            memory: "6Gi"
+          limits:
+            memory: "10Gi"
         env:
         - name: REGISTRY_HTTP_ADDR
           value: 0.0.0.0:5000

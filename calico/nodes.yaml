@@ -222,6 +222,50 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint
 metadata:
+  name: k8s-chase-ci-06.calit2.optiputer.net
+  labels:
+    host-endpoint: production
+spec:
+  node: k8s-chase-ci-06.calit2.optiputer.net
+  expectedIPs:
+  - 67.58.53.166
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: k8s-chase-ci-07.calit2.optiputer.net
+  labels:
+    host-endpoint: production
+spec:
+  node: k8s-chase-ci-07.calit2.optiputer.net
+  expectedIPs:
+  - 67.58.53.167
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: k8s-chase-ci-08.calit2.optiputer.net
+  labels:
+    host-endpoint: production
+spec:
+  node: k8s-chase-ci-08.calit2.optiputer.net
+  expectedIPs:
+  - 67.58.53.168
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: k8s-chase-ci-09.calit2.optiputer.net
+  labels:
+    host-endpoint: production
+spec:
+  node: k8s-chase-ci-09.calit2.optiputer.net
+  expectedIPs:
+  - 67.58.53.169
+---
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
   name: k8s-epyc-01.sdsc.optiputer.net
   labels:
     host-endpoint: production

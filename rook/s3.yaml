@@ -19,14 +19,18 @@ spec:
     instances: 4
     allNodes: false
     placement:
-     nodeAffinity:
-       requiredDuringSchedulingIgnoredDuringExecution:
-         nodeSelectorTerms:
-         - matchExpressions:
-           - key: env
-             operator: In
-             values:
-             - production
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: env
+              operator: In
+              values:
+              - production
+            - key: nw
+              operator: In
+              values:
+              - 100G
     resources:
      limits:
        memory: "30Gi"

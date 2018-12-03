@@ -93,3 +93,44 @@ spec:
       volumes:
         - name: config
           emptyDir: {}
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab-runner-general
+  namespace: gitlab
+  labels:
+    app: gitlab-runner-general
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: gitlab-runner-general
+    spec:
+      initContainers:
+        - name: init-runner
+          image: gitlab/gitlab-runner:latest
+          args:
+            - register
+          env:
+            - name: CI_SERVER_URL
+              value: https://gitlab.nautilus.optiputer.net/
+            - name: REGISTER_NON_INTERACTIVE
+              value: "true"
+            - name: REGISTRATION_TOKEN
+              value: 5XWaAf2wvzUDixJyNqV2
+            - name: RUNNER_EXECUTOR
+              value: kubernetes
+            - name: RUNNER_REQUEST_CONCURRENCY
+              value: "4"
+            - name: KUBERNETES_NAMESPACE
+              value: gitlab
+          volumeMounts:
+            - mountPath: /etc/gitlab-runner
+              name: config
+      containers:
+        - name: runner
+          image: gitlab/gitlab-runner:latest
+          args:
+            - run

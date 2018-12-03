@@ -126,9 +126,8 @@ spec:
               value: "4"
             - name: KUBERNETES_NAMESPACE
               value: gitlab
-          volumeMounts:
-            - mountPath: /etc/gitlab-runner
-              name: config
+            - name: REGISTER_LOCKED
+              value: "false"
       containers:
         - name: runner
           image: gitlab/gitlab-runner:latest

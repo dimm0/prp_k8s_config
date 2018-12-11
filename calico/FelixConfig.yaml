@@ -1,9 +1,0 @@
-apiVersion: projectcalico.org/v3
-kind: FelixConfiguration
-metadata:
-  name: default
-spec:
-  ipipEnabled: true
-  logSeverityScreen: Info
-  reportingInterval: 0s
-  ipipMTU: 8960

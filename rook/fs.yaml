@@ -23,6 +23,10 @@ spec:
               operator: In
               values:
               - production
+            - key: nw
+              operator: In
+              values:
+              - 100G
     resources:
      limits:
        memory: "16Gi"

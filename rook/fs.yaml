@@ -12,7 +12,7 @@ spec:
         dataChunks: 3
         codingChunks: 2
   metadataServer:
-    activeCount: 1
+    activeCount: 2
     activeStandby: true
     placement:
       nodeAffinity:

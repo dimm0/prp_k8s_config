@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: fs-pod
-  namespace: satellite-pwc
+  namespace: dimm
 spec:
   containers:
   - name: fs-container
@@ -13,10 +13,13 @@ spec:
       name: fs-store
   restartPolicy: Never
   volumes:
-  - name: fs-store
-    flexVolume:
-      driver: rook.io/rook
+  - flexVolume:
+      driver: ceph.rook.io/rook
       fsType: ceph
       options:
-        fsName: satellite-pwc
-        clusterName: rook
+        clusterNamespace: rook
+        fsName: nautilusfs
+        path: /dimm
+        mountUser: dimm
+        mountSecret: ceph-fs-secret
+    name: fs-store

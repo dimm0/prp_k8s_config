@@ -27,6 +27,17 @@ spec:
               operator: In
               values:
               - 100G
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - rook-ceph-mds
+            topologyKey: kubernetes.io/hostname
+          weight: 100              
     resources:
      limits:
        memory: "16Gi"

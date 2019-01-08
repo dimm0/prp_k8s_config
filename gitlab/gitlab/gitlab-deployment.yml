@@ -87,7 +87,7 @@ spec:
         - name: GITLAB_SSH_HOST
           value: "gitlab-ssh.nautilus.optiputer.net"
         - name: GITLAB_SSH_PORT
-          value: "443"
+          value: "30622"
 
         - name: GITLAB_NOTIFY_ON_BROKEN_BUILDS
           value: "true"
@@ -279,5 +279,20 @@ spec:
     targetPort: 5000
     protocol: TCP
     name: registry
+  selector:
+    name: gitlab
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab-ssh
+  namespace: gitlab
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 30622
+    port: 22
+    protocol: TCP
+    name: ssh
   selector:
     name: gitlab

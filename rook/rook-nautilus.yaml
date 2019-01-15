@@ -236,7 +236,34 @@ spec:
         requests:
           memory: "5Gi"
         limits:
-          memory: "15Gi"          
+          memory: "15Gi"
+    - name: "venadi.ucsc.edu"
+      devices:
+      # sda,sdb boot
+      # nvme0n1 docker 
+      # nvme1n1 ceph
+      - name: "sdc" #480GB SSD
+      - name: "sdd" #480GB SSD
+      - name: "sde" #480GB SSD
+      - name: "sdf" #480GB SSD
+      - name: "sdg" #480GB SSD
+      - name: "sdh" #480GB SSD
+      - name: "sdi" #480GB SSD
+      - name: "sdj" #480GB SSD
+      - name: "sdk" # 12TB SAS3
+      - name: "sdl" # 12TB SAS3
+      - name: "sdm" # 12TB SAS3
+      - name: "sdn" # 12TB SAS3
+      - name: "sdo" # 12TB SAS3
+      - name: "sdp" # 12TB SAS3
+      - name: "sdq" # 12TB SAS3
+      - name: "sdr" # 12TB SAS3
+
+      resources:
+        requests:
+          memory: "5Gi"
+        limits:
+          memory: "15Gi"
     - name: "fiona-dtn.usc.edu"
       devices:
       # sda,sdb boot

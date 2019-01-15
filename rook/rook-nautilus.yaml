@@ -162,22 +162,25 @@ spec:
           memory: "15Gi"
     - name: "fiona-dtn-1.ucsc.edu"
       devices:
-      # sdq,sdah boot
-      # sdr,sds docker
-      - name: "sdt"
-      - name: "sdu"
-      - name: "sdv"
-      - name: "sdw"
-      - name: "sdx"
-      - name: "sdy"
-      - name: "sdz"
-      - name: "sdaa"
-      - name: "sdab"
-      - name: "sdac"
-      - name: "sdad"
-      - name: "sdae"
-      - name: "sdaf"
-      - name: "sdag"
+      # sda,sdb boot
+      # nvme0n1 docker
+      # nvme1n1 ceph
+      - name: "sdc" # 480GB
+      - name: "sdd" # 480GB
+      - name: "sde" # 480GB
+      - name: "sdf" # 480GB
+      - name: "sdg" # 12TB SAS3
+      - name: "sdh" # 12TB SAS3
+      - name: "sdi" # 12TB SAS3
+      - name: "sdj" # 12TB SAS3
+      - name: "sdk" # 12TB SAS3
+      - name: "sdl" # 12TB SAS3
+      - name: "sdm" # 12TB SAS3
+      - name: "sdn" # 12TB SAS3
+      - name: "sdo" # 12TB SAS3
+      - name: "sdp" # 12TB SAS3
+      - name: "sdq" # 12TB SAS3
+      - name: "sdr" # 12TB SAS3
       resources:
         requests:
           memory: "5Gi"

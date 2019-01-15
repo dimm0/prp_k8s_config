@@ -161,7 +161,8 @@ spec:
         limits:
           memory: "15Gi"
     - name: "fiona-dtn-1.ucsc.edu"
-      metadataDevice: "nvme1n1"
+      config:
+        metadataDevice: "nvme1n1"
       devices:
       # sda,sdb boot
       # nvme0n1 docker

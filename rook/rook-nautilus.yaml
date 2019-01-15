@@ -258,12 +258,35 @@ spec:
       - name: "sdp" # 12TB SAS3
       - name: "sdq" # 12TB SAS3
       - name: "sdr" # 12TB SAS3
-
       resources:
         requests:
           memory: "5Gi"
         limits:
           memory: "15Gi"
+    - name: "prp-dtn.noc.ucsb.edu"
+     devices:
+     # sda DEAD 256GB SSD
+     # sdb spare 256GB SSD
+     # sdc boot 64GB SATA DOM
+     # sdd spare 128GB SATA DOM
+     # nvme0n1 docker
+     # nvme1n1 ceph
+      - name: "sde" #10TB 
+      - name: "sdf" #10TB 
+      - name: "sdg" #10TB 
+      - name: "sdh" #10TB 
+      - name: "sdi" # 128GB ?? Missed a disk
+      - name: "sdj" #10TB 
+      - name: "sdk" #10TB 
+      - name: "sdl" #10TB 
+      - name: "sdm" #10TB 
+      - name: "sdn" #10TB 
+      - name: "sdo" #10TB 
+      - name: "sdp" #10TB 
+      - name: "sdq" #10TB 
+      - name: "sdr" #10TB 
+      - name: "sds" #10TB 
+      - name: "sdt" #10TB 
     - name: "fiona-dtn.usc.edu"
       devices:
       # sda,sdb boot
@@ -458,25 +481,3 @@ spec:
   #   - name: "sdd"
   #   - name: "sde"
   #   - name: "sdf"
-  # - name: "prp-dtn.noc.ucsb.edu"
-  #   devices:
-  #   # sda DEAD
-  #   # sdb docker
-  #   # sdc boot
-  #   # sdd spare SATA DOM
-  #   - name: "sde" #10TB 
-  #   - name: "sdf" #10TB 
-  #   - name: "sdg" #10TB 
-  #   - name: "sdh" #10TB 
-  #   - name: "sdi" # 128GB ?? Missed a disk
-  #   - name: "sdj" #10TB 
-  #   - name: "sdk" #10TB 
-  #   - name: "sdl" #10TB 
-  #   - name: "sdm" #10TB 
-  #   - name: "sdn" #10TB 
-  #   - name: "sdo" #10TB 
-  #   - name: "sdp" #10TB 
-  #   - name: "sdq" #10TB 
-  #   - name: "sdr" #10TB 
-  #   - name: "sds" #10TB 
-  #   - name: "sdt" #10TB 

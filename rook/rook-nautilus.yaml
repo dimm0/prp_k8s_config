@@ -239,10 +239,11 @@ spec:
         limits:
           memory: "15Gi"
     - name: "venadi.ucsc.edu"
+      config:
+        metadataDevice: "nvme1n1"
       devices:
       # sda,sdb boot
       # nvme0n1 docker 
-      # nvme1n1 ceph
       - name: "sdc" #480GB SSD
       - name: "sdd" #480GB SSD
       - name: "sde" #480GB SSD

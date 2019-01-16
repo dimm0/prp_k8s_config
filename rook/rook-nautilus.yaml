@@ -266,13 +266,14 @@ spec:
         limits:
           memory: "15Gi"
     - name: "prp-dtn.noc.ucsb.edu"
+      config:
+        metadataDevice: "nvme1n1"
      devices:
      # sda DEAD 256GB SSD
      # sdb spare 256GB SSD
      # sdc boot 64GB SATA DOM
      # sdd spare 128GB SATA DOM
      # nvme0n1 docker
-     # nvme1n1 ceph
       - name: "sde" #10TB 
       - name: "sdf" #10TB 
       - name: "sdg" #10TB 

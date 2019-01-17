@@ -265,6 +265,23 @@ spec:
           memory: "5Gi"
         limits:
           memory: "15Gi"
+    - name: "fiona.ucsc.edu"
+      config:
+        metadataDevice: "nvme1n1"
+      devices:
+      # sdi,sdj boot
+      # nvme0n1 docker 512GB 
+      - name: "sda" # 12TB SAS3
+      - name: "sdb" # 12TB SAS3
+      - name: "sdc" # 12TB SAS3
+      - name: "sdd" # 12TB SAS3
+      - name: "sde" # 12TB SAS3
+      - name: "sdf" # 12TB SAS3
+      resources:
+        requests:
+          memory: "5Gi"
+        limits:
+          memory: "15Gi"
     - name: "prp-dtn.noc.ucsb.edu"
       config:
         metadataDevice: "nvme1n1"

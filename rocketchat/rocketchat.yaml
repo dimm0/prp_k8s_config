@@ -95,6 +95,32 @@ spec:
         ports:
           - name: https
             containerPort: 443
+      - name: mongo
+        image: mongo
+        args:
+          - "mongod"
+          - "--auth"
+          - "--bind_ip"
+          - "127.0.0.1"
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: password
+          - name: MONGO_INITDB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: database
+        volumeMounts:
+          - name: mongo-persistent-storage
+            mountPath: /data/db
       volumes:
       - name: ssl-key
         secret:
@@ -102,6 +128,9 @@ spec:
       - name: conf
         configMap:
           name: nginx-proxy-config
+      - name: mongo-persistent-storage
+        persistentVolumeClaim:
+          claimName: mongo-pv-claim
 ---
 apiVersion: v1
 kind: Service

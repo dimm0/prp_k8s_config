@@ -11,7 +11,7 @@ data:
   password: ""
   database: "cm9ja2V0Y2hhdA=="
   connectstring: ""
-  #"mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongo.rocketchat:27017/${MONGODB_DATABASE}?ssl=true"
+  #"mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@127.0.0.1:27017/${MONGODB_DATABASE}"
 ---
 apiVersion: v1
 kind: Service
@@ -40,60 +40,3 @@ spec:
   resources:
     requests:
       storage: 50Gi
----
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: mongo
-  namespace: rocketchat
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        k8s-app: mongo
-    spec:
-      containers:
-        - name: mongo
-          image: mongo
-          args:
-            - "mongod"
-            - "--auth"
-            - "--bind_ip"
-            - "0.0.0.0"
-            - "--sslMode"
-            - "requireSSL"
-            - "--sslPEMKeyFile"
-            - "/data/ssl/mongodb.pem"
-            - "--sslAllowInvalidCertificates"
-            - "--sslAllowInvalidHostnames"
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb
-                  key: username
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb
-                  key: password
-            - name: MONGO_INITDB_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb
-                  key: database
-          ports:
-            - containerPort: 27017
-          volumeMounts:
-            - name: mongo-persistent-storage
-              mountPath: /data/db
-            - name: mongo-ssl
-              mountPath: /data/ssl
-      volumes:
-      - name: mongo-ssl
-        secret:
-          secretName: mongo-ssl
-      - name: mongo-persistent-storage
-        persistentVolumeClaim:
-          claimName: mongo-pv-claim

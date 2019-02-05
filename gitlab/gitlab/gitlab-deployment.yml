@@ -24,6 +24,19 @@ spec:
     requests:
       storage: 1Ti
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitlab-db
+  namespace: gitlab
+spec:
+  storageClassName: rook-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -128,7 +141,7 @@ spec:
         - name: DB_TYPE
           value: postgres
         - name: DB_HOST
-          value: gitlab-postgresql
+          value: 127.0.0.1
         - name: DB_PORT
           value: "5432"
         - name: DB_USER
@@ -160,6 +173,17 @@ spec:
           valueFrom:
             secretKeyRef:
               name: gitlab-oauth
+              key: secret
+
+        - name: OAUTH_GITHUB_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: github-oauth
+              key: key
+        - name: OAUTH_GITHUB_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: github-oauth
               key: secret
 
         - name: SMTP_ENABLED
@@ -253,6 +277,47 @@ spec:
         - containerPort: 5000
           name: registry
           protocol: TCP
+      - name: postgresql
+        image: sameersbn/postgresql
+        imagePullPolicy: Always
+        env:
+        - name: DB_USER
+          value: gitlab
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: gitlab
+              key: dbpw
+        - name: DB_NAME
+          value: gitlab_production
+        - name: DB_EXTENSION
+          value: pg_trgm
+        ports:
+        - name: postgres
+          containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: db-data
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -h
+            - localhost
+            - -U
+            - postgres
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -h
+            - localhost
+            - -U
+            - postgres
+          initialDelaySeconds: 5
+          timeoutSeconds: 1          
       volumes:
       - name: ssl
         secret:
@@ -263,6 +328,9 @@ spec:
       - name: image-store
         persistentVolumeClaim:
           claimName: kube-registry-pvc
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: gitlab-db
 ---
 apiVersion: v1
 kind: Service
@@ -275,6 +343,10 @@ spec:
     targetPort: 80
     protocol: TCP
     name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
   - port: 5000
     targetPort: 5000
     protocol: TCP

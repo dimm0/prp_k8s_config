@@ -175,6 +175,17 @@ spec:
               name: gitlab-oauth
               key: secret
 
+        - name: OAUTH_GITHUB_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: github-oauth
+              key: key
+        - name: OAUTH_GITHUB_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: github-oauth
+              key: secret
+
         - name: SMTP_ENABLED
           value: "true"
         - name: SMTP_DOMAIN

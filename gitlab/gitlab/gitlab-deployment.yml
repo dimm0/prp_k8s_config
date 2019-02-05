@@ -155,7 +155,7 @@ spec:
           value: gitlab_production
 
         - name: REDIS_HOST
-          value: gitlab-redis
+          value: 127.0.0.1
         - name: REDIS_PORT
           value: "6379"
 
@@ -317,7 +317,26 @@ spec:
             - -U
             - postgres
           initialDelaySeconds: 5
-          timeoutSeconds: 1          
+          timeoutSeconds: 1
+      - name: redis
+        image: redis
+        volumeMounts:
+          - mountPath: /var/lib/redis
+            name: redisdata
+        livenessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
       volumes:
       - name: ssl
         secret:
@@ -331,6 +350,8 @@ spec:
       - name: db-data
         persistentVolumeClaim:
           claimName: gitlab-db
+      - name: redisdata
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

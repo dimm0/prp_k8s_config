@@ -66,6 +66,7 @@ spec:
                 operator: In
                 values:
                 - production
+                - system
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       hostNetwork: true

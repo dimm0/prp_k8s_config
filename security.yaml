@@ -15,6 +15,9 @@ subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: User
   name: http://cilogon.org/serverT/users/226398
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: http://cilogon.org/serverA/users/2859846
 roleRef:
   kind: ClusterRole
   name: cluster-admin

@@ -1,0 +1,15 @@
+apiVersion: scheduling.k8s.io/v1beta1
+kind: PriorityClass
+metadata:
+  name: opportunistic
+value: -2000000000
+globalDefault: false
+description: "Used for pods that can be preempted by any other pod."
+---
+apiVersion: scheduling.k8s.io/v1beta1
+kind: PriorityClass
+metadata:
+  name: nice
+value: -10
+globalDefault: false
+description: "Used for pods that can tolerate occasional preemption"

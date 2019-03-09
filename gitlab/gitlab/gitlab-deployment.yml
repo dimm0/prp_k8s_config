@@ -189,23 +189,22 @@ spec:
         - name: SMTP_ENABLED
           value: "true"
         - name: SMTP_DOMAIN
-          value: "ucsd.edu"
+          value: ucsd.edu
         - name: SMTP_HOST
-          value: "smtp.ucsd.edu"
+          value: smtp.ucsd.edu
         - name: SMTP_PORT
           value: "465"
         - name: SMTP_USER
-          value: "nautilus"
+          value: nautilus@eng.ucsd.edu
+        - name: SMTP_STARTTLS
+          value: "false"
+        - name: SMTP_TLS
+          value: "true"
         - name: SMTP_PASS
           valueFrom:
             secretKeyRef:
-              name: gitlab
               key: smtppw
-        - name: SMTP_STARTTLS
-          value: "true"
-        - name: SMTP_AUTHENTICATION
-          value: login
-
+              name: gitlab
         - name: IMAP_ENABLED
           value: "false"
         - name: IMAP_HOST

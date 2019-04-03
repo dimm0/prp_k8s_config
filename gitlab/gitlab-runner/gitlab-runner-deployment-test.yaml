@@ -72,6 +72,7 @@ spec:
           args:
             - |
               cat <<EOF >> /etc/gitlab-runner/config.toml
+                output_limit = 32768
                 [runners.kubernetes.node_selector]
                   gitlab-worker = "true"
                 [[runners.kubernetes.volumes.host_path]]

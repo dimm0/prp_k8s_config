@@ -1,0 +1,20 @@
+#!/bin/bash
+
+printf "Namespace\tGrant\tPI\tAdmin Name\tAdmin University\tAdmin Email\tUser Name\tUser University\tUser Email\n"
+
+for ns in `kubectl get ns -o=jsonpath="{range .items[*]}{.metadata.name}{'\t'}{end}"`
+do
+  printf '%s\t' $ns
+  kubectl get configmap meta -n $ns -o=jsonpath="{.data.Grant}{'\t'}{.data.PI}{'\t'}" 2>/dev/null || printf "\t\t"
+  printf "\t\t\t\t\t\t\t"
+  printf "=HYPERLINK(\"https://grafana.nautilus.optiputer.net/d/dRG9q0Ymz/k8s-compute-resources-namespace-gpus?var-namespace=$ns\"\t"
+  printf "=HYPERLINK(\"https://grafana.nautilus.optiputer.net/d/85a562078cdf77779eaa1add43ccec1e/kubernetes-compute-resources-namespace-pods?var-namespace=xai$ns\"\n"
+  kubectl get rolebinding -n $ns nautilus-admin -o=jsonpath="{range .subjects[*]}{.name}{'\n'}{end}" 2>/dev/null |
+  	sed -e 's/:\/\//-/g' -e 's/[\.\/]/-/g' | tr '[:upper:]' '[:lower:]' |
+  	xargs -n 1 -I{} kubectl get prpuser {} -o=jsonpath="{'\t\t\t'}{.spec.Name}{'\t'}{.spec.IDP}{'\t'}{.spec.Email}{'\n'}"
+  kubectl get rolebinding -n $ns nautilus-user -o=jsonpath="{range .subjects[*]}{.name}{'\n'}{end}" 2>/dev/null |
+  	sed -e 's/:\/\//-/g' -e 's/[\.\/]/-/g' | tr '[:upper:]' '[:lower:]' |
+  	xargs -n 1 -I{} kubectl get prpuser {} -o=jsonpath="{'\t\t\t\t\t\t'}{.spec.Name}{'\t'}{.spec.IDP}{'\t'}{.spec.Email}{'\n'}"
+  printf ''
+  echo
+done

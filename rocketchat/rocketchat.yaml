@@ -76,10 +76,10 @@ spec:
             secretKeyRef:
               name: mongodb
               key: oploguser-user
-        - name: MONGODB_URL
-          value: "mongodb://rocketchat:$(ROCKETCHAT_PASSWORD)@127.0.0.1:27017/rocketchat"
+        - name: MONGO_URL
+          value: mongodb://rocketchat:$(ROCKETCHAT_PASSWORD)@127.0.0.1:27017/rocketchat
         - name: MONGO_OPLOG_URL
-          value: "mongodb://rocketchat:$(OPLOG_PASSWORD)@127.0.0.1:27017/local"
+          value: mongodb://oploguser:$(OPLOG_PASSWORD)@127.0.0.1:27017/local?authSource=admin&replSet=rs01
       - image: nginx
         name: nginx
         volumeMounts:

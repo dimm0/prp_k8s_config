@@ -39,6 +39,7 @@ data:
 
     }
 ---
+# mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase=admin
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -58,33 +59,27 @@ spec:
               - key: env
                 operator: In
                 values:
-                - production
+                - system
       containers:
       - name: rocketchat-app
-        image: rocketchat/rocket.chat:latest
+        image: rocketchat/rocket.chat:1.0.1
         env:
         - name: ROOT_URL
           value: "https://rocket.nautilus.optiputer.net"
-        - name: MONGO_URL
+        - name: ROCKETCHAT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongodb
-              key: connectstring
-        - name: MONGODB_USERNAME
+              key: rocketchat-user
+        - name: OPLOG_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongodb
-              key: username
-        - name: MONGODB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongodb
-              key: password
-        - name: MONGODB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: mongodb
-              key: database
+              key: oploguser-user
+        - name: MONGODB_URL
+          value: "mongodb://rocketchat:$(ROCKETCHAT_PASSWORD)@127.0.0.1:27017/rocketchat"
+        - name: MONGO_OPLOG_URL
+          value: "mongodb://rocketchat:$(OPLOG_PASSWORD)@127.0.0.1:27017/local"
       - image: nginx
         name: nginx
         volumeMounts:
@@ -100,24 +95,9 @@ spec:
         args:
           - "mongod"
           - "--auth"
-          - "--bind_ip"
-          - "127.0.0.1"
-        env:
-          - name: MONGO_INITDB_ROOT_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: mongodb
-                key: username
-          - name: MONGO_INITDB_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mongodb
-                key: password
-          - name: MONGO_INITDB_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: mongodb
-                key: database
+          - "--bind_ip=127.0.0.1"
+          - "--oplogSize=128"
+          - "--replSet=rs0"
         volumeMounts:
           - name: mongo-persistent-storage
             mountPath: /data/db

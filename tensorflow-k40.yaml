@@ -6,7 +6,7 @@ spec:
   containers:
   - name: gpu-container
     image: tensorflow/tensorflow:latest-gpu
-    args: ["sleep", "infinity"]
+    command: ["sleep", "infinity"]
     resources:
       limits:
         nvidia.com/gpu: 1

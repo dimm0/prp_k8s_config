@@ -6,7 +6,7 @@ spec:
   containers:
   - name: gpu-container
     image: gitlab-registry.nautilus.optiputer.net/prp/jupyterlab:latest
-    args: ["sleep", "infinity"]
+    command: ["sleep", "infinity"]
     resources:
       limits:
         nvidia.com/gpu: 1

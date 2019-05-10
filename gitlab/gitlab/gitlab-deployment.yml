@@ -186,6 +186,18 @@ spec:
               name: github-oauth
               key: secret
 
+        - name: OAUTH_GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: google-oauth
+              key: key
+        - name: OAUTH_GOOGLE_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: google-oauth
+              key: secret
+
+
         - name: SMTP_ENABLED
           value: "true"
         - name: SMTP_DOMAIN

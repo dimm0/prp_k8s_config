@@ -27,7 +27,10 @@ spec:
       tolerations:
       - operator: "Exists"
         key: "nautilus.io/ceph"
-        effect: "NoSchedule"          
+        effect: "NoSchedule" 
+      - operator: "Exists"
+        key: "nautilus.io/science-dmz"
+        effect: "NoSchedule" 
 ---
 kind: Service
 apiVersion: v1

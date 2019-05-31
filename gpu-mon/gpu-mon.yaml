@@ -24,6 +24,10 @@ spec:
         imagePullPolicy: Always
         command:
           - "/nvidia_exporter"
+      tolerations:
+      - operator: "Exists"
+        key: "nautilus.io/ceph"
+        effect: "NoSchedule"          
 ---
 kind: Service
 apiVersion: v1

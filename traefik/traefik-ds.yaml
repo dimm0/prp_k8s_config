@@ -67,6 +67,9 @@ spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       hostNetwork: true
+      tolerations:
+      - operator: "Exists"
+        effect: "NoSchedule"      
       containers:
       - image: traefik:1.7
         name: traefik-ingress-lb

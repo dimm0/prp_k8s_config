@@ -348,6 +348,13 @@ spec:
               - ping
           initialDelaySeconds: 5
           timeoutSeconds: 1
+      tolerations:
+      - operator: "Exists"
+        key: "nautilus.io/ceph"
+        effect: "NoSchedule" 
+      - operator: "Exists"
+        key: "nautilus.io/science-dmz"
+        effect: "NoSchedule"          
       volumes:
       - name: ssl
         secret:

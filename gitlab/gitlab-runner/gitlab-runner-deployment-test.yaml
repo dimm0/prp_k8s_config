@@ -132,6 +132,21 @@ spec:
           volumeMounts:
             - mountPath: /etc/gitlab-runner
               name: config
+        - name: init-runner-volume
+          image: alpine
+          command: ["sh", "-c"]
+          # Append hostpath mount to configuration because there is no env variable for it
+          # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/2578
+          args:
+            - |
+              cat <<EOF >> /etc/gitlab-runner/config.toml
+                output_limit = 32768
+                [runners.kubernetes.node_selector]
+                  gitlab-worker = "true"
+              EOF
+          volumeMounts:
+            - mountPath: /etc/gitlab-runner
+              name: config
       containers:
         - name: runner
           image: gitlab/gitlab-runner:latest

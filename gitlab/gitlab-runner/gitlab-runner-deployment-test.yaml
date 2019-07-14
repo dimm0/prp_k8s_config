@@ -158,3 +158,76 @@ spec:
       volumes:
         - name: config
           emptyDir: {}
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab-runner-host-net
+  namespace: gitlab
+  labels:
+    app: gitlab-runner
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gitlab-runner
+    spec:
+      hostNetwork: true
+      initContainers:
+        - name: init-runner
+          image: gitlab/gitlab-runner:latest
+          args:
+            - register
+          env:
+            - name: CI_SERVER_URL
+              value: https://gitlab.nautilus.optiputer.net/
+            - name: REGISTER_NON_INTERACTIVE
+              value: "true"
+            - name: REGISTRATION_TOKEN
+              value: 5XWaAf2wvzUDixJyNqV2
+            - name: RUNNER_EXECUTOR
+              value: kubernetes
+            - name: RUNNER_TAG_LIST
+              value: "build-as-host-net"
+            - name: RUNNER_REQUEST_CONCURRENCY
+              value: "4"
+            # Must use privileged mode for docker-in-docker
+            # - name: KUBERNETES_PRIVILEGED
+            #   value: "true"
+            - name: KUBERNETES_NAMESPACE
+              value: gitlab
+            # More variables as needed (see below)
+          volumeMounts:
+            - mountPath: /etc/gitlab-runner
+              name: config
+        - name: init-runner-volume
+          image: alpine
+          command: ["sh", "-c"]
+          # Append hostpath mount to configuration because there is no env variable for it
+          # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/2578
+          args:
+            - |
+              cat <<EOF >> /etc/gitlab-runner/config.toml
+                output_limit = 32768
+                [runners.kubernetes.node_selector]
+                  gitlab-worker = "true"
+                [[runners.kubernetes.volumes.host_path]]
+                  name = "docker-sock"
+                  mount_path = "/var/run/docker.sock"
+                  host_path = "/var/run/docker.sock"
+              EOF
+          volumeMounts:
+            - mountPath: /etc/gitlab-runner
+              name: config
+      containers:
+        - name: runner
+          image: gitlab/gitlab-runner:latest
+          args:
+            - run
+          volumeMounts:
+            - mountPath: /etc/gitlab-runner
+              name: config
+      volumes:
+        - name: config
+          emptyDir: {}

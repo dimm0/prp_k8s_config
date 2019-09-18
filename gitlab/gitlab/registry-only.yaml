@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab-reg
+  namespace: gitlab
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: gitlab-reg
+        app: gitlab-reg
+    spec:
+      containers:
+      - name: registry
+        image: registry
+        resources:
+          requests:
+            memory: "6Gi"
+          limits:
+            memory: "10Gi"
+        env:
+        - name: REGISTRY_HTTP_ADDR
+          value: 0.0.0.0:5000
+        - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+          value: /var/lib/registry
+        - name: REGISTRY_AUTH_TOKEN_SERVICE
+          value: container_registry
+        - name: REGISTRY_AUTH_TOKEN_REALM
+          value: https://gitlab.nautilus.optiputer.net/jwt/auth
+        - name: REGISTRY_AUTH_TOKEN_ISSUER
+          value: gitlab-issuer
+        - name: REGISTRY_LOG_LEVEL
+          value: debug
+        - name: REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE
+          value: /ssl/registry.crt
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
+        volumeMounts:
+        - name: image-store
+          mountPath: /var/lib/registry
+        - mountPath: "/ssl"
+          name: "ssl"
+        ports:
+        - containerPort: 5000
+          name: registry
+          protocol: TCP
+      volumes:
+      - name: ssl
+        secret:
+          secretName: ssl-key
+      - name: data
+        persistentVolumeClaim:
+          claimName: gitlab
+      - name: image-store
+        persistentVolumeClaim:
+          claimName: kube-registry-pvc
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: gitlab-db
+      - name: redisdata
+        emptyDir: {}

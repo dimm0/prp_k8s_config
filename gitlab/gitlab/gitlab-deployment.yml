@@ -50,6 +50,19 @@ spec:
         name: gitlab
         app: gitlab
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - system
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - k8s-epyc-01.sdsc.optiputer.net
       containers:
       - name: gitlab
         image: sameersbn/gitlab:11.4.5

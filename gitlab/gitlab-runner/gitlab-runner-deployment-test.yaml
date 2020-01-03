@@ -129,21 +129,31 @@ spec:
               value: gitlab
             - name: REGISTER_LOCKED
               value: "false"
-          volumeMounts:
-            - mountPath: /etc/gitlab-runner
-              name: config
-        - name: init-runner-volume
-          image: alpine
-          command: ["sh", "-c"]
-          # Append hostpath mount to configuration because there is no env variable for it
-          # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/2578
-          args:
-            - |
-              cat <<EOF >> /etc/gitlab-runner/config.toml
-                output_limit = 32768
-                [runners.kubernetes.node_selector]
-                  gitlab-worker = "true"
-              EOF
+            - name: KUBERNETES_NODE_SELECTOR
+              value: gitlab-worker:true
+            - name: OUTPUT_LIMIT
+              value: "32768"
+
+            - name: CACHE_TYPE
+              value: "s3"
+            - name: CACHE_SHARED
+              value: "true"
+            - name: CACHE_S3_SERVER_ADDRESS
+              value: "s3.nautilus.optiputer.net"
+            - name: CACHE_S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: runner-cache
+                  key: accesskey
+            - name: CACHE_S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: runner-cache
+                  key: secretkey
+            - name: CACHE_S3_BUCKET_NAME
+              value: "runners-cache"
+            - name: CACHE_S3_INSECURE
+              value: "false"
           volumeMounts:
             - mountPath: /etc/gitlab-runner
               name: config

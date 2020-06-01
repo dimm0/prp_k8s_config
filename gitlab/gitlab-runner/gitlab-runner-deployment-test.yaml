@@ -95,7 +95,7 @@ spec:
         - name: config
           emptyDir: {}
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gitlab-runner-general
@@ -103,15 +103,28 @@ metadata:
   labels:
     app: gitlab-runner-general
 spec:
-  replicas: 2
+  replicas: 4
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: gitlab-runner-general
   template:
     metadata:
       labels:
         app: gitlab-runner-general
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - system
       initContainers:
         - name: init-runner
-          image: gitlab/gitlab-runner:latest
+          image: gitlab/gitlab-runner:v13.0.2
           args:
             - register
           env:
@@ -133,7 +146,6 @@ spec:
               value: gitlab-worker:true
             - name: OUTPUT_LIMIT
               value: "32768"
-
             - name: CACHE_TYPE
               value: "s3"
             - name: CACHE_SHARED
@@ -159,12 +171,16 @@ spec:
               name: config
       containers:
         - name: runner
-          image: gitlab/gitlab-runner:latest
+          image: gitlab/gitlab-runner:v13.0.2
           args:
             - run
           volumeMounts:
             - mountPath: /etc/gitlab-runner
               name: config
+      tolerations:
+      - effect: NoSchedule
+        key: nautilus.io/ceph
+        operator: Exists
       volumes:
         - name: config
           emptyDir: {}

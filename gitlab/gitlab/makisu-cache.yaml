@@ -71,4 +71,4 @@ spec:
     targetPort: 6379
     protocol: TCP
   selector:
-    name: makisu-redis
+    k8s-app: makisu-redis

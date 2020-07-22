@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: makisu-redis
+  namespace: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: makisu-redis
+  template:
+    metadata:
+      labels:
+        k8s-app: makisu-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        volumeMounts:
+          - mountPath: /var/lib/redis
+            name: redisdata
+        livenessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+      tolerations:
+      - operator: "Exists"
+        key: "nautilus.io/ceph"
+        effect: "NoSchedule" 
+      - operator: "Exists"
+        key: "nautilus.io/science-dmz"
+        effect: "NoSchedule"          
+      volumes:
+      - name: redisdata
+        persistentVolumeClaim:
+          claimName: gitlab-db
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: makisu-redis
+  namespace: gitlab
+spec:
+  storageClassName: rook-ceph-block
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: makisu-redis
+  namespace: gitlab
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+    protocol: TCP
+  selector:
+    name: makisu-redis

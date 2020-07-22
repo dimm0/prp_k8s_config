@@ -33,6 +33,8 @@ spec:
               - ping
           initialDelaySeconds: 5
           timeoutSeconds: 1
+      nodeSelector:
+        env: system
       tolerations:
       - operator: "Exists"
         key: "nautilus.io/ceph"
@@ -43,7 +45,7 @@ spec:
       volumes:
       - name: redisdata
         persistentVolumeClaim:
-          claimName: gitlab-db
+          claimName: makisu-redis
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

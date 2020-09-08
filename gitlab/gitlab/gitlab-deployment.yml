@@ -65,7 +65,7 @@ spec:
                 - k8s-epyc-01.sdsc.optiputer.net
       containers:
       - name: gitlab
-        image: sameersbn/gitlab:11.4.5
+        image: sameersbn/gitlab:13.3.4
         # imagePullPolicy: Always
         resources:
           requests:
@@ -302,7 +302,7 @@ spec:
           name: registry
           protocol: TCP
       - name: postgresql
-        image: sameersbn/postgresql
+        image: sameersbn/postgresql:12-20200524
         imagePullPolicy: Always
         env:
         - name: DB_USER
@@ -315,7 +315,7 @@ spec:
         - name: DB_NAME
           value: gitlab_production
         - name: DB_EXTENSION
-          value: pg_trgm
+          value: pg_trgm,btree_gist
         ports:
         - name: postgres
           containerPort: 5432
